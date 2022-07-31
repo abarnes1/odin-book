@@ -1,0 +1,6 @@
+example_id                                           | status  | run_time        |
+---------------------------------------------------- | ------- | --------------- |
+./spec/models/post_spec.rb[1:1]                      | pending | 0.00002 seconds |
+./spec/models/user_spec.rb[1:1]                      | pending | 0.00002 seconds |
+./spec/system/authentication_required_spec.rb[1:1:1] | passed  | 0.20826 seconds |
+./spec/system/authentication_required_spec.rb[1:2:1] | pending | 0.01985 seconds |
