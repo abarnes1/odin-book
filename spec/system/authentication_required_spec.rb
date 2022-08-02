@@ -1,12 +1,10 @@
 require 'rails_helper'
 
-# include Devise::Test::IntegrationHelpers
-
 RSpec.describe 'authenication' do
   context 'when not logged in' do
     it 'routes to the sign in page' do
       visit root_path
-      expect(page).to have_content('You need to sign in or sign up before continuing.')
+      expect(page).to have_selector('form#new_user')
     end
   end
 
