@@ -2,6 +2,8 @@
 ## Requirements
 ### Required
 1. Users must sign in to see anything except the sign in page.
+    - Basics set up 8/2/2022.  Will need to ensure as controllers are added that
+      they enforce authentication via `before_action :authenticate_user!`
 1. Users can send friend requests to other users.
 1. A user must accept the friend request to become friends.
 1. The friend request shows up in the notifications section of a user's navbar.
