@@ -13,6 +13,8 @@
 1. Posts should always display the post content, author, comments, and likes.
 1. The posts index page shows a "timeline" of all recent posts from the current user and users they are friends with.
 1. Users can create a profile with their personal information and a photo. (Gravatar)
+    - All but photo 8/5/2022.
+    - Gravatar working 8/6/2022.
 1. The user show page contains their profile information, photo, and posts.
 1. The users index page lists all users and buttons for sending friend requests to those who are not already friends or who don't already have a pending request.
 1. Sign in using OmniAuth to allow users to sign in with their real Facebook account.
