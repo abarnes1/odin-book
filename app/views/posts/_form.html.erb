@@ -5,3 +5,9 @@
   <br>
   <%= form.submit %>
 <% end %>
+
+<% if @post.errors %>
+  <% @post.errors.each do |error| %>
+    <p><%= error.full_message %></p>
+  <% end %>
+<% end %>
