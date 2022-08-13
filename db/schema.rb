@@ -10,9 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_03_033534) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_09_000225) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "friendship_request_status", ["pending", "accepted"]
+
+  create_table "friendship_requests", force: :cascade do |t|
+    t.bigint "sender_id", null: false
+    t.bigint "recipient_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.enum "status", enum_type: "friendship_request_status"
+    t.index ["recipient_id", "sender_id"], name: "index_friendship_requests_on_recipient_id_and_sender_id", unique: true
+    t.index ["sender_id", "recipient_id"], name: "index_friendship_requests_on_sender_id_and_recipient_id", unique: true
+    t.index ["status"], name: "index_friendship_requests_on_status"
+  end
 
   create_table "posts", force: :cascade do |t|
     t.string "content"
@@ -38,5 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_03_033534) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "friendship_requests", "users", column: "recipient_id"
+  add_foreign_key "friendship_requests", "users", column: "sender_id"
   add_foreign_key "posts", "users"
 end
