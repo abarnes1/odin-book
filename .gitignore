@@ -31,4 +31,7 @@
 /config/master.key
 
 todo.txt
+requirements.md
 /spec/examples.txt
+/scripts
+/notes
