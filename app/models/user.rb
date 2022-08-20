@@ -17,20 +17,43 @@ class User < ApplicationRecord
            class_name: 'FriendshipRequest', foreign_key: :recipient_id
 
   def friends
-    query = <<~SQL
-      SELECT users.*
-      FROM friendship_requests
-        JOIN users
-          ON users.id =
-            CASE
-              WHEN friendship_requests.sender_id = #{id}
-                THEN friendship_requests.recipient_id
-              ELSE
-                friendship_requests.sender_id
-            END
-      WHERE friendship_requests.status = 'accepted'
+    @friends ||= friends_as_active_record_custom_sql.to_a
+  end
+
+  def friends?(user)
+    friends.include?(user)
+  end
+
+  def requested_friendship_with?(user)
+    friend_request_user_ids.include?(user.id)
+  end
+
+  def friendship_requested_by?(user)
+    requested_friend_user_ids.include?(user.id)
+  end
+
+  private
+
+  def friends_as_active_record_custom_sql
+    join_clause = <<~SQL
+      JOIN friendship_requests
+        ON users.id =
+          CASE
+            WHEN friendship_requests.sender_id = #{id}
+              THEN friendship_requests.recipient_id
+            ELSE
+              friendship_requests.sender_id
+          END
     SQL
 
-    User.find_by_sql(query)
+    User.joins(join_clause).merge(FriendshipRequest.accepted)
+  end
+
+  def friend_request_user_ids
+    @friend_request_user_ids ||= sent_friend_requests.pluck(:recipient_id).to_a
+  end
+
+  def requested_friend_user_ids
+    @requested_friend_user_ids ||= received_friend_requests.pluck(:sender_id).to_a
   end
 end
