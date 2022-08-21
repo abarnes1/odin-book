@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  resources :users, only: %i[index]
+  resources :users, only: %i[index show]
 
   devise_scope :user do
     get '/sign_in', to: 'devise/sessions#new'
@@ -21,5 +21,7 @@ Rails.application.routes.draw do
   root 'posts#index'
 
   resources :posts, only: %i[index new create]
-  resource :friendship_request, only: %i[new create update destroy]
+  resource :friendship_request, only: %i[create update destroy]
+
+  get '/friends', to: 'users#friends'
 end

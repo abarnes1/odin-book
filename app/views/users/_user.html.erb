@@ -1,4 +1,4 @@
 <div class='user' id=<%= dom_id(user) %>>
-  <%= user.username %> | <%= user.email %> |
+  <%= link_to user.username, user_path(user) %> | <%= user.email %> |
   <%= render partial: 'friend_requests/form', locals: { user: user } %> 
 </div>
