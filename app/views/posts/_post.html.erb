@@ -1,3 +1,10 @@
 <div>
   <p id=<%= dom_id(post) %>><%= post.content %></p>
+  <% if current_user.likes_post?(post) %>
+    <%= render partial: 'likes/form', locals: { like: post.likes.build, post: post } %>
+  <% else %>  
+    <%= render partial: 'likes/form', locals: { like: post.likes.build, post: post } %>
+  <% end %>
+   | 
+  Likes: <%= (post.likes.size > 0) ? post.likes.count : 0 %>
 </div>
