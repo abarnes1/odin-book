@@ -1,1 +1,4 @@
-<p><%= user.username %> | <%= user.email %> | <%= friendship_button_text(current_user, user)  %></p>
+<div class='user' id=<%= dom_id(user) %>>
+  <%= user.username %> | <%= user.email %> |
+  <%= render partial: 'friend_requests/form', locals: { user: user } %> 
+</div>

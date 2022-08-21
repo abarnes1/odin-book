@@ -21,4 +21,5 @@ Rails.application.routes.draw do
   root 'posts#index'
 
   resources :posts, only: %i[index new create]
+  resource :friendship_request, only: %i[new create update destroy]
 end
