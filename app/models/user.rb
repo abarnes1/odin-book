@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   has_many :posts
   has_many :likes
+  has_many :comments
 
   # uniqueness at model level
   # https://nelsonfigueroa.dev/uniqueness-constraint-between-two-columns-in-rails/
