@@ -1,0 +1,5 @@
+<% if comment.persisted? %>
+  <div>
+    <%= comment.user.username %> says: <%= comment.message %> at <%= comment.created_at %>
+  </div>
+<% end %>

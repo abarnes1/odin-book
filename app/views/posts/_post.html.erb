@@ -1,3 +1,4 @@
+<hr>
 <div>
   <p id=<%= dom_id(post) %>><%= post.content %></p>
   <% if current_user.likes_post?(post) %>
@@ -7,4 +8,11 @@
   <% end %>
    | 
   Likes: <%= (post.likes.size > 0) ? post.likes.count : 0 %>
+
+
+  <%= render partial: 'comments/form', locals: { comment: post.comments.build } %>
+
+  Comments
+
+  <%= render partial: 'comments/comment', collection: post.comments %>  
 </div>

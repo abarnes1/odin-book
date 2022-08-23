@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   end
 
   resource :friendship_request, only: %i[create update destroy]
+  resources :comments, only: %i[new create]
 
   get '/friends', to: 'users#friends'
   post '/posts/:id/like', to: 'likes#like', as: 'like'
