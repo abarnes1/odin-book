@@ -3,7 +3,7 @@
   <br>
   <%= form.text_area :message %>
   <br>
-  <%= form.hidden_field :post_id %>
+  <%= form.hidden_field :post_id, value: comment.post_id %>
   <%= form.hidden_field :parent_comment_id %>
   <%= form.submit %>
 <% end %>

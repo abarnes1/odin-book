@@ -9,10 +9,9 @@
    | 
   Likes: <%= (post.likes.size > 0) ? post.likes.count : 0 %>
 
-
   <%= render partial: 'comments/form', locals: { comment: post.comments.build } %>
 
   Comments
 
-  <%= render partial: 'comments/comment', collection: post.comments %>  
+  <%= render partial: 'comments/comment', collection: post.comments.top_level, locals: { prefix: '' } %>  
 </div>

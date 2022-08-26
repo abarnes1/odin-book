@@ -1,5 +1,15 @@
 <% if comment.persisted? %>
   <div>
-    <%= comment.user.username %> says: <%= comment.message %> at <%= comment.created_at %>
+    <%= prefix unless prefix.nil? %>
+    <!-- -->
+    <%= comment.user.username %> 
+    says: <%= comment.message %> 
+    at <%= comment.created_at %>
+     | <%= link_to 'Reply', new_comment_path(comment: {post_id: comment.post_id, parent_comment_id: comment.id}) %>
+     <%= link_to 'Delete', comment_path(comment), data: { turbo_method: :delete }  if comment.user == current_user %>
+ 
+    <% if comment.comments %>
+      <%= render partial: 'comments/comment', collection: comment.comments, locals: { prefix: ('-' * (prefix.length + 2)) } %>  
+    <% end %>
   </div>
 <% end %>
