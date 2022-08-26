@@ -6,9 +6,9 @@ class User < ApplicationRecord
 
   validates :email, :username, :first_name, :last_name, presence: true
 
-  has_many :posts
-  has_many :likes
-  has_many :comments
+  has_many :posts, inverse_of: :user
+  has_many :likes, inverse_of: :user
+  has_many :comments, inverse_of: :user
 
   # uniqueness at model level
   # https://nelsonfigueroa.dev/uniqueness-constraint-between-two-columns-in-rails/
@@ -34,10 +34,6 @@ class User < ApplicationRecord
     requested_friend_user_ids.include?(user.id)
   end
 
-  def likes_post?(post)
-    liked_post_ids.include?(post.id)
-  end
-
   private
 
   def friends_as_active_record_custom_sql
@@ -61,9 +57,5 @@ class User < ApplicationRecord
 
   def requested_friend_user_ids
     @requested_friend_user_ids ||= received_friend_requests.pluck(:sender_id).to_a
-  end
-
-  def liked_post_ids
-    @liked_post_ids ||= Like.where(user: self).pluck(:post_id).to_a
   end
 end
