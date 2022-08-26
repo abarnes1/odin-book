@@ -2,11 +2,14 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @posts = current_user.posts.includes(:likes)
+    @posts = current_user.posts.includes(
+      likes: [:user],
+      comments: [:user]
+    )
+    puts '******* leaving controller'
   end
 
   def new
-    # @post = current_user.posts.build
     @post = Post.new
   end
 

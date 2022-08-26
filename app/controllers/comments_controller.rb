@@ -11,19 +11,18 @@ class CommentsController < ApplicationController
 
     if @comment.save
       flash[:alert] = 'Comment Creation Success'
-      redirect_to posts_path
     else
       flash[:alert] = 'Comment Creation Error'
       # figure out how to render only the comment form
       # render :new, status: :unprocessable_entity
-
-      redirect_to posts_path
     end
+
+    redirect_to posts_path
   end
 
   def destroy
     comment = Comment.find(params[:id])
-    comment.remove_message
+    comment.soft_delete
     comment.save
 
     redirect_to posts_path

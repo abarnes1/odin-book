@@ -28,6 +28,4 @@ Rails.application.routes.draw do
   resources :comments, only: %i[new create destroy]
 
   get '/friends', to: 'users#friends'
-  post '/posts/:id/like', to: 'likes#like', as: 'like'
-  delete '/posts/:id/like', to: 'likes#unlike', as: 'destroy_like'
 end
