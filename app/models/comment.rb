@@ -10,8 +10,4 @@ class Comment < ApplicationRecord
   def top_level?
     parent_comment_id.nil?
   end
-
-  def soft_delete
-    self.message = '(deleted comment)'
-  end
 end

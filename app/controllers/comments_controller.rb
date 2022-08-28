@@ -3,29 +3,34 @@ class CommentsController < ApplicationController
 
   def new
     @comment = Comment.new(comment_params)
-    # @comment = current_user.comments.build(comment_params)
   end
 
   def create
     @comment = current_user.comments.build(comment_params)
 
-    if @comment.save
-      flash[:alert] = 'Comment Creation Success'
-    else
-      flash[:alert] = 'Comment Creation Error'
-      # figure out how to render only the comment form
-      # render :new, status: :unprocessable_entity
-    end
+    flash[:alert] = if @comment.save
+                      'Comment Creation Success'
+                    else
+                      'Comment Creation Error'
+                    end
 
     redirect_to posts_path
   end
 
-  def destroy
-    comment = Comment.find(params[:id])
-    comment.soft_delete
-    comment.save
+  def edit
+    @comment = Comment.find(params[:id])
+  end
 
-    redirect_to posts_path
+  def update
+    @comment = Comment.find(params[:id])
+
+    if @comment.update(comment_params)
+      flash[:alert] = 'Comment Update Success'
+      redirect_to posts_path
+    else
+      flash[:alert] = 'Comment Update Error'
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
