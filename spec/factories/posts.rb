@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :post do
-    body { "MyString" }
+    content { 'Default post content' }
     user { nil }
   end
 end

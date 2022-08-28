@@ -1,7 +1,7 @@
 <% if comment.persisted? %>
-  <div>
+  <div class="comment-container">
     <%= prefix unless prefix.nil? %>
-    
+
     <%= comment.user.username %> 
     says: <%= comment.message %> 
     at <%= comment.created_at %>
