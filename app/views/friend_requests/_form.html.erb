@@ -1,16 +1,14 @@
-<% if current_user.friends?(user) || current_user.requested_friendship_with?(user) %>
-  <%= form_with url: friendship_request_path, method: :delete, class: 'inline' do |form| %> 
-    <%= form.hidden_field :friend_id, value: user.id %>
-    <%= form.submit friendship_button_text(current_user, user) %>
-  <% end %>
-<% elsif current_user.friendship_requested_by?(user) %>  
-    <%= form_with url: friendship_request_path, method: :patch, class: 'inline' do |form| %> 
-    <%= form.hidden_field :friend_id, value: user.id %>
-    <%= form.submit friendship_button_text(current_user, user) %>
-    <% end %>
-<% else %>
-    <%= form_with url: friendship_request_path, method: :post, class: 'inline' do |form| %> 
-    <%= form.hidden_field :friend_id, value: user.id %>
-    <%= form.submit friendship_button_text(current_user, user) %>
-    <% end %>
+<% method =
+    if current_user.friends?(user) || current_user.requested_friendship_with?(user)
+      :delete
+    elsif current_user.friendship_requested_by?(user)
+      :patch
+    else
+      :post
+    end
+%>
+
+<%= form_with url: friendship_request_path, method: method, class: 'inline friend-request-form' do |form| %> 
+  <%= form.hidden_field :friend_id, value: user.id %>
+  <%= form.submit friendship_button_text(current_user, user) %>
 <% end %>
