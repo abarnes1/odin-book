@@ -1,9 +1,7 @@
-<% puts "  ********* rendering comment: #{comment.id}" %>
-
 <% if comment.persisted? %>
   <div>
     <%= prefix unless prefix.nil? %>
-    <!-- -->
+    
     <%= comment.user.username %> 
     says: <%= comment.message %> 
     at <%= comment.created_at %>

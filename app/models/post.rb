@@ -2,7 +2,6 @@ class Post < ApplicationRecord
   belongs_to :user
   has_many :likes, dependent: :destroy, inverse_of: :post
   has_many :comments, dependent: :destroy, inverse_of: :post
-  has_many :top_level_comments, -> { top_level }, class_name: 'Comment', dependent: :destroy
 
   validates :content, presence: true
 
