@@ -10,15 +10,14 @@ RSpec.describe 'creating a post' do
 
   context 'when fields are valid' do
     it 'creates the post' do
-      content = 'This is my post.'
-      fill_in 'Content', with: content
+      post_content = 'This is my post.'
+      fill_in 'Content', with: post_content
+
       click_on 'Create Post'
 
-      post = user.posts.first
-
-      expect(page).to have_selector(
-        "#post_#{post.id}", text: content
-      )
+      within '.post-container' do
+        expect(page).to have_content(post_content)
+      end
     end
   end
 

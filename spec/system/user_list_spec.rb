@@ -11,13 +11,17 @@ RSpec.describe 'user list', type: :system do
   it 'does not list the current user' do
     visit users_path
 
-    expect(page).not_to have_selector("##{dom_id(user1)}")
+    within '.listed-user-container' do
+      expect(page).not_to have_content(user1.username)
+    end
   end
 
   it 'lists other users' do
     visit users_path
 
-    expect(page).to have_selector("##{dom_id(user2)}")
+    within '.listed-user-container' do
+      expect(page).to have_content(user2.username)
+    end
   end
 
   context 'when users are friends' do
@@ -27,7 +31,7 @@ RSpec.describe 'user list', type: :system do
       visit users_path
 
       within "##{dom_id(user2)}" do
-        expect(page).to have_text 'Remove Friendship'
+        expect(page).to have_button(value: 'Remove Friendship')
       end
     end
   end
@@ -39,7 +43,7 @@ RSpec.describe 'user list', type: :system do
       visit users_path
 
       within "##{dom_id(user2)}" do
-        expect(page).to have_text 'Cancel Request'
+        expect(page).to have_button(value: 'Cancel Request')
       end
     end
   end
@@ -51,7 +55,7 @@ RSpec.describe 'user list', type: :system do
       visit users_path
 
       within "##{dom_id(user2)}" do
-        expect(page).to have_text 'Accept Request'
+        expect(page).to have_button(value: 'Accept Request')
       end
     end
   end
@@ -61,7 +65,7 @@ RSpec.describe 'user list', type: :system do
       visit users_path
 
       within "##{dom_id(user2)}" do
-        expect(page).to have_text 'Request Friendship'
+        expect(page).to have_button(value: 'Request Friendship')
       end
     end
   end
