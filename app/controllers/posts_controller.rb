@@ -6,7 +6,6 @@ class PostsController < ApplicationController
       likes: [:user],
       comments: [:user]
     )
-    puts '******* leaving controller'
   end
 
   def new

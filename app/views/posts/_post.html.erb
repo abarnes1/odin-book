@@ -1,10 +1,12 @@
-<% puts "********* rendering post: #{post.id}" %>
 <hr>
-<div>
-  <p id=<%= dom_id(post) %>><%= post.content %></p>
-    <%= render partial: 'likes/form', locals: { like: Like.new, post: post } %>  
-    Likes: <%= post.likes.size %>  
-    
+<div class="post-container">
+  <div id=<%= dom_id(post) %>>
+    <%= post.content %>
+  </div>
+
+  <%= render partial: 'likes/form', locals: { like: Like.new, post: post } %>  
+  Likes: <%= post.likes.size %>  
+  
   <%= render partial: 'comments/form', locals: { comment: post.comments.build } %>
 
   Comments
