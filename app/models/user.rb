@@ -18,6 +18,13 @@ class User < ApplicationRecord
   has_many :received_friend_requests, -> { FriendshipRequest.pending },
            class_name: 'FriendshipRequest', foreign_key: :recipient_id
 
+  def feed
+    Post.all.joins(:user)
+        .where(user_id: friends.map(&:id) << id)
+        .order(created_at: :desc).order(created_at: :desc)
+        .includes(likes: [:user], comments: [:user])
+  end
+
   def friends
     @friends ||= friends_as_active_record_custom_sql.to_a
   end

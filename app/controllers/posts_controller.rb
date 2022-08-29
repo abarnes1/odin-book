@@ -8,6 +8,10 @@ class PostsController < ApplicationController
     )
   end
 
+  def feed
+    @posts = current_user.feed
+  end
+
   def new
     @post = Post.new
   end
