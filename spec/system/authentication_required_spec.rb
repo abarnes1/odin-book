@@ -15,13 +15,13 @@ RSpec.describe 'authenication' do
   end
 
   context 'when logged in' do
-    let(:user) { build(:user) }
+    let(:user) { create(:user) }
 
-    it 'routes to the user posts page' do
+    it 'routes to the user feed page' do
       sign_in user
       visit root_path
 
-      expect(page).to have_content('User posts placeholder')
+      expect(page).to have_content('User Feed')
     end
   end
 end
