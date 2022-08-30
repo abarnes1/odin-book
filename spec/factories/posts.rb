@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :post do
-    content { 'Default post content' }
+    content { Faker::ChuckNorris.fact }
     user { nil }
   end
 end
