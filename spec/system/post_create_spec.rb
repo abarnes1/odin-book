@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'creating a post' do
+RSpec.describe 'creating a post', type: :system do
   let!(:user) { create(:user) }
 
   before do
@@ -11,9 +11,7 @@ RSpec.describe 'creating a post' do
   context 'when fields are valid' do
     it 'creates the post' do
       post_content = 'This is my post.'
-      fill_in 'Content', with: post_content
-
-      click_on 'Create Post'
+      create_post(post_content)
 
       within '.post-container' do
         expect(page).to have_content(post_content)
@@ -23,7 +21,7 @@ RSpec.describe 'creating a post' do
 
   context 'when content field is blank' do
     it 'does not create the post' do
-      click_on 'Create Post'
+      create_post('')
 
       expect(page).to have_content('Post Creation Error')
     end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'editing a comment' do
+RSpec.describe 'editing a comment', type: :system do
   let!(:user) { create(:user) }
   let!(:post) { create(:post, user: user) }
   let!(:comment) { create(:comment, post: post, user: user) }
@@ -19,8 +19,7 @@ RSpec.describe 'editing a comment' do
 
     context 'when fields are not valid' do
       it 'does not update the comment' do
-        fill_in 'Comment:', with: ''
-        click_on 'Update Comment'
+        update_comment('')
         expect(page).to have_content('Comment Update Error')
       end
     end
@@ -29,8 +28,7 @@ RSpec.describe 'editing a comment' do
       let(:new_comment_message) { 'updated comment' }
 
       it 'updates the comment' do
-        fill_in 'Comment:', with: new_comment_message
-        click_on 'Update Comment'
+        update_comment(new_comment_message)
 
         within '.comment-container' do
           expect(page).to have_content(new_comment_message)
@@ -43,14 +41,14 @@ RSpec.describe 'editing a comment' do
     let(:other_user) { create(:user) }
 
     before do
+      user.sent_friend_requests.create(recipient: other_user, status: 'accepted')
       sign_in other_user
-      visit posts_path
+      visit feed_path
     end
 
     it 'cannot be edited' do
-      pending 'will fail until post#index shows friend posts'
       within '.comment-container' do
-        expect(page).not_to have_selector(:link_or_button, 'Reply')
+        expect(page).not_to have_selector(:link_or_button, 'Edit')
       end
     end
   end
