@@ -11,10 +11,9 @@
 
   Comments
 
-<% post.comments.each do |comment| %>
-  <% if comment.top_level?%>
-    <%= render partial: 'comments/comment', locals: { comment: comment, prefix: '' } %>  
+  <% post.comments.each do |comment| %>
+    <% if comment.top_level?%>
+      <%= render partial: 'comments/comment', locals: { comment: comment, prefix: '' } %>  
+    <% end %>
   <% end %>
-<% end %>
-  
 </div>

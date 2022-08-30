@@ -9,7 +9,10 @@ class PostsController < ApplicationController
   end
 
   def feed
-    @posts = current_user.feed
+    @posts = current_user.feed.includes(
+      likes: [:user],
+      comments: [:user]
+    )
   end
 
   def new
@@ -21,7 +24,7 @@ class PostsController < ApplicationController
 
     if @post.save
       flash[:alert] = 'Post Creation Success'
-      redirect_to posts_path
+      redirect_to feed_path
     else
       flash.now[:alert] = 'Post Creation Error'
       render :new, status: :unprocessable_entity

@@ -1,0 +1,6 @@
+<%= link_to 'New Post', new_post_path %>
+
+User Feed
+<div class='feed-container'>
+  <%= render partial: 'post', collection: @posts %>
+</div>

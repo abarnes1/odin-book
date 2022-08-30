@@ -22,7 +22,6 @@ class User < ApplicationRecord
     Post.all.joins(:user)
         .where(user_id: friends.map(&:id) << id)
         .order(created_at: :desc).order(created_at: :desc)
-        .includes(likes: [:user], comments: [:user])
   end
 
   def friends

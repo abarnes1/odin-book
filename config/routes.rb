@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     root to: redirect('/sign_in'), as: :unauthenticated_root
   end
 
-  root 'posts#index'
+  root 'posts#feed'
 
   resources :posts, only: %i[index new create] do
     resources :likes, only: %i[create destroy]
@@ -28,4 +28,5 @@ Rails.application.routes.draw do
   resources :comments, only: %i[new create edit update]
 
   get '/friends', to: 'users#friends'
+  get '/feed', to: 'posts#feed'
 end
