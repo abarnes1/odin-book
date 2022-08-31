@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
                       'Comment Creation Error'
                     end
 
-    redirect_to posts_path
+    redirect_to feed_path
   end
 
   def edit
@@ -26,7 +26,7 @@ class CommentsController < ApplicationController
 
     if @comment.update(comment_params)
       flash[:alert] = 'Comment Update Success'
-      redirect_to posts_path
+      redirect_to feed_path
     else
       flash[:alert] = 'Comment Update Error'
       render :edit, status: :unprocessable_entity

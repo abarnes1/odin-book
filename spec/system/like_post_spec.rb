@@ -7,7 +7,7 @@ RSpec.describe 'liking a post' do
   before do
     user.posts << post
     sign_in user
-    visit posts_path
+    visit feed_path
   end
 
   context 'when post is not liked' do

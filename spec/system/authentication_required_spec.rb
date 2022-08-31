@@ -8,7 +8,7 @@ RSpec.describe 'authenication' do
     end
 
     it 'requires a sign in to access protected resources' do
-      visit posts_path
+      visit feed_path
       expect(page).to have_content('You need to sign in or sign up before continuing.')
       expect(page).to have_selector(:link_or_button, 'Log in')
     end

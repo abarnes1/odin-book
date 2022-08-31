@@ -8,7 +8,7 @@ class LikesController < ApplicationController
                       'Like Failed'
                     end
 
-    redirect_to posts_path
+    redirect_to feed_path
   end
 
   def destroy
@@ -18,7 +18,7 @@ class LikesController < ApplicationController
                       'Unlike Failed'
                     end
 
-    redirect_to posts_path
+    redirect_to feed_path
   end
 
   private

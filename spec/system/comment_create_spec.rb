@@ -7,7 +7,7 @@ RSpec.describe 'creating a comment', type: :system do
 
   before do
     sign_in user
-    visit posts_path
+    visit feed_path
   end
 
   context 'when fields are not valid' do

@@ -13,7 +13,7 @@ RSpec.describe 'editing a comment', type: :system do
   context 'when comment is from signed in user' do
     before do
       sign_in user
-      visit posts_path
+      visit feed_path
       click_on 'Edit'
     end
 
