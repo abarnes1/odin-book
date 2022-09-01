@@ -10,10 +10,14 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= render partial: 'shared/flash' %>
+  <body class='site'>
     <%= render partial: 'shared/nav' if user_signed_in? %>
+    <%= render partial: 'shared/flash' %>
 
-    <%= yield %>
+    <main class='site-content'>
+      <%= yield %>
+    </main>
+
+    <%= render partial: 'shared/footer' if user_signed_in? %>
   </body>
 </html>

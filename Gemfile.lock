@@ -73,6 +73,8 @@ GEM
     bootsnap (1.13.0)
       msgpack (~> 1.2)
     builder (3.2.4)
+    bulma-rails (0.9.3)
+      sassc (~> 2.0)
     capybara (3.37.1)
       addressable
       matrix
@@ -242,6 +244,8 @@ GEM
       rspec-support (~> 3.10)
     rspec-support (3.11.0)
     rubyzip (2.3.2)
+    sassc (2.4.0)
+      ffi (~> 1.9)
     selenium-webdriver (4.3.0)
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -290,6 +294,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap
+  bulma-rails (~> 0.9.3)
   capybara
   debug
   devise
