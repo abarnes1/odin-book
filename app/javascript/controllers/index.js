@@ -6,3 +6,6 @@ import { application } from "./application"
 
 import ConfirmableController from "./confirmable_controller"
 application.register("confirmable", ConfirmableController)
+
+import ToggleableController from "./toggleable_controller"
+application.register("toggleable", ToggleableController)
