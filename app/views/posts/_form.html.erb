@@ -1,13 +1,13 @@
-<%= form_with model: @post do |form| %>
+<% if post.errors %>
+  <% post.errors.each do |error| %>
+    <p><%= error.full_message %></p>
+  <% end %>
+<% end %>
+
+<%= form_with model: post do |form| %>
   <%= form.label :content %>
   <br>
   <%= form.text_area :content %>
   <br>
   <%= form.submit %>
-<% end %>
-
-<% if @post.errors %>
-  <% @post.errors.each do |error| %>
-    <p><%= error.full_message %></p>
-  <% end %>
 <% end %>

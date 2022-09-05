@@ -1,9 +1,10 @@
-<%= form_with model: comment do |form| %>
-  <%= form.label :message, 'Comment:' %>
-  <br>
-  <%= form.text_area :message %>
-  <br>
-  <%= form.hidden_field :post_id, value: comment.post_id %>
-  <%= form.hidden_field :parent_comment_id %>
-  <%= form.submit %>
-<% end %>
+<div class="is-flex">
+  <span class="mx-4"></span>
+  <span class="mx-1"></span>
+  <%= form_with model: comment, class: "is-flex is-flex-grow-1 p-2" do |form| %>
+    <%= form.text_field :message, class: "input is-static is-flex-grow-1 has-background-grey-dark has-text-grey-lighter border-curved" %>
+    <%= form.hidden_field :post_id, value: comment.post_id %>
+    <%= form.hidden_field :parent_comment_id %>
+    <%= form.submit 'Comment', class: "button p-2 ml-2 is-dark border-curved" %>
+  <% end %>  
+</div>

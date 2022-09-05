@@ -10,11 +10,11 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class='site'>
+  <body class='is-flex is-flex-direction-column has-background-black-ter has-text-grey-lighter'>
     <%= render partial: 'shared/nav' if user_signed_in? %>
     <%= render partial: 'shared/flash' %>
 
-    <main class='site-content'>
+    <main class='is-flex-grow-1'>
       <%= yield %>
     </main>
 

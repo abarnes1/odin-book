@@ -20,10 +20,32 @@
   display: inline;
 }
 
-.inline {
-  display: inline;
+.border-light {
+  border: 1px solid lightgray;
 }
 
-.inline-block {
-  display: inline-block;
+.border-curved {
+  border-radius: 15px;
+}
+
+.post-container {
+  max-width: 720px;
+}
+
+.gap-1 {
+  gap: 1rem;
+}
+
+.is-size-smaller {
+  font-size: smaller;
+}
+
+/* bulma has-text-grey-lighter equivalent */
+a {
+  color: hsl(0, 0%, 86%);
+}
+
+/* bulma has-text-white-ter equivalent */
+a:hover {
+  color: hsl(0, 0%, 96%);
 }

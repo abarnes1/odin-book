@@ -1,5 +1,8 @@
-<%= link_to 'New Post', new_post_path %>
+<div class="container bordered">
+  <span class='is-size-3'>User Posts</span>
+  <%= link_to 'New Post', new_post_path %>
+</div>
 
-User posts placeholder
-
-<%= render partial: 'post', collection: @posts %>
+<section class="section">
+  <%= render partial: 'post', collection: @posts %>
+</section>

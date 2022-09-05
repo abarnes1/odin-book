@@ -1,3 +1,9 @@
 New Post
 
-<%= render partial: 'form' %>
+<% if false %>
+  <%= turbo_frame_tag 'new-post' do %>
+    <%= render partial: 'form', locals: { post: @post }%>
+  <% end %>
+<% end %>
+
+<%= render partial: 'form', locals: { post: @post }%>

@@ -1,6 +1,17 @@
-<%= link_to 'New Post', new_post_path %>
+<section class="section py-0 bordered">
+  <h1 class='is-size-3 has-text-centered'>User Feed</h1>
 
-User Feed
-<div class='feed-container'>
-  <%= render partial: 'post', collection: @posts %>
-</div>
+  <% if false %>
+    <%= turbo_frame_tag 'new-post' do %>
+      <%= link_to 'New Post', new_post_path %>
+    <% end %>
+  <% end %>
+  
+  <span class='is-centered'><%= link_to 'New Post', new_post_path %></span>
+</section>
+
+<section class="section">
+  <div class='feed-container'>
+    <%= render partial: 'post', collection: @posts %>
+  </div>
+</section>
