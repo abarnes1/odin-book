@@ -19,7 +19,7 @@ RSpec.describe 'liking a post' do
 
     it 'liking increments likes count' do
       within '.post-container' do
-        expect(page).to have_content('Likes: 0')
+        expect(page).to have_content('0 Likes')
       end
     end
   end
@@ -37,7 +37,7 @@ RSpec.describe 'liking a post' do
 
     it 'liking decrements likes count' do
       within '.post-container' do
-        expect(page).to have_content('Likes: 1')
+        expect(page).to have_content('1 Likes')
       end
     end
   end

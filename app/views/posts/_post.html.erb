@@ -17,7 +17,7 @@
   <hr class="mx-2 my-0 has-background-grey">
 
   <div class="is-flex is-justify-content-space-between p-2">
-    <p>Like</p>
+    <%= render partial: 'likes/form', locals: { like: Like.new, post: post } %>
     <p>Comment</p>
   </div>
 
