@@ -1,17 +1,16 @@
 <% if comment.persisted? %>
-  <div class="comment-container is-flex is-flex-direction-column <%= 'p-2' if spacer_count.zero? %>">
-    <div class="is-flex">
+    <div class="comment-container is-flex">
 
-      <% spacer_count.times do %>
-        <span class="mx-4"></span>
-      <% end %>
+      <% spacer_width = spacer_count * 32 %>
+      <span class="" style="width: <%= spacer_width %>px"></span>
 
-    <div class="image is-<%= avatar_size %>x<%= avatar_size %> is-flex-shrink-0 <%= 'ml-2' unless comment.top_level? %>"><img class="is-rounded" src="<%= gravatar_url(comment.user.email, avatar_size)%>" alt=""></div>
+      <div class="image is-<%= avatar_size %>x<%= avatar_size %> is-flex-shrink-0 <%= 'ml-2' unless comment.top_level? %>">
+        <img class="is-rounded" src="<%= gravatar_url(comment.user.email, avatar_size)%>" alt="">
+      </div>
+      
       <div class="border-curved has-background-grey-dark is-flex-grow-1 mb-2 ml-2 p-2">
-        <div>
           <p><%= comment.user.username %></p>
           <p><%= comment.message %></p>
-        </div>
 
         <div class="is-size-smaller is-flex gap-1">
           <p>Like</p>
@@ -19,13 +18,13 @@
           <% if comment.user == current_user %>
             <p><%= link_to 'Edit', edit_comment_path(comment) if comment.user == current_user %></p>
           <% end %>
-          <p><%= comment.created_at %></p>
+          <p><%= comment.created_at.strftime("%Y-%m-%d") %></p>
         </div>
       </div>
     </div>
  
-    <% if comment.comments %>
-      <%= render partial: 'comments/comment', collection: comment.comments, locals: { spacer_count: spacer_count + 1, avatar_size: 24 } %>  
-    <% end %>
-  </div>
+  <% if comment.comments %>
+    <%= render partial: 'comments/comment', collection: comment.comments, locals: { spacer_count: spacer_count + 1, avatar_size: 24 } %>  
+  <% end %>
+  
 <% end %>

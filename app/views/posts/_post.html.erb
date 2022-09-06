@@ -1,5 +1,5 @@
-<div class="post-container border-light border-curved is-flex is-flex-direction-column mx-auto mb-4">
-  <div class="is-flex p-2">
+<div class="post-container border-light border-curved is-flex is-flex-direction-column mx-auto p-2 block">
+  <div class="is-flex mb-4">
     <div class="image is-48x48"><img class="is-rounded" src="<%= gravatar_url(post.user.email, 48)%>" alt=""></div>
     <div class="is-flex is-flex-direction-column ml-2">
       <p><%= post.user.username %></p>
@@ -7,25 +7,25 @@
     </div>
   </div>
 
-  <p class="p-2"><%= post.content %></p>
+  <p class="mb-4"><%= post.content %></p>
 
-  <div class="is-flex is-justify-content-space-between p-2">
+  <div class="is-flex is-justify-content-space-between">
     <p><%= post.likes.size %> Likes</p>
     <p><%= post.comments.size %> Comments</p>
   </div>
 
-  <hr class="mx-2 my-0 has-background-grey">
+  <hr class="my-0 has-background-grey">
 
-  <div class="is-flex is-justify-content-space-between p-2">
+  <div class="is-flex is-justify-content-space-between">
     <%= render partial: 'likes/form', locals: { like: Like.new, post: post } %>
     <p>Comment</p>
   </div>
 
-  <hr class="mx-2 my-0 has-background-grey">
-  <p class="px-2 is-flex is-justify-content-flex-end">&#9660; All Comments</p>
+  <hr class="my-0 has-background-grey">
+  <p class="is-flex is-justify-content-flex-end">&#9660; All Comments</p>
 
   <% post.comments.each do |comment| %>
-    <% if comment.top_level?%>
+    <% if comment.top_level? %>
       <%= render partial: 'comments/comment', locals: { comment: comment, spacer_count: 0, avatar_size: 32 } %>  
     <% end %>
   <% end %>
