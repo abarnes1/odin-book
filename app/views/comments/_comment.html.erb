@@ -2,17 +2,17 @@
     <div class="comment-container is-flex">
 
       <% spacer_width = spacer_count * 32 %>
-      <span class="" style="width: <%= spacer_width %>px"></span>
+      <span class="is-flex-shrink-0" style="width: <%= spacer_width %>px"></span>
 
       <div class="image is-<%= avatar_size %>x<%= avatar_size %> is-flex-shrink-0 <%= 'ml-2' unless comment.top_level? %>">
         <img class="is-rounded" src="<%= gravatar_url(comment.user.email, avatar_size)%>" alt="">
       </div>
       
-      <div class="border-curved has-background-grey-dark is-flex-grow-1 mb-2 ml-2 p-2">
-          <p><%= comment.user.username %></p>
-          <p><%= comment.message %></p>
+      <div class="border-curved has-background-grey-dark is-flex-shrink-1 is-flex-grow-1 mb-2 ml-2 p-2 is-flex is-flex-direction-column">
+        <p><%= comment.user.username %></p>
+        <p class="is-word-break-all"><%= comment.message %></p>
 
-        <div class="is-size-smaller is-flex gap-1">
+        <div class="is-size-smaller is-flex gap-1 is-flex-wrap-wrap">
           <p>Like</p>
           <p><%= link_to 'Reply', new_comment_path(comment: {post_id: comment.post_id, parent_comment_id: comment.id}), class: 'is-text' %></p>
           <% if comment.user == current_user %>
@@ -26,5 +26,4 @@
   <% if comment.comments %>
     <%= render partial: 'comments/comment', collection: comment.comments, locals: { spacer_count: spacer_count + 1, avatar_size: 24 } %>  
   <% end %>
-  
 <% end %>
