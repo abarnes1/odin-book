@@ -59,6 +59,9 @@ group :development, :test do
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "faker"
+
+  gem "rack-mini-profiler"
+  gem "benchmark-ips"
 end
 
 group :development do
