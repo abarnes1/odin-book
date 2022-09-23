@@ -18,10 +18,11 @@ class User < ApplicationRecord
   has_many :received_friend_requests, -> { FriendshipRequest.pending },
            class_name: 'FriendshipRequest', foreign_key: :recipient_id
 
-  def feed
-    Post.all.joins(:user)
+  def feed(post_count = 5)
+    Post.joins(:user)
         .where(user_id: friends.map(&:id) << id)
-        .order(created_at: :desc).order(created_at: :desc)
+        .newest
+        .limit(post_count)
   end
 
   def friends
