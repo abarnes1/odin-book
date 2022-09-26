@@ -3,8 +3,8 @@ module Feed
     attr_reader :posts, :user
 
     def initialize(user, posts)
-      @posts = posts
       @user = user
+      @posts = posts
     end
   end
 end

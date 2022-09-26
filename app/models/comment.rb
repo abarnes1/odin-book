@@ -1,8 +1,10 @@
 class Comment < ApplicationRecord
+  include DisplayComments
+
   belongs_to :user, inverse_of: :comments
   belongs_to :post, inverse_of: :comments
 
-  has_many :comments, class_name: 'Comment', foreign_key: 'parent_comment_id'
+  has_many :comments, -> { order('created_at DESC') }, class_name: 'Comment', foreign_key: 'parent_comment_id'
   belongs_to :parent_comment, class_name: 'Comment', foreign_key: 'parent_comment_id', optional: true
 
   # temporary, may remove after benchmarking

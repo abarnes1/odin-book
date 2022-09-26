@@ -1,7 +1,9 @@
 class Post < ApplicationRecord
+  include DisplayComments
+
   belongs_to :user
   has_many :likes, dependent: :destroy, inverse_of: :post
-  has_many :comments, dependent: :destroy, inverse_of: :post
+  has_many :comments, -> { order('created_at DESC') }, dependent: :destroy, inverse_of: :post
 
   scope :newest, -> { order(created_at: :desc) }
 
@@ -14,7 +16,4 @@ class Post < ApplicationRecord
   def liked_by?(user)
     !!user_like(user)
   end
-
-  # temporary, may remove after benchmarking
-  has_many :feed_comments, -> { Comment.top_level.newest.limit(5) }, class_name: 'Comment', inverse_of: :post
 end

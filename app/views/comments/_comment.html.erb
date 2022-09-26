@@ -23,7 +23,7 @@
       </div>
     </div>
  
-  <% if comment.comments %>
-    <%= render partial: 'comments/comment', collection: comment.comments, locals: { spacer_count: spacer_count + 1, avatar_size: 24 } %>  
+  <% unless comment.display_comments.empty? %>
+    <%= render partial: 'comments/comment', collection: comment.display_comments, as: :comment, locals: { spacer_count: spacer_count + 1, avatar_size: 24 } %>  
   <% end %>
 <% end %>

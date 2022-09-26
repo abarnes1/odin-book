@@ -17,19 +17,25 @@
   <hr class="my-0 has-background-grey">
 
   <div class="is-flex is-justify-content-space-between">
-    <%= render partial: 'likes/form', locals: { like: Like.new, post: post } %>
+  <%= render partial: 'likes/form', locals: { like: Like.new, post: post } %>
+    
     <p>Comment</p>
   </div>
 
   <hr class="my-0 has-background-grey">
   
   <p class="is-flex is-justify-content-flex-end">&#9660; All Comments</p>
-
-  <% post.comments.each do |comment| %>
+  <% post.display_comments.each do |comment| %>
     <% if comment.top_level? %>
-      <%= render partial: 'comments/comment', locals: { comment: comment, spacer_count: 0, avatar_size: 32 } %>  
+      <% if false %>
+        <%= render partial: 'comments/comment', locals: { comment: comment, spacer_count: 0, avatar_size: 32 } %>  
+        <%= render partial: 'comments/comment', collection: comment.display_comments, locals: { spacer_count: spacer_count + 1, avatar_size: 24 } %>  
+      <% end %>
+      
+      <%= render partial: 'comments/comment', locals: { comment: comment, spacer_count: 0, avatar_size: 24 } %>  
     <% end %>
   <% end %>
 
   <%= render partial: 'comments/form', locals: { comment: post.comments.build } %>
+  
 </div>

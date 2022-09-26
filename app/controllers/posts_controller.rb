@@ -9,10 +9,7 @@ class PostsController < ApplicationController
   end
 
   def feed
-    @posts = current_user.feed.includes(
-      likes: [:user],
-      comments: [:user]
-    )
+    @posts = Feed::UserFeedFactory.for_user(current_user).posts
   end
 
   def new
