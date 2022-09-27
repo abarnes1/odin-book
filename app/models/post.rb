@@ -3,7 +3,7 @@ class Post < ApplicationRecord
 
   belongs_to :user
   has_many :likes, dependent: :destroy, inverse_of: :post
-  has_many :comments, -> { order('created_at DESC') }, dependent: :destroy, inverse_of: :post
+  has_many :comments, dependent: :destroy, inverse_of: :post
 
   scope :newest, -> { order(created_at: :desc) }
 
