@@ -5,7 +5,8 @@ class Comment < ApplicationRecord
   belongs_to :post, counter_cache: true, inverse_of: :comments
 
   has_many :comments, class_name: 'Comment', foreign_key: 'parent_comment_id'
-  belongs_to :parent_comment, class_name: 'Comment', foreign_key: 'parent_comment_id', optional: true
+  belongs_to :parent_comment, class_name: 'Comment', foreign_key: 'parent_comment_id', optional: true,
+                              counter_cache: true
 
   validates :message, presence: true
 
