@@ -3,6 +3,7 @@ class Post < ApplicationRecord
 
   belongs_to :user
   has_many :likes, dependent: :destroy, inverse_of: :post
+  has_many :top_level_comments, -> { top_level }, class_name: 'Comment', dependent: :destroy, inverse_of: :post
   has_many :comments, dependent: :destroy, inverse_of: :post
 
   scope :newest, -> { order(created_at: :desc) }
@@ -15,5 +16,11 @@ class Post < ApplicationRecord
 
   def liked_by?(user)
     !!user_like(user)
+  end
+
+  def update_counters
+    self.comments_count = comments.count
+    self.top_level_comments_count = top_level_comments.count
+    save
   end
 end
