@@ -8,10 +8,6 @@ class PostsController < ApplicationController
     )
   end
 
-  def feed
-    @posts = Feed::UserFeedFactory.for_user(current_user).posts
-  end
-
   def new
     @post = Post.new
   end
