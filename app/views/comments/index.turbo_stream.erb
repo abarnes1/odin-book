@@ -9,7 +9,7 @@
   <% if @remaining_count.zero? %>
     All Comments Loaded
   <% else %>
-    <%= link_to "View #{@remaining_count} Previous", comments_path(id: @comments.first.id, displayed_count: @displayed_count), id: 'load_previous_link', method: :get, data: { turbo_stream: true }%>   
+    <%= link_to "View Previous (#{@remaining_count} Remain)", comments_path(id: @comments.first.id, displayed_count: @displayed_count), id: 'load_previous_link', method: :get, data: { turbo_stream: true }%>   
   <% end %>
 <% end %>
 
