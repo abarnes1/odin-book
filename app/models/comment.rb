@@ -25,7 +25,8 @@ class Comment < ApplicationRecord
     Comment.where(post_id: comment.post_id, parent_comment_id: comment.parent_comment_id)
            .where('created_at < ?', comment.created_at)
            .limit(limit)
-           .order(:created_at)
+           .order(created_at: :desc)
+           .reverse
   end
 
   private

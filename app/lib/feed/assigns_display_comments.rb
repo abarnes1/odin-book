@@ -57,6 +57,7 @@ module Feed
                .order(created_at: :desc)
                .includes(:user)
                .to_a
+               .reverse
       end
 
       def comments_replies(comments, replies_per_comment)

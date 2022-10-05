@@ -1,0 +1,17 @@
+<% unless @comments.empty? %>
+    <%= turbo_stream.prepend "post_#{@comments.first.post_id}_comments" do %>
+    <%= puts 'RENDERING MORE COMMENTS WITH TUUUUURBO' %>
+      <%= render partial: 'comments/comment', collection: @comments, locals: { spacer_count: 0, avatar_size: 24 } %>
+    <% end %>
+<% end %>
+
+<%= turbo_stream.replace 'load_previous_link' do %>
+  <% if @remaining_count.zero? %>
+    All Comments Loaded
+  <% else %>
+    <%= link_to "View #{@remaining_count} Previous", comments_path(id: @comments.first.id, displayed_count: @displayed_count), id: 'load_previous_link', method: :get, data: { turbo_stream: true }%>   
+  <% end %>
+<% end %>
+
+
+

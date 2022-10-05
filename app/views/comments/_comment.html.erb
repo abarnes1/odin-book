@@ -19,6 +19,7 @@
             <p><%= link_to 'Edit', edit_comment_path(comment) if comment.user == current_user %></p>
           <% end %>
           <p><%= comment.created_at.strftime("%Y-%m-%d") %></p>
+          <p><%= comment.comments.size %> Replies</p>
         </div>
       </div>
     </div>

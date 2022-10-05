@@ -19,8 +19,8 @@ class Post < ApplicationRecord
   end
 
   def update_counters
-    self.comments_count = comments.count
-    self.top_level_comments_count = top_level_comments.count
+    self.total_comments_count = comments.count
+    self.comments_count = top_level_comments.count
     save
   end
 end
