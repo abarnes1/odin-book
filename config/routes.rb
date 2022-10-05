@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     root to: redirect('/sign_in'), as: :unauthenticated_root
   end
 
-  root 'feed#show'
+  root 'feeds#show'
 
   resources :posts, only: %i[index new create] do
     resources :likes, only: %i[create destroy]
