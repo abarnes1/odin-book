@@ -25,7 +25,7 @@
 
   <div class="is-flex is-justify-content-space-between">
     <% if post.display_comments? %>
-      <%= link_to "View Previous (#{post.remaining_comments_count} Remain)", comments_path(id: post.first_displayed.id, displayed_count: post.displayed_comments_count), id: 'load_previous_link',  method: :get, data: { turbo_stream: true }%>
+      <%= link_to "View Previous (#{post.remaining_comments_count} Remain)", comments_path(id: post.first_displayed.id, displayed_count: post.displayed_comments_count), id: "#{dom_id(post)}_load_previous",  method: :get, data: { turbo_stream: true }%>
     <% else %>
       <span></span>
     <% end %>
@@ -42,5 +42,4 @@
   <% end %>
 
   <%= render partial: 'comments/form', locals: { comment: post.comments.build } %>
-  
 </div>

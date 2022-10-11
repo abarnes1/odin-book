@@ -1,17 +1,28 @@
 <% unless @comments.empty? %>
+
+  <% if @comments.first.top_level? %>
+    <!-- deal with top level comments -->
     <%= turbo_stream.prepend "post_#{@comments.first.post_id}_comments" do %>
-    <%= puts 'RENDERING MORE COMMENTS WITH TUUUUURBO' %>
       <%= render partial: 'comments/comment', collection: @comments, locals: { spacer_count: 0, avatar_size: 24 } %>
     <% end %>
-<% end %>
 
-<%= turbo_stream.replace 'load_previous_link' do %>
-  <% if @remaining_count.zero? %>
-    All Comments Loaded
+    <%= turbo_stream.replace "#{dom_id(@comments.first.post)}_load_previous" do %>
+      <% if @remaining_count.zero? %>
+        All Comments Loaded
+      <% else %>
+        <%= link_to "View Previous (#{@remaining_count} Remain)", comments_path(id: @comments.first.id, displayed_count: @displayed_count), id: 'load_previous_link', method: :get, data: { turbo_stream: true }%>   
+      <% end %>
+    <% end %>
   <% else %>
-    <%= link_to "View Previous (#{@remaining_count} Remain)", comments_path(id: @comments.first.id, displayed_count: @displayed_count), id: 'load_previous_link', method: :get, data: { turbo_stream: true }%>   
+    <!-- deal with comment replies -->
+    <%= turbo_stream.append "comment_#{@comments.first.parent_comment_id}_comments" do %>
+      <%= render partial: 'comments/comment', collection: @comments, locals: { spacer_count: @depth, avatar_size: 24 } %>
+    <% end %>
+
+    <%= turbo_stream.replace "#{dom_id(@comments.first.parent_comment)}_load_previous" do %>
+      <% unless @remaining_count.zero? %>
+        <%= link_to "View More Previous (#{@remaining_count} Remain)", comments_path(id: @comments.first.id, displayed_count: @displayed_count), id: "#{dom_id(@comments.first.parent_comment)}_load_previous", method: :get, data: { turbo_stream: true }%>   
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>
-
-
-

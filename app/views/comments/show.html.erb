@@ -1,0 +1,22 @@
+Post for context:
+<br>
+<%= @comment.post.content %>
+<br>
+<br>
+Conversation context:
+<br>
+<%= @comment.parent_comment.message %>
+
+<br><br>
+
+Viewing comment:
+<br>
+<%= @comment.message %>
+
+<br><br>
+
+(Put some replies here I guess?)
+
+<br><br>
+Interact or whatever... social media is dumb
+<%= render partial: 'comments/form', locals: { comment: @comment.comments.build } %>

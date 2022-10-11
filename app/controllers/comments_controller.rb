@@ -2,13 +2,23 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @comments = load_previous
-    puts "#{params[:displayed_count]} COMMENTS ALREADY DISPLAYED"
-    puts "#{@comments.size} COMMENTS LOADED"
-    post = @comments.first.post
+    @comments = 
+      if params[:id].present?
+        load_previous
+      else
+        load_initial
+      end
+
+    @depth = params[:depth].present? ? params[:depth].to_i : 0
+    commentable =
+      if @comments.first.top_level?
+        @comments.first.post
+      else
+        @comments.first.parent_comment
+      end
+
     @displayed_count = params[:displayed_count].to_i + @comments.size
-    @remaining_count = post.comments_count - @displayed_count
-    puts "#{@remaining_count} COMMENTS REMAIN"
+    @remaining_count = commentable.comments_count - @displayed_count
 
     respond_to do |format|
       format.turbo_stream
@@ -48,6 +58,10 @@ class CommentsController < ApplicationController
     end
   end
 
+  def show
+    @comment = Comment.find(params[:id])
+  end
+
   private
 
   def comment_params
@@ -60,6 +74,12 @@ class CommentsController < ApplicationController
 
   def load_previous
     current_oldest_visible_comment = Comment.find(params[:id])
+
     Comment.previous(current_oldest_visible_comment)
+  end
+
+  def load_initial
+    parent_comment = Comment.find(params[:parent_comment_id])
+    parent_comment.comments.newest.limit(5).reverse
   end
 end

@@ -1,6 +1,6 @@
 <% if comment.persisted? %>
-    <div class="comment-container is-flex">
-
+  <div id="" class="comment-container is-flex is-flex-direction-column">
+    <div class="is-flex">
       <% spacer_width = spacer_count * 32 %>
       <span class="is-flex-shrink-0" style="width: <%= spacer_width %>px"></span>
 
@@ -8,23 +8,50 @@
         <img class="is-rounded" src="<%= gravatar_url(comment.user.email, avatar_size)%>" alt="">
       </div>
       
-      <div class="border-curved has-background-grey-dark is-flex-shrink-1 is-flex-grow-1 mb-2 ml-2 p-2 is-flex is-flex-direction-column">
-        <p><%= comment.user.username %></p>
-        <p class="is-word-break-all"><%= comment.message %></p>
+      <div class="is-flex is-flex-direction-column is-flex-grow-1 is-flex-shrink-1 mb-2 ml-2">
+        <div class="border-curved has-background-grey-dark p-2 is-flex is-flex-direction-column">
+          <p><%= comment.user.username %></p>
+          <p class="is-word-break-all"><%= comment.message %></p>
 
-        <div class="is-size-smaller is-flex gap-1 is-flex-wrap-wrap">
-          <p>Like</p>
-          <p><%= link_to 'Reply', new_comment_path(comment: {post_id: comment.post_id, parent_comment_id: comment.id}), class: 'is-text' %></p>
-          <% if comment.user == current_user %>
-            <p><%= link_to 'Edit', edit_comment_path(comment) if comment.user == current_user %></p>
-          <% end %>
-          <p><%= comment.created_at.strftime("%Y-%m-%d") %></p>
-          <p><%= comment.comments.size %> Replies</p>
+          <div class="is-size-smaller is-flex gap-1 is-flex-wrap-wrap">
+            <p>Like</p>
+            <p><%= link_to 'Reply', new_comment_path(comment: {post_id: comment.post_id, parent_comment_id: comment.id}), class: 'is-text' %></p>
+            <% if comment.user == current_user %>
+              <p><%= link_to 'Edit', edit_comment_path(comment) if comment.user == current_user %></p>
+            <% end %>
+            <p><%= comment.created_at.strftime("%Y-%m-%d") %></p>
+            <p><%= comment.comments.size %> Replies</p>
+          </div>
         </div>
       </div>
     </div>
- 
-  <% unless comment.display_comments.empty? %>
-    <%= render partial: 'comments/comment', collection: comment.display_comments, as: :comment, locals: { spacer_count: spacer_count + 1, avatar_size: 24 } %>  
+  </div>
+
+  <%= turbo_frame_tag id="comment_#{comment.id}_comments" do %>  
+    <% unless comment.display_comments.empty? %>
+      <%= render partial: 'comments/comment', collection: comment.display_comments, as: :comment, locals: { spacer_count: spacer_count + 1, avatar_size: 24 } %>  
+    <% end %>
+  <% end %>
+
+  <% if spacer_count >= 2 && comment.remaining_comments_count.positive?  %>
+    <div class="pl-2 is-flex">
+      <span class="is-flex-shrink-0" style="width: <%= spacer_width + avatar_size %>px"></span>
+      
+      <div class="pl-2"><span class="is-size-smaller"><%= link_to "\u2937 Continue Conversation", comment_path(comment), data: {turbo: false} %></div>
+    </div>  
+  <% else %>
+    <% if comment.remaining_comments_count.positive? %>
+      <div class="pl-2 is-flex">
+        <span class="is-flex-shrink-0" style="width: <%= spacer_width + avatar_size %>px"></span>
+        <div class="pl-2">
+          <span class="is-size-smaller">
+          <% depth = comment.top_level? ? 1 : 2 %>
+            <%= link_to "\u2937 #{comment.remaining_comments_count} More Replies", 
+              comments_path(id: comment.last_displayed_id, displayed_count: comment.displayed_comments_count, depth: depth, parent_comment_id: comment.id), 
+              id: "#{dom_id(comment)}_load_previous",  method: :get, data: { turbo_stream: true }%>
+          </span>
+        </div>
+      </div>  
+    <% end %>
   <% end %>
 <% end %>

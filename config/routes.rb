@@ -25,8 +25,9 @@ Rails.application.routes.draw do
   end
 
   resource :friendship_request, only: %i[create update destroy]
-  resources :comments, only: %i[new create edit update index]
+  resources :comments, only: %i[new create edit update index show]
   resource :feed, only: %i[show]
+  resource :windowed_comments, only: %i[show]
 
   get '/friends', to: 'users#friends'
 end
