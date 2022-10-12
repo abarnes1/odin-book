@@ -24,11 +24,12 @@
   <hr class="my-0 has-background-grey">
 
   <div class="is-flex is-justify-content-space-between">
-    <% if post.display_comments? %>
-      <%= link_to "View Previous (#{post.remaining_comments_count} Remain)", comments_path(id: post.first_displayed.id, displayed_count: post.displayed_comments_count), id: "#{dom_id(post)}_load_previous",  method: :get, data: { turbo_stream: true }%>
-    <% else %>
-      <span></span>
-    <% end %>
+    <span>
+      <% if post.remaining_comments_count.positive? %>
+        <%= link_to "View Previous (#{post.remaining_comments_count} Remain)", comments_path(id: post.first_displayed.id, displayed_count: post.displayed_comments_count), id: "#{dom_id(post)}_load_previous",  method: :get, data: { turbo_stream: true }%>
+      <% end %>
+    </span>
+    
     
     <p class="is-flex is-justify-content-flex-end">&#9660; All Comments</p>
   </div>
