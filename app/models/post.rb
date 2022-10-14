@@ -1,6 +1,4 @@
 class Post < ApplicationRecord
-  include DisplayComments
-
   belongs_to :user
   has_many :likes, dependent: :destroy, inverse_of: :post
   has_many :top_level_comments, -> { top_level }, class_name: 'Comment', dependent: :destroy, inverse_of: :post

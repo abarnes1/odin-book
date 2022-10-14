@@ -1,7 +1,8 @@
 module Feed
   class UserFeedFactory
     def self.for_user(user, post_limit = 5, page = 0, comment_tiers = 3, comments_per_tier = 3)
-      posts = feed_posts(user, post_limit, page)
+      # posts = feed_posts(user, post_limit, page)
+      posts = feed_posts(user, post_limit, page).map { |post| Display::DisplayPost.new(post) }
 
       AssignsDisplayComments.for_posts(posts, comment_tiers, comments_per_tier)
 

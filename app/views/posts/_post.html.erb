@@ -25,11 +25,10 @@
 
   <div class="is-flex is-justify-content-space-between">
     <span>
-      <% if post.remaining_comments_count.positive? %>
-        <%= link_to "View Previous (#{post.remaining_comments_count} Remain)", comments_path(id: post.first_displayed.id, displayed_count: post.displayed_comments_count), id: "#{dom_id(post)}_load_previous",  method: :get, data: { turbo_stream: true }%>
+      <% if post.not_displayed_comments_count.positive? %>
+        <%= link_to "View Previous (#{post.not_displayed_comments_count} Remain)", comments_path(id: post.oldest_display_comment.id, displayed_count: post.displayed_comments_count), id: "#{dom_id(post)}_load_previous",  method: :get, data: { turbo_stream: true }%>
       <% end %>
     </span>
-    
     
     <p class="is-flex is-justify-content-flex-end">&#9660; All Comments</p>
   </div>

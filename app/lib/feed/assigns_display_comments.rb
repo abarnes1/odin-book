@@ -2,7 +2,7 @@ module Feed
   class AssignsDisplayComments
     def self.for_posts(posts, comment_tiers = 3, comments_per_tier = 3)
       posts = [posts].flatten
-      comments = posts_comments(posts, comments_per_tier)
+      comments = posts_comments(posts.map(&:id), comments_per_tier)
       assign_comments_to_posts(posts, comments)
 
       load_comments_tiers(comments, comment_tiers - 1, comments_per_tier)
