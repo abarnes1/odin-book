@@ -50,19 +50,19 @@ RSpec.describe Display::DisplayPost do
     end
   end
 
-  describe '#display_comments_count' do
+  describe '#displayed_comments_count' do
     context 'when has no display comments' do
       subject(:display_post) { described_class.new(post)}
 
       it 'returns 0' do
-        expect(display_post.display_comments_count).to eq(0)
+        expect(display_post.displayed_comments_count).to eq(0)
       end
     end
 
     context 'when only some post comments are displayed' do
       subject(:display_post_with_comment) { described_class.new(post, displayed_comment) }
       it 'returns the correct count' do
-        expect(display_post_with_comment.display_comments_count).to eq(1)
+        expect(display_post_with_comment.displayed_comments_count).to eq(1)
       end
     end
   end

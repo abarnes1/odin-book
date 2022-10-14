@@ -16,7 +16,7 @@ module Display
       !display_comments.empty?
     end
 
-    def display_comments_count
+    def displayed_comments_count
       display_comments.size
     end
 
@@ -26,7 +26,7 @@ module Display
 
     def not_displayed_comments_count
       count = comments_count.nil? ? 0 : comments_count
-      count - display_comments_count
+      count - displayed_comments_count
     end
 
     def all_comments_displayed?
