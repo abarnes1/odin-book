@@ -2,7 +2,7 @@ module Feed
   class AssignsDisplayComments
     def self.for_posts(posts, comment_tiers = 3, comments_per_tier = 3)
       posts = [posts].flatten
-      comments = posts_comments(posts.map(&:id), comments_per_tier)
+      comments = posts_comments(posts.map(&:id), comments_per_tier).map { |c| Display::DisplayComment.new(c) }
       assign_comments_to_posts(posts, comments)
 
       load_comments_tiers(comments, comment_tiers - 1, comments_per_tier)
@@ -12,7 +12,7 @@ module Feed
 
     def self.load_comments_tiers(comments, comment_tiers, comments_per_tier)
       until comment_tiers.zero?
-        replies = comments_replies(comments, comments_per_tier)
+        replies = comments_replies(comments.map(&:id), comments_per_tier).map { |c| Display::DisplayComment.new(c) }
         assign_replies_to_comments(comments, replies)
 
         comment_tiers -= 1
@@ -24,8 +24,9 @@ module Feed
     def self.for_comments(comments, comment_tiers = 3, comments_per_tier = 3)
       comments = [comments].flatten
 
-      load_comments_tiers(comments, comment_tiers - 1, comments_per_tier)
+      load_comments_tiers(comments, comment_tiers - 1, comments_per_tier).map { |c| Display::DisplayComment.new(c) }
 
+      debugger
       comments
     end
 

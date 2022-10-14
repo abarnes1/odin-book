@@ -1,6 +1,4 @@
 class Comment < ApplicationRecord
-  include DisplayComments
-
   after_create :update_counter_caches
   after_destroy :update_counter_caches
 

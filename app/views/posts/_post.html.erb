@@ -26,7 +26,7 @@
   <div class="is-flex is-justify-content-space-between">
     <span>
       <% if post.not_displayed_comments_count.positive? %>
-        <%= link_to "View Previous (#{post.not_displayed_comments_count} Remain)", comments_path(id: post.oldest_display_comment.id, displayed_count: post.displayed_comments_count), id: "#{dom_id(post)}_load_previous",  method: :get, data: { turbo_stream: true }%>
+        <%= link_to "View Previous (#{post.not_displayed_comments_count} Remain)", comments_path(older_than: post.oldest_display_comment, displayed_count: post.displayed_comments_count), id: "#{dom_id(post)}_load_previous",  method: :get, data: { turbo_stream: true }%>
       <% end %>
     </span>
     

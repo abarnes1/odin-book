@@ -2,12 +2,12 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @comments = 
-      if params[:id].present?
+    @comments =
+      if params[:older_than].present?
         load_previous
       else
         load_initial
-      end
+      end.map { |c| Display::DisplayComment.new(c) }
 
     @depth = params[:depth].present? ? params[:depth].to_i : 0
     commentable =
@@ -73,13 +73,13 @@ class CommentsController < ApplicationController
   end
 
   def load_previous
-    current_oldest_visible_comment = Comment.find(params[:id])
+    current_oldest_visible_comment = Comment.find(params[:older_than])
 
     Comment.previous(current_oldest_visible_comment)
   end
 
   def load_initial
-    parent_comment = Comment.find(params[:parent_comment_id])
+    parent_comment = Comment.find(params[:parent_comment])
     parent_comment.comments.newest.limit(5).reverse
   end
 end
