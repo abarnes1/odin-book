@@ -1,8 +1,5 @@
 module Display
-  # A post with a limited number of comments to be displayed.
-  class DisplayPost < SimpleDelegator
-    attr_accessor :display_comments
-
+  class DisplayComment < SimpleDelegator
     def initialize(delegate, display_comments = nil)
       super(delegate)
       @display_comments = display_comments.nil? ? nil : [display_comments].flatten
@@ -11,7 +8,7 @@ module Display
     def display_comments
       @display_comments ||= []
     end
-
+    
     def display_comments=(comments)
       @display_comments = comments
     end
@@ -36,15 +33,11 @@ module Display
     def all_comments_displayed?
       not_displayed_comments_count.zero?
     end
-    
+
     def oldest_display_comment
       return nil if display_comments.empty?
 
       display_comments.min { |a, b| a.created_at <=> b.created_at }
-    end
-
-    def likes_count
-      likes.size
     end
   end
 end
