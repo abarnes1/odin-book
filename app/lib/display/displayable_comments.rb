@@ -1,10 +1,9 @@
 module Display
-  class DisplayComment < SimpleDelegator
-    def initialize(delegate, display_comments = nil)
-      super(delegate)
-      @display_comments = display_comments.nil? ? nil : [display_comments].flatten
-    end
-
+  # Enables behaviors to both have display comments and provide counters 
+  # for which comments are and are not displayed.  Classes that extend
+  # this module should be able to provide a #comments_count method to 
+  # calculate displayed and not_displayed counts.
+  module DisplayableComments
     def display_comments
       @display_comments ||= []
     end

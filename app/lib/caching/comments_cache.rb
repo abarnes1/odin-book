@@ -24,7 +24,7 @@ module Caching
     end
 
     def storage_key(model)
-      if [Post, Display::DisplayPost].include? model.class
+      if model.is_a? Post
         "post_#{model.id}_comments".to_sym
       elsif model.parent_comment_id?
         "comment_#{model.parent_comment_id}_replies".to_sym
@@ -34,7 +34,7 @@ module Caching
     end
 
     def retrieval_key(model)
-      if [Post, Display::DisplayPost].include? model.class
+      if model.is_a? Post
         "post_#{model.id}_comments".to_sym
       else
         "comment_#{model.id}_replies".to_sym

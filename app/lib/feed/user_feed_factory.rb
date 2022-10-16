@@ -1,16 +1,16 @@
 module Feed
+  # Creates a UserFeed object, consisting of posts with a limited number of
+  # displayed comment levels and displayed comments per level.
   class UserFeedFactory
     def self.for_user(user, post_limit = 5, page = 0, comment_tiers = 3, comments_per_tier = 3)
-      posts = feed_posts(user, post_limit, page)
+      posts = feed_posts(user, post_limit, page).map { |post| post.extend Display::DisplayableComments }
       cache = Caching::CommentsCacheFactory.create_for(posts, comment_tiers, comments_per_tier)
 
-      display_posts = posts.map do |post|
-        Display::DisplayPostFactory.create_for(post, cache) do |display_post| 
-          Caching::AttachesDisplayCommentsFromCache.attach(display_post, cache)
-        end
+      posts_with_display_comments = posts.map do |post|
+        Caching::AttachesDisplayCommentsFromCache.attach(post, cache)
       end
 
-      UserFeed.new(user, display_posts)
+      UserFeed.new(user, posts_with_display_comments)
     end
 
     class << self

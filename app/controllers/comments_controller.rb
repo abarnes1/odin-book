@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
         load_previous
       else
         load_initial
-      end.map { |c| Display::DisplayComment.new(c) }
+      end.map { |c| c.extend Display::DisplayableComments }
 
     @depth = params[:depth].present? ? params[:depth].to_i : 0
     commentable =
