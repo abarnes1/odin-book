@@ -1,15 +1,15 @@
 module Display
   # Enables behaviors to both have display comments and provide counters 
   # for which comments are and are not displayed.  Classes that extend
-  # this module should be able to provide a #comments_count method to 
-  # calculate displayed and not_displayed counts.
+  # this module must be able to provide a #comments_count to calculate
+  # displayed and not_displayed counts.
   module DisplayableComments
     def display_comments
       @display_comments ||= []
     end
     
     def display_comments=(comments)
-      @display_comments = comments
+      @display_comments = [comments].flatten
     end
 
     def display_comments?
