@@ -22,7 +22,7 @@ class CommentsCacheFactory
         comments_replies(models, comments_per_tier)
       end
 
-    cache.store(comments)
+    cache.store_comments(comments)
     load_comments_tiers(comments, cache, comment_tiers - 1, comments_per_tier)
   end
 
@@ -32,7 +32,7 @@ class CommentsCacheFactory
     def load_comments_tiers(comments, cache, comment_tiers, comments_per_tier)
       until comment_tiers.zero?
         replies = comments_replies(comments, comments_per_tier)
-        cache.store(replies)
+        cache.store_comments(replies)
         comment_tiers -= 1
         comments = replies
       end

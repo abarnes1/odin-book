@@ -4,8 +4,6 @@
 # so they can be assigned to presenter objects without additional trips
 # to the database.
 class CommentsCache
-  attr_reader :root_nodes
-
   def initialize
     @cached_comments = nil
   end
@@ -14,7 +12,7 @@ class CommentsCache
     cached_comments.empty?
   end
 
-  def store(models)
+  def store_comments(models)
     keyed_groups = models.group_by do |model|
       storage_key(model)
     end
@@ -22,13 +20,20 @@ class CommentsCache
     cached_comments.merge!(keyed_groups)
   end
 
+  def retrieve_comments_for(model)
+    comments = cached_comments[retrieval_key(model)]
+    return [] if comments.empty?
+
+    comments
+  end
+
+  private
+
   def storage_key(model)
-    if model.is_a? Post
-      "post_#{model.id}_comments".to_sym
-    elsif model.parent_comment_id?
-      "comment_#{model.parent_comment_id}_replies".to_sym
-    else
+    if model.top_level?
       "post_#{model.post_id}_comments".to_sym
+    else
+      "comment_#{model.parent_comment_id}_replies".to_sym
     end
   end
 
@@ -38,10 +43,6 @@ class CommentsCache
     else
       "comment_#{model.id}_replies".to_sym
     end
-  end
-
-  def retrieve_comments(model)
-    cached_comments[retrieval_key(model)]
   end
 
   def cached_comments

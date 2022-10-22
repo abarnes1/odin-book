@@ -7,7 +7,7 @@ class AttachDisplayCommentsFromCache
   def self.attach(model, cache)
     return model if cache.nil?
 
-    comments = cache.retrieve_comments(model)
+    comments = cache.retrieve_comments_for(model)
     return model if comments.empty?
 
     model.display_comments = comments.map { |comment| comment.extend DisplayableComments }
