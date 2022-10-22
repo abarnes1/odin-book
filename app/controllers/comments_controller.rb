@@ -7,18 +7,13 @@ class CommentsController < ApplicationController
         load_previous
       else
         load_initial
-      end.map { |c| c.extend Display::DisplayableComments }
+      end.map { |c| c.extend DisplayableComments }
 
     @depth = params[:depth].present? ? params[:depth].to_i : 0
-    commentable =
-      if @comments.first.top_level?
-        @comments.first.post
-      else
-        @comments.first.parent_comment
-      end
+    owner = comment_owner(@comments.first)
 
     @displayed_count = params[:displayed_count].to_i + @comments.size
-    @remaining_count = commentable.comments_count - @displayed_count
+    @remaining_count = owner.comments_count - @displayed_count
 
     respond_to do |format|
       format.turbo_stream
@@ -33,13 +28,13 @@ class CommentsController < ApplicationController
   def create
     @comment = current_user.comments.build(comment_params)
 
-    flash[:alert] = if @comment.save
-                      'Comment Creation Success'
-                    else
-                      'Comment Creation Error'
-                    end
-
-    redirect_to feed_path
+    if @comment.save
+      flash[:alert] = 'Comment Creation Success'
+      redirect_to feed_path
+    else
+      flash.now[:alert] = 'Comment Creation Error'
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
@@ -64,12 +59,16 @@ class CommentsController < ApplicationController
 
   private
 
-  def comment_params
-    params.require(:comment).permit(:post_id, :parent_comment_id, :message)
+  def comment_owner(comment)
+    if comment.top_level?
+      comment.post
+    else
+      comment.parent_comment
+    end
   end
 
-  def load_previous_params
-    params.permit(:post_id, :comment_id)
+  def comment_params
+    params.require(:comment).permit(:post_id, :parent_comment_id, :message)
   end
 
   def load_previous

@@ -2,15 +2,14 @@ require 'rails_helper'
 
 class DisplayableCommentsTestClass
   def initialize
-    extend Display::DisplayableComments
+    extend DisplayableComments
   end
 
   def comments_count; end
   def likes; end
 end
 
-RSpec.describe Display::DisplayableComments do
-  # subject!(:dummy_class) { Class.new { extend Display::DisplayableComments } (comments_count: 0) }
+RSpec.describe DisplayableComments do
   subject!(:dummy_class) { DisplayableCommentsTestClass.new }
 
   let(:displayed_comment) { double('fake displayed comment') }
