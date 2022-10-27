@@ -2,15 +2,10 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @comments =
-      if params[:older_than].present?
-        load_previous
-      else
-        load_initial
-      end.map { |c| c.extend DisplayableComments }
+    @comments = CommentsLoader.load(load_comments_params)
 
     @depth = params[:depth].present? ? params[:depth].to_i : 0
-    owner = comment_owner(@comments.first)
+    owner = @comments.first.owner
 
     @displayed_count = params[:displayed_count].to_i + @comments.size
     @remaining_count = owner.comments_count - @displayed_count
@@ -59,26 +54,11 @@ class CommentsController < ApplicationController
 
   private
 
-  def comment_owner(comment)
-    if comment.top_level?
-      comment.post
-    else
-      comment.parent_comment
-    end
+  def load_comments_params
+    params.permit(:older_than, :parent_comment)
   end
 
   def comment_params
     params.require(:comment).permit(:post_id, :parent_comment_id, :message)
-  end
-
-  def load_previous
-    current_oldest_visible_comment = Comment.find(params[:older_than])
-
-    Comment.previous(current_oldest_visible_comment)
-  end
-
-  def load_initial
-    parent_comment = Comment.find(params[:parent_comment])
-    parent_comment.comments.newest.limit(5).reverse
   end
 end
