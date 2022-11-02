@@ -39,4 +39,13 @@ module DisplayableComments
 
     display_comments.min { |a, b| a.created_at <=> b.created_at }
   end
+
+  private
+
+  # Array#flatten calls private method #to_ary and will issue a warning
+  # that the delegator does not forward the private message.  Override
+  # here as a workaround to suppress warning.
+  def to_ary
+    nil
+  end
 end
