@@ -22,7 +22,7 @@ RSpec.describe CommentsCache do
     end
   end
 
-  describe '#retrieve' do
+  describe '#retrieve_comments_for' do
     subject(:comments_cache) { described_class.new }
     let(:post) { build_stubbed(:post) }
     let(:first_top_level_comment) { build_stubbed(:comment, post: post) }
@@ -42,8 +42,8 @@ RSpec.describe CommentsCache do
       let(:reply_to_different_comment) { build_stubbed(:comment, parent_comment: second_top_level_comment) }
 
       it 'can retrieve the comment replies' do
-        comments = [first_child_comment, second_child_comment, comment_to_not_retrieve]
-        comments_to_retrieve = [first_child_comment, second_child_comment]
+        comments = [first_reply, second_reply, reply_to_different_comment]
+        comments_to_retrieve = [first_reply, second_reply]
         comments_cache.store_comments(comments)
         expect(comments_cache.retrieve_comments_for(first_top_level_comment)).to eq(comments_to_retrieve)
       end
