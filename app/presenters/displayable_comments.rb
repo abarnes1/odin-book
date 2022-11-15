@@ -18,7 +18,7 @@ module DisplayableComments
   end
 
   def displayed_comments_count
-    display_comments.size
+    display_comments.size + already_displayed_comments_count
   end
 
   def not_displayed_comments?
@@ -38,6 +38,10 @@ module DisplayableComments
     return nil if display_comments.empty?
 
     display_comments.min { |a, b| a.created_at <=> b.created_at }
+  end
+
+  def already_displayed_comments_count
+    @already_displayed_comments_count ||= 0
   end
 
   private
