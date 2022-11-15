@@ -1,13 +1,12 @@
-<div class="comment-container is-flex is-flex-direction-column">
+<div class="comment-container is-flex is-flex-direction-column mb-2">
   <div class="is-flex">
-    <% spacer_width = spacer_count * 32 %>
-    <span class="is-flex-shrink-0" style="width: <%= spacer_width %>px"></span>
+    <span class="is-flex-shrink-0" style="width: <%= comment.indent_pixels %>px"></span>
 
-    <div class="image is-<%= avatar_size %>x<%= avatar_size %> is-flex-shrink-0 <%= 'ml-2' unless comment.top_level? %>">
-      <img class="is-rounded" src="<%= gravatar_url(comment.user.email, avatar_size)%>" alt="">
+    <div class="image is-<%= comment.avatar_size %>x<%= comment.avatar_size %> is-flex-shrink-0">
+      <img class="is-rounded" src="<%= gravatar_url(comment.user.email, comment.avatar_size)%>" alt="">
     </div>
     
-    <div class="is-flex is-flex-direction-column is-flex-grow-1 is-flex-shrink-1 mb-2 ml-2">
+    <div class="is-flex is-flex-direction-column is-flex-grow-1 is-flex-shrink-1 ml-2">
       <div class="border-curved has-background-grey-dark p-2 is-flex is-flex-direction-column">
         <p><%= comment.user.username %></p>
         <p class="is-word-break-all"><%= comment.message %></p>
@@ -26,30 +25,24 @@
   </div>
 </div>
 
-<%= turbo_frame_tag id="comment_#{comment.id}_comments" do %>  
+<%= turbo_frame_tag comment.comments_container_id do %>  
   <% if comment.display_comments? %>
-    <%= render partial: 'comments/comment', collection: comment.display_comments, as: :comment, locals: { spacer_count: spacer_count + 1, avatar_size: 24 } %>  
+    <%= render partial: 'comments/comment', collection: comment.display_comments, as: :comment %>  
   <% end %>
 <% end %>
 
-<% if spacer_count >= 2 && comment.not_displayed_comments?  %>
-  <div class="pl-2 is-flex">
-    <span class="is-flex-shrink-0" style="width: <%= spacer_width + avatar_size %>px"></span>
-    
-    <div class="pl-2"><span class="is-size-smaller"><%= link_to "\u2937 Continue Conversation", comment_path(comment), data: {turbo: false} %></div>
-  </div>  
-<% else %>
-  <% if comment.not_displayed_comments? %>
-    <div class="pl-2 is-flex">
-      <span class="is-flex-shrink-0" style="width: <%= spacer_width + avatar_size %>px"></span>
-      <div class="pl-2">
-        <span class="is-size-smaller">
-        <% depth = comment.top_level? ? 1 : 2 %>
-          <%= link_to "\u2937 #{comment.not_displayed_comments_count} More Replies", 
-          comments_path(displayed_count: comment.displayed_comments_count, depth: depth, parent_comment: comment, older_than: comment.oldest_display_comment), 
-          id: "#{dom_id(comment)}_load_previous",  method: :get, data: { turbo_stream: true } %>
-        </span>
-      </div>
-    </div>  
-  <% end %>
+<% if comment.not_displayed_comments? %>
+  <div class="is-flex">
+    <span class="is-flex-shrink-0" style="width: <%= comment.load_comments_link_indent_pixels %>px"></span>
+
+    <span class="is-size-smaller">
+      <% if comment.max_display_depth? %>
+        <%= link_to comment.load_comments_link_text, comment_path(comment), data: { turbo: false } %>
+      <% else %>
+        <%= link_to comment.load_comments_link_text, 
+          load_path(comment_id: comment.id, displayed_count: comment.displayed_comments_count, display_depth: comment.display_depth + 1, older_than: comment.oldest_display_comment), 
+          id: comment.load_comments_link_id,  method: :get, data: { turbo_stream: true } %>
+      <% end %>
+    </span>
+  </div>
 <% end %>

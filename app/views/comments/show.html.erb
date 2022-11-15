@@ -19,4 +19,4 @@ Viewing comment:
 
 <br><br>
 Interact or whatever... social media is dumb
-<%= render partial: 'comments/form', locals: { comment: @comment.comments.build } %>
+<%= render partial: 'comments/form', locals: { comment: @comment.comments.build(post_id: @comment.post_id) } %>

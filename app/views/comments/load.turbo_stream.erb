@@ -1,0 +1,15 @@
+<% if @commentable.not_displayed_comments? %>
+  <%= turbo_stream.replace @commentable.load_comments_link_id do %>
+    <%= link_to @commentable.load_comments_link_text, 
+      load_path(post_id: @commentable.post_id, comment_id: @commentable.comment_id, older_than: @commentable.oldest_display_comment.id, displayed_count: @commentable.displayed_comments_count), 
+      id: @commentable.load_comments_link_id, method: :get, data: { turbo_stream: true } %>   
+  <% end %>
+<% else %>
+  <%= turbo_stream.remove @commentable.load_comments_link_id %>
+<% end %>
+
+<%= turbo_stream.send(@commentable.display_comments_turbo_method, @commentable.comments_container_id) do %>
+  <%= render partial: 'comments/comment', collection: @commentable.display_comments, locals: { avatar_size: 24 } %>
+<% end %>
+
+

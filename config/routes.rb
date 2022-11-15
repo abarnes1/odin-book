@@ -30,4 +30,5 @@ Rails.application.routes.draw do
   resource :windowed_comments, only: %i[show]
 
   get '/friends', to: 'users#friends'
+  get '/load', to: 'comments#load'
 end

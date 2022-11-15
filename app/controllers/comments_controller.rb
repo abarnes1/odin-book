@@ -2,18 +2,11 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @comments = CommentsLoader.load(load_comments_params)
+    #place holder, may use for user comments
+  end
 
-    @depth = params[:depth].present? ? params[:depth].to_i : 0
-    owner = @comments.first.owner
-
-    @displayed_count = params[:displayed_count].to_i + @comments.size
-    @remaining_count = owner.comments_count - @displayed_count
-
-    respond_to do |format|
-      format.turbo_stream
-      format.html
-    end
+  def load
+    @commentable = LoadComments.new(load_comments_params).load
   end
 
   def new
@@ -55,7 +48,7 @@ class CommentsController < ApplicationController
   private
 
   def load_comments_params
-    params.permit(:older_than, :parent_comment)
+    params.permit(:post_id, :comment_id, :older_than, :displayed_count, :display_depth)
   end
 
   def comment_params
