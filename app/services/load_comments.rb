@@ -4,15 +4,19 @@
 class LoadComments
   include AssignDisplayDepth
 
+  DEFAULT_LIMIT = 3
+  DEFAULT_DISPLAYED_COUNT = 0
+  DEFAULT_DISPLAY_DEPTH = 0
+
   attr_reader :limit, :comment_id, :post_id
 
   def initialize(params = {})
     @post_id = params.fetch(:post_id, nil)
     @older_than = params.fetch(:older_than, nil)
     @comment_id = params.fetch(:comment_id, nil)
-    @limit = params.fetch(:limit, 2)
-    @displayed_count = params.fetch(:displayed_count, 0).to_i
-    @display_depth = params.fetch(:display_depth, 0).to_i
+    @limit = params.fetch(:limit, DEFAULT_LIMIT).to_i
+    @displayed_count = params.fetch(:displayed_count, DEFAULT_DISPLAYED_COUNT).to_i
+    @display_depth = params.fetch(:display_depth, DEFAULT_DISPLAY_DEPTH).to_i
   end
 
   def owner
@@ -20,6 +24,8 @@ class LoadComments
   end
 
   def oldest_comment
+    return nil unless older_than
+
     @oldest_comment ||= Comment.find(older_than)
   end
 
@@ -28,6 +34,10 @@ class LoadComments
     decorated_owner.display_comments.each { |c| c.display_depth = starting_display_depth }
     decorated_owner
   end
+
+  private
+
+  attr_reader :older_than, :display_depth, :displayed_count
 
   def comments
     if older_than
@@ -45,10 +55,6 @@ class LoadComments
     owner.comments.newest.limit(limit).includes(:user).reverse
   end
 
-  private
-
-  attr_reader :older_than, :display_depth, :displayed_count
-
   def decorated_owner
     @decorated_owner ||= if owner.is_a? Post
                            PostPresenter.new(owner, { displayed_count: displayed_count })
@@ -60,7 +66,7 @@ class LoadComments
 
   def starting_display_depth
     if owner.is_a? Post
-      0
+      DEFAULT_DISPLAY_DEPTH
     else
       display_depth
     end
