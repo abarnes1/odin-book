@@ -23,4 +23,12 @@ RSpec.describe CommentablePresenterBase do
       expect(presenter.load_comments_link_id).to eq("object_99_load_comments")
     end
   end
+
+  context 'when given a displayed count' do
+    it 'returns the correct count' do
+      display_count = 99
+      presenter = described_class.new(thing, displayed_count: display_count)
+      expect(presenter.displayed_comments_count).to eq(display_count)
+    end
+  end
 end
