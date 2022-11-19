@@ -1,12 +1,16 @@
 class LoadFeedPosts
   attr_reader :user, :post_count, :page, :comment_tiers, :comments_per_tier
 
+  DEFAULT_POST_COUNT = 5
+  DEFAULT_COMMENT_TIERS = 3
+  DEFAULT_COMMENTS_PER_TIER = 3
+
   def initialize(user, params = {})
     @user = user
-    @post_count = params.fetch(:post_count, 5).to_i
-    @page = params.fetch(:page, 0).to_i
-    @comment_tiers = params.fetch(:comment_tiers, 3).to_i
-    @comments_per_tier = params.fetch(:comments_per_tier, 3).to_i
+    @post_count = params.fetch(:post_count, DEFAULT_POST_COUNT).to_i
+    @page = params.fetch(:page, 1).to_i - 1
+    @comment_tiers = params.fetch(:comment_tiers, DEFAULT_COMMENT_TIERS).to_i
+    @comments_per_tier = params.fetch(:comments_per_tier, DEFAULT_COMMENTS_PER_TIER).to_i
   end
 
   def load
