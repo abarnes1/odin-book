@@ -1,9 +1,10 @@
 class CommentPresenter < CommentablePresenterBase
-  DEFAULT_MAX_DISPLAY_DEPTH = 2
+  MAX_DISPLAY_DEPTH = 2
+  DEFAULT_DISPLAY_DEPTH = 0
 
   def initialize(comment, options = {})
     super(comment, options)
-    @display_depth = options.fetch(:display_depth, 0).to_i
+    @display_depth = options.fetch(:display_depth, DEFAULT_DISPLAY_DEPTH).to_i
   end
 
   attr_accessor :display_depth
@@ -17,7 +18,7 @@ class CommentPresenter < CommentablePresenterBase
   end
 
   def max_display_depth?
-    display_depth >= DEFAULT_MAX_DISPLAY_DEPTH
+    display_depth >= MAX_DISPLAY_DEPTH
   end
 
   def load_comments_link_text
