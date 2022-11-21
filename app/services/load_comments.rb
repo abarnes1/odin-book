@@ -2,8 +2,6 @@
 
 # Examine parameters and load the correct unnested comments for display.
 class LoadComments
-  include AssignDisplayDepth
-
   DEFAULT_LIMIT = 3
   DEFAULT_DISPLAYED_COUNT = 0
   DEFAULT_DISPLAY_DEPTH = 0
@@ -31,7 +29,7 @@ class LoadComments
 
   def load
     decorated_owner.display_comments = comments.map { |c| CommentPresenter.new(c) }
-    decorated_owner.display_comments.each { |c| c.display_depth = starting_display_depth }
+    ServiceSupport::AssignDisplayDepth.assign_depth(decorated_owner.display_comments, starting_display_depth)
     decorated_owner
   end
 
