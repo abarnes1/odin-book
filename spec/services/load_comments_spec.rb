@@ -95,7 +95,7 @@ RSpec.describe LoadComments do
         expect(loaded_comments).to eq([middle_post_comment, newest_post_comment])
       end
     end
-    
+
     context 'when loading comment replies' do
       it 'returns newest comments from ordered from oldest to newest' do
         owned_by_comment = described_class.new(comment_id: newest_post_comment.id, limit: 2)

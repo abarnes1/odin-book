@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Loads a set of posts, each with a limited number of comments,
+# that make up a user's feed page.
 class LoadFeedPosts
   extend ServiceSupport::AttachDisplayCommentsFromCache
 

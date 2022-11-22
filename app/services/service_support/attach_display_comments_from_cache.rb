@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-# Start with a model that has displayable comments and
-# recursively attach child displayed comments until no
-# additional comments in the chain are found within the cache.
-
 module ServiceSupport
+  # Start with a model that has displayable comments and
+  # recursively attach child displayed comments until no
+  # additional comments in the chain are found within the cache.
   module AttachDisplayCommentsFromCache
     def self.attach(model, cache)
       return model if cache.nil?
