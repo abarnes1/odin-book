@@ -1,4 +1,10 @@
+# frozen_string_literal: true
+
+# Loads a set of posts, each with a limited number of comments,
+# that make up a user's feed page.
 class LoadFeedPosts
+  extend ServiceSupport::AttachDisplayCommentsFromCache
+
   attr_reader :user, :post_count, :page, :comment_tiers, :comments_per_tier
 
   DEFAULT_POST_COUNT = 5
@@ -19,23 +25,14 @@ class LoadFeedPosts
 
     posts = posts.map { |p| PostPresenter.new(p) }
     posts.each do |post|
-      AttachDisplayCommentsFromCache.attach(post, cache)
-      assign_depth(post.display_comments)
+      ServiceSupport::AttachDisplayCommentsFromCache.attach(post, cache)
+      ServiceSupport::AssignDisplayDepth.assign_depth(post.display_comments)
     end
 
     posts
   end
 
   private
-
-  def assign_depth(comments, depth = 0)
-    comments.each do |comment|
-      comment.display_depth = depth
-      assign_depth(comment.display_comments, depth + 1)
-    end
-
-    comments
-  end
 
   def feed_posts
     Post.includes(:user, likes: [:user])
