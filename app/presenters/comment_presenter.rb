@@ -29,6 +29,19 @@ class CommentPresenter < CommentablePresenterBase
     end
   end
 
+  def comment_form_id
+    # If comment has an id it should interact with its own form.
+    # Otherwise, it is a new comment and the form belongs to
+    # the parent commentable.
+    if id?
+      super
+    elsif parent_comment_id?
+      "#{__getobj__.class.name.downcase}_#{parent_comment_id}_comment_form"
+    else
+      "post_#{post.id}_comment_form"
+    end
+  end
+
   def load_comments_link_indent_pixels
     indent_pixels + 32
   end

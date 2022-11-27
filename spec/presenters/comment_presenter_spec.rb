@@ -82,4 +82,37 @@ RSpec.describe CommentPresenter do
       end
     end
   end
+
+  describe '#comment_form_id' do
+    context 'when comment has an id' do
+      it 'returns the comment form id' do
+        presenter = described_class.new(comment)
+        expected = "comment_#{comment.id}_comment_form"
+        expect(presenter.comment_form_id).to eq(expected)
+      end
+    end
+
+    context 'when comment has no id' do
+      context 'when comment has a parent comment id' do
+        it 'returns the parent comment form id' do
+          presenter = described_class.new(comment)
+          allow(presenter).to receive(:id?).and_return false
+          allow(presenter).to receive(:parent_comment_id?).and_return true
+          allow(presenter).to receive(:parent_comment_id).and_return 99
+          expected = "comment_99_comment_form"
+          expect(presenter.comment_form_id).to eq(expected)
+        end
+      end
+
+      context 'when comment has no parent comment id' do
+        it 'return the post form id' do
+          presenter = described_class.new(comment)
+          allow(presenter).to receive(:id?).and_return false
+          allow(presenter).to receive(:parent_comment_id?).and_return false
+          expected = "post_#{comment.post_id}_comment_form"
+          expect(presenter.comment_form_id).to eq(expected)
+        end
+      end
+    end
+  end
 end
