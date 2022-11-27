@@ -12,6 +12,7 @@ class Comment < ApplicationRecord
   validates :message, presence: true
 
   scope :newest, -> { order(created_at: :desc) }
+  scope :oldest, -> { order(:created_at) }
   scope :top_level, -> { where(parent_comment_id: nil) }
 
   def top_level?

@@ -40,6 +40,12 @@ module DisplayableComments
     display_comments.min { |a, b| a.created_at <=> b.created_at }
   end
 
+  def newest_display_comment
+    return nil if display_comments.empty?
+
+    display_comments.max { |a, b| a.created_at <=> b.created_at }
+  end
+
   def already_displayed_comments_count
     @already_displayed_comments_count ||= 0
   end

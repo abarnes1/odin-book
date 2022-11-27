@@ -114,6 +114,15 @@ RSpec.describe LoadComments do
       end
     end
 
+    context 'when given newer than param' do
+      it 'returns newer comments' do
+        with_newer_than = described_class.new(post_id: post.id, newer_than: middle_post_comment.id)
+        loaded_comments = with_newer_than.load.display_comments
+
+        expect(loaded_comments).to eq([newest_post_comment])
+      end
+    end
+
     context 'when given a display depth' do
       it 'assigns display depth' do
         depth = 3

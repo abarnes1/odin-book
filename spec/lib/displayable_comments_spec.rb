@@ -126,4 +126,22 @@ RSpec.describe DisplayableComments do
       end
     end
   end
+
+  describe '#newest_display_comment' do
+    context 'when no display comments' do
+      it 'returns nil' do
+        expect(dummy_class.newest_display_comment).to be nil
+      end
+    end
+
+    context 'when multiple display comments' do
+      let!(:newer_comment) { double('Comment', created_at: 1.minute.ago) }
+      let!(:older_comment) { double('Comment', created_at: 5.minutes.ago) }
+
+      it 'returns the newest comment' do
+        dummy_class.display_comments = [newer_comment, older_comment]
+        expect(dummy_class.newest_display_comment).to eq(newer_comment)
+      end
+    end
+  end
 end

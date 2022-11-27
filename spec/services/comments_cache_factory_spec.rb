@@ -47,8 +47,8 @@ RSpec.describe CommentsCacheFactory do
       expect(expected_comments).to eq(actual_comments)
     end
 
-    it 'orders comment replies from newest to oldest' do
-      expected_comments = [reply1_at_depth1, reply2_at_depth1, reply3_at_depth1]
+    it 'orders comment replies from oldest to newest' do
+      expected_comments = [reply3_at_depth1, reply2_at_depth1, reply1_at_depth1]
       actual_comments = cache_starting_at_post.retrieve_comments_for(top_level_comment1)
       expect(expected_comments).to eq(actual_comments)
     end

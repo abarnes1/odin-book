@@ -11,6 +11,7 @@ class LoadComments
   def initialize(params = {})
     @post_id = params.fetch(:post_id, nil)
     @older_than = params.fetch(:older_than, nil)
+    @newer_than = params.fetch(:newer_than, nil)
     @comment_id = params.fetch(:comment_id, nil)
     @limit = params.fetch(:limit, DEFAULT_LIMIT).to_i
     @displayed_count = params.fetch(:displayed_count, DEFAULT_DISPLAYED_COUNT).to_i
@@ -27,6 +28,12 @@ class LoadComments
     @oldest_comment ||= Comment.find(older_than)
   end
 
+  def newest_comment
+    return nil unless newer_than
+
+    @newest_comment ||= Comment.find(newer_than)
+  end
+
   def load
     decorated_owner.display_comments = comments.map { |c| CommentPresenter.new(c) }
     ServiceSupport::AssignDisplayDepth.assign_depth(decorated_owner.display_comments, starting_display_depth)
@@ -35,11 +42,13 @@ class LoadComments
 
   private
 
-  attr_reader :older_than, :display_depth, :displayed_count
+  attr_reader :older_than, :newer_than, :display_depth, :displayed_count
 
   def comments
     if older_than
       load_previous
+    elsif newer_than
+      load_newer
     else
       load_initial
     end
@@ -47,6 +56,10 @@ class LoadComments
 
   def load_previous
     previous_comments
+  end
+
+  def load_newer
+    later_comments
   end
 
   def load_initial
@@ -82,6 +95,15 @@ class LoadComments
     owner.comments
          .where('created_at < ?', oldest_comment.created_at)
          .newest
+         .limit(limit)
+         .includes(:user)
+         .reverse
+  end
+
+  def later_comments
+    owner.comments
+         .where('created_at > ?', newest_comment.created_at)
+         .oldest
          .limit(limit)
          .includes(:user)
          .reverse
