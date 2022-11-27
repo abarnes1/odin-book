@@ -7,6 +7,10 @@ class PostPresenter < CommentablePresenterBase
     id
   end
 
+  def post
+    @commentable
+  end
+
   def comment_id
     nil
   end

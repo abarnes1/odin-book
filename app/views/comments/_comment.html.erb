@@ -1,4 +1,4 @@
-<div class="comment-container is-flex is-flex-direction-column mb-2">
+<div class="comment-container is-flex is-flex-direction-column mb-2" id=<%= dom_id(comment) %>>
   <div class="is-flex">
     <span class="is-flex-shrink-0" style="width: <%= comment.indent_pixels %>px"></span>
 
@@ -13,23 +13,38 @@
 
         <div class="is-size-smaller is-flex gap-1 is-flex-wrap-wrap">
           <p>Like</p>
-          <p><%= link_to 'Reply', new_comment_path(comment: {post_id: comment.post_id, parent_comment_id: comment.id}), class: 'is-text' %></p>
+          <p>
+            <%= link_to 'Reply', new_comment_path(comment: {post_id: comment.post_id, parent_comment_id: comment.id, display_depth: comment.display_depth + 1}), 
+              class: 'is-text', method: :get, data: { turbo_stream: true } %>
+          </p>
+
           <% if comment.user == current_user %>
             <p><%= link_to 'Edit', edit_comment_path(comment) if comment.user == current_user %></p>
           <% end %>
           <p><%= comment.created_at.strftime("%Y-%m-%d") %></p>
-          <p><%= comment.comments.size %> Replies</p>
+          <p>
+            <%= turbo_frame_tag comment.comments_counter_container_id do %>
+              <%= comment.comments.size %>
+            <% end %>
+            Replies
+          </p>
         </div>
       </div>
+
+      <%= turbo_frame_tag comment.comment_form_id %>
     </div>
   </div>
 </div>
 
-<%= turbo_frame_tag comment.comments_container_id do %>  
-  <% if comment.display_comments? %>
-    <%= render partial: 'comments/comment', collection: comment.display_comments, as: :comment %>  
+<%= turbo_frame_tag comment.new_comments_container_id %>  
+
+<div>
+  <%= turbo_frame_tag comment.comments_container_id do %>  
+    <% if comment.display_comments? %>
+      <%= render partial: 'comments/comment', collection: comment.display_comments, as: :comment %>  
+    <% end %>
   <% end %>
-<% end %>
+</div>
 
 <% if comment.not_displayed_comments? %>
   <div class="is-flex">

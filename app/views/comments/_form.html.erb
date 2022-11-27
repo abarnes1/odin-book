@@ -1,8 +1,10 @@
 <div class="is-flex">
-  <%= form_with model: comment, class: "is-flex is-flex-grow-1" do |form| %>
-    <%= form.text_field :message, class: "input is-static is-flex-grow-1 has-background-grey-dark has-text-grey-lighter border-curved" %>
+  <%= form_with model: comment, class: "is-flex is-flex-grow-1 my-2" do |form| %>
+    <%= form.text_field :message, class: "input is-static is-flex-grow-1 has-background-grey-dark has-text-grey-lighter border-curved", required: true, active: true %>
     <%= form.hidden_field :post_id, value: comment.post_id %>
     <%= form.hidden_field :parent_comment_id %>
-    <%= form.submit 'Comment', class: "button p-2 ml-2 is-dark border-curved" %>
+    <%= form.hidden_field :display_depth %>
+    <%= form.hidden_field :displayed_count, value: comment.displayed_comments_count %>
+    <%= form.submit 'Comment', class: "button p-2 ml-2 is-dark border-curved", data: {turbo: comment.display_depth <= CommentPresenter::MAX_DISPLAY_DEPTH } %>
   <% end %>  
 </div>
