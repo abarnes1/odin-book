@@ -13,9 +13,20 @@
 
         <div class="is-size-smaller is-flex gap-1 is-flex-wrap-wrap">
           <p>Like</p>
+          <% if false %>
+            <p>
+              <%= turbo_frame_tag comment.comment_link_id do %>
+                <%= link_to 'Reply', new_comment_path(comment: {post_id: comment.post_id, parent_comment_id: comment.id, display_depth: comment.display_depth, displayed_count: comment.displayed_comments_count}), 
+                  class: 'is-text', method: :get, data: { turbo_stream: true } %>
+              <% end %>
+            </p>
+          <% end %>
+
           <p>
-            <%= link_to 'Reply', new_comment_path(comment: {post_id: comment.post_id, parent_comment_id: comment.id, display_depth: comment.display_depth + 1}), 
-              class: 'is-text', method: :get, data: { turbo_stream: true } %>
+            <%= turbo_frame_tag comment.comment_link_id do %>
+              <%= link_to 'Reply', new_comment_path(comment: { post_id: comment.post_id, parent_comment_id: comment.id }, display: { depth: comment.child_display_depth }), 
+                class: 'is-text', method: :get, data: { turbo_stream: true } %>
+            <% end %>
           </p>
 
           <% if comment.user == current_user %>
@@ -36,16 +47,6 @@
   </div>
 </div>
 
-<%= turbo_frame_tag comment.new_comments_container_id %>  
-
-<div>
-  <%= turbo_frame_tag comment.comments_container_id do %>  
-    <% if comment.display_comments? %>
-      <%= render partial: 'comments/comment', collection: comment.display_comments, as: :comment %>  
-    <% end %>
-  <% end %>
-</div>
-
 <% if comment.not_displayed_comments? %>
   <div class="is-flex">
     <span class="is-flex-shrink-0" style="width: <%= comment.load_comments_link_indent_pixels %>px"></span>
@@ -55,9 +56,17 @@
         <%= link_to comment.load_comments_link_text, comment_path(comment), data: { turbo: false } %>
       <% else %>
         <%= link_to comment.load_comments_link_text, 
-          load_path(comment_id: comment.id, displayed_count: comment.displayed_comments_count, display_depth: comment.display_depth + 1, older_than: comment.oldest_display_comment), 
+          load_path(**comment.load_comments_params), 
           id: comment.load_comments_link_id,  method: :get, data: { turbo_stream: true } %>
       <% end %>
     </span>
   </div>
 <% end %>
+
+<div>
+  <%= turbo_frame_tag comment.comments_container_id do %>  
+    <% if comment.display_comments? %>
+      <%= render partial: 'comments/comment', collection: comment.display_comments, as: :comment %>  
+    <% end %>
+  <% end %>
+</div>

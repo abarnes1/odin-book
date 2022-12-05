@@ -23,7 +23,7 @@
 
   <div class="is-flex is-justify-content-space-between">
     <%= render partial: 'likes/form', locals: { like: Like.new, post: post } %>
-    <%= link_to 'Comment', new_comment_path(comment: { post_id: post.id, displayed_count: post.displayed_comments_count }), method: :get, data: { turbo_stream: true } %>
+    <%= link_to 'Comment', new_comment_path(comment: { post_id: post.id }, display: { depth: 0 }), method: :get, data: { turbo_stream: true } %>
   </div>
 
   <hr class="my-0 has-background-grey">
@@ -31,8 +31,7 @@
   <div class="is-flex is-justify-content-space-between">
     <span>
       <% if post.not_displayed_comments? %>
-        <%= link_to "View Previous (#{post.not_displayed_comments_count} Remain)", 
-          load_path(post_id: post.id, older_than: post.oldest_display_comment, displayed_count: post.displayed_comments_count), 
+        <%= link_to "View Previous (#{post.not_displayed_comments_count} Remain)", load_path(**post.load_comments_params), 
           id: post.load_comments_link_id,  method: :get, data: { turbo_stream: true }%>
       <% end %>
     </span>
@@ -41,11 +40,10 @@
   </div>
 
   <%= turbo_frame_tag post.comment_form_id %>
-  <%= turbo_frame_tag post.new_comments_container_id %>  
 
   <%= turbo_frame_tag post.comments_container_id do %>
       <% post.display_comments.each do |comment| %>
-        <%= render partial: 'comments/comment', locals: { comment: comment, avatar_size: 24 } %>  
+        <%= render partial: 'comments/comment', locals: { comment: comment, avatar_size: comment.avatar_size } %>  
       <% end %>
   <% end %>
 </div>
