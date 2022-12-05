@@ -6,7 +6,6 @@ class DisplayableCommentsTestClass
   end
 
   def comments_count; end
-  def likes; end
 end
 
 RSpec.describe DisplayableComments do
@@ -30,7 +29,7 @@ RSpec.describe DisplayableComments do
     end
 
     context 'when assigned an array of objects' do
-      it 'returns an array of comments' do
+      it 'returns an array of objects' do
         comments = [displayed_comment, 'anything']
         dummy_class.display_comments = comments
         expect(dummy_class.display_comments).to eq(comments)
@@ -67,6 +66,16 @@ RSpec.describe DisplayableComments do
         expect(dummy_class.displayed_comments_count).to eq(1)
       end
     end
+
+    context 'when displayed count is overridden' do
+      it 'returns the correct count' do
+        dummy_class.display_comments = displayed_comment
+        allow(dummy_class).to receive(:comments_count).and_return(2)
+        allow(dummy_class).to receive(:displayed_count_override).and_return(10)
+  
+        expect(dummy_class.displayed_comments_count).to eq(11)
+      end
+    end
   end
 
   describe '#not_displayed_comments_count' do
@@ -85,6 +94,15 @@ RSpec.describe DisplayableComments do
       it 'returns the correct count' do
         allow(dummy_class).to receive(:comments_count).and_return(2)
         expect(dummy_class.not_displayed_comments_count).to eq(1)
+      end
+    end
+
+    context 'when not displayed count is overridden' do
+      it 'returns the correct count' do
+        dummy_class.display_comments = displayed_comment
+        allow(dummy_class).to receive(:not_displayed_count_override).and_return(10)
+  
+        expect(dummy_class.not_displayed_comments_count).to eq(9)
       end
     end
   end
@@ -109,38 +127,31 @@ RSpec.describe DisplayableComments do
     end
   end
 
-  describe '#oldest_display_comment' do
+  describe '#oldest_display_comment_id' do
     context 'when no display comments' do
       it 'returns nil' do
-        expect(dummy_class.oldest_display_comment).to be nil
+        expect(dummy_class.oldest_display_comment_id).to be nil
       end
     end
 
-    context 'when multiple display comments' do
+    context 'when multiple display comments_id' do
       let!(:newer_comment) { double('Comment', created_at: 1.minute.ago) }
-      let!(:older_comment) { double('Comment', created_at: 5.minutes.ago) }
+      let!(:older_comment) { double('Comment', created_at: 5.minutes.ago, id: 777) }
 
       it 'returns the oldest comment' do
         dummy_class.display_comments = [newer_comment, older_comment]
-        expect(dummy_class.oldest_display_comment).to eq(older_comment)
-      end
-    end
-  end
-
-  describe '#newest_display_comment' do
-    context 'when no display comments' do
-      it 'returns nil' do
-        expect(dummy_class.newest_display_comment).to be nil
+        expect(dummy_class.oldest_display_comment_id).to eq(older_comment.id)
       end
     end
 
-    context 'when multiple display comments' do
+    context 'when oldest display comment is overridden' do
       let!(:newer_comment) { double('Comment', created_at: 1.minute.ago) }
-      let!(:older_comment) { double('Comment', created_at: 5.minutes.ago) }
+      let!(:older_comment) { double('Comment', created_at: 5.minutes.ago, id: 777) }
 
-      it 'returns the newest comment' do
+      it 'returns the overridden oldest comment id' do
         dummy_class.display_comments = [newer_comment, older_comment]
-        expect(dummy_class.newest_display_comment).to eq(newer_comment)
+        allow(dummy_class).to receive(:oldest_display_comment_id_override).and_return(1234)
+        expect(dummy_class.oldest_display_comment_id).to eq(1234)
       end
     end
   end
