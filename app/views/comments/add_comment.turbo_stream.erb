@@ -1,0 +1,13 @@
+<%# replace post comments count %>
+<%= render partial: 'posts/comment_counters', locals: { post: @commentable.post }  %>  
+
+<%# replace comments count %>
+<%= render partial: 'commentable/comment_counters', locals: { commentable: @commentable } %>
+
+<%# render newly created comment %>
+<%= turbo_stream.append(@commentable.comments_container_id) do %>
+  <%= render partial: 'comments/comment', collection: @commentable.display_comments, locals: { avatar_size: @commentable.avatar_size } %>
+<% end %>
+
+<%# remove new comment form %>
+<%= turbo_stream.update @commentable.comment_form_id %>
