@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    #place holder, may use for user comments
+    # placeholder, may use for user comments
   end
 
   def load
@@ -10,15 +10,29 @@ class CommentsController < ApplicationController
   end
 
   def new
-    @comment = Comment.new(comment_params)
+    @comment = CommentPresenter.new(Comment.new(comment_params), display_params)
+    respond_to do |format|
+      format.html { render :new }
+      format.turbo_stream { render :new }
+    end
   end
 
   def create
-    @comment = current_user.comments.build(comment_params)
+    comment = CommentPresenter.new(current_user.comments.build(comment_params), display_params)
+    if comment.save
+      # LoadCommnents works but probably does too much, maybe can do something like
+      # CommentablePresenterFactory.build(comment.owner, presenter_params) instead
+      @commentable = LoadComments.new(comment_id: comment.parent_comment_id, post_id: comment.post_id,
+                                      limit: 0, depth: comment.display_depth - 1).load
 
-    if @comment.save
+      @commentable.display_comments = comment
+
       flash[:alert] = 'Comment Creation Success'
-      redirect_to feed_path
+
+      respond_to do |format|
+        format.html { redirect_to comment_path(@commentable) }
+        format.turbo_stream { render 'comments/add_comment' }
+      end
     else
       flash.now[:alert] = 'Comment Creation Error'
       render :new, status: :unprocessable_entity
@@ -42,16 +56,20 @@ class CommentsController < ApplicationController
   end
 
   def show
-    @comment = Comment.find(params[:id])
+    @comment = LoadComments.new(comment_id: params[:id]).load
   end
 
   private
 
   def load_comments_params
-    params.permit(:post_id, :comment_id, :older_than, :displayed_count, :display_depth)
+    params.permit(:post_id, :comment_id, :oldest, :depth)
   end
 
   def comment_params
     params.require(:comment).permit(:post_id, :parent_comment_id, :message)
+  end
+
+  def display_params
+    params.require(:display).permit(:depth)
   end
 end
