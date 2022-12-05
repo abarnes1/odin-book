@@ -34,7 +34,7 @@ RSpec.describe LoadComments do
     context 'when given an oldest comment id' do
       let!(:comment) { create(:comment, post: post, user: user) }
       it 'returns the oldest comment' do
-        with_oldest_comment = described_class.new(older_than: comment.id)
+        with_oldest_comment = described_class.new(oldest: comment.id)
 
         expect(with_oldest_comment.oldest_comment).to eq(comment)
       end
@@ -105,65 +105,39 @@ RSpec.describe LoadComments do
       end
     end
 
-    context 'when given older than param' do
+    context 'when given oldest param' do
       it 'returns older comments' do
-        with_older_than = described_class.new(post_id: post.id, older_than: middle_post_comment.id)
+        with_older_than = described_class.new(post_id: post.id, oldest: middle_post_comment.id)
         loaded_comments = with_older_than.load.display_comments
 
         expect(loaded_comments).to eq([oldest_post_comment])
       end
     end
 
-    context 'when given newer than param' do
-      it 'returns newer comments' do
-        with_newer_than = described_class.new(post_id: post.id, newer_than: middle_post_comment.id)
-        loaded_comments = with_newer_than.load.display_comments
-
-        expect(loaded_comments).to eq([newest_post_comment])
-      end
-    end
-
     context 'when given a display depth' do
-      it 'assigns display depth' do
-        depth = 3
-        with_display_depth = described_class.new(comment_id: newest_post_comment.id, limit: 2, display_depth: depth)
-        loaded_comments = with_display_depth.load.display_comments
+      it 'assigns display depth to the commentable' do
+        depth = 2
+        with_display_depth = described_class.new(comment_id: newest_post_comment.id, depth: depth)
+        commentable = with_display_depth.load
 
-        expect(loaded_comments.first.display_depth).to eq(depth)
+        expect(commentable.display_depth).to eq(depth)
       end
 
-      it 'assigns default depth for post comments' do
-        with_display_depth = described_class.new(post_id: post.id, limit: 1, display_depth: 3)
+      it 'assigns incremented display depth to loaded comments' do
+        depth = 2
+        with_display_depth = described_class.new(comment_id: newest_post_comment.id, depth: depth)
         loaded_comments = with_display_depth.load.display_comments
 
-        expect(loaded_comments.first.display_depth).to eq(described_class::DEFAULT_DISPLAY_DEPTH)
+        expect(loaded_comments.first.display_depth).to eq(depth + 1)
       end
     end
 
     context 'when not given a display_depth' do
-      it 'assigns default display depth to comments' do
+      it 'assigns default display depth to commentable' do
         without_display_depth = described_class.new(comment_id: newest_post_comment.id, limit: 1)
-        loaded_comments = without_display_depth.load.display_comments
+        commentable = without_display_depth.load
 
-        expect(loaded_comments.first.display_depth).to eq(described_class::DEFAULT_DISPLAY_DEPTH)
-      end
-    end
-
-    context 'when given a displayed count' do
-      it 'assigns the owner the displayed_count' do
-        with_display_count = described_class.new(post_id: post.id, displayed_count: 99)
-        owner = with_display_count.load
-
-        expect(owner.already_displayed_comments_count).to eq(99)
-      end
-    end
-
-    context 'when not given a displayed count' do
-      it 'assigns the owner the default displayed_count' do
-        with_display_count = described_class.new(post_id: post.id)
-        owner = with_display_count.load
-
-        expect(owner.already_displayed_comments_count).to eq(described_class::DEFAULT_DISPLAYED_COUNT)
+        expect(commentable.display_depth).to eq(described_class::DEFAULT_DISPLAY_DEPTH)
       end
     end
   end
