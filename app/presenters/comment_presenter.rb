@@ -1,10 +1,9 @@
 class CommentPresenter < CommentablePresenterBase
   MAX_DISPLAY_DEPTH = 2
-  DEFAULT_DISPLAY_DEPTH = 0
 
   def initialize(comment, options = {})
     super(comment, options)
-    @display_depth = options.fetch(:display_depth, DEFAULT_DISPLAY_DEPTH).to_i
+    @display_depth = Integer(options.fetch(:depth, nil), exception: false)
   end
 
   attr_accessor :display_depth
@@ -13,19 +12,27 @@ class CommentPresenter < CommentablePresenterBase
     id
   end
 
-  def display_comments_turbo_method
-    :append
+  def child_display_depth
+    display_depth + 1
   end
 
   def max_display_depth?
+    return false if display_depth.nil?
+
     display_depth >= MAX_DISPLAY_DEPTH
+  end
+
+  def displayable?
+    return true if display_depth.nil?
+
+    display_depth <= MAX_DISPLAY_DEPTH
   end
 
   def load_comments_link_text
     if max_display_depth?
       "\u2937 Continue Conversation"
     else
-      "\u2937 #{not_displayed_comments_count} More Replies"
+      "\u2937 View Previous Replies (#{not_displayed_comments_count} Remain)"
     end
   end
 
@@ -56,5 +63,11 @@ class CommentPresenter < CommentablePresenterBase
 
   def avatar_size
     24
+  end
+
+  def load_comments_params
+    { comment_id: id,
+      depth: display_depth,
+      oldest: oldest_display_comment_id }
   end
 end

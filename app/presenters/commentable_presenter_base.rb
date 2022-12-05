@@ -4,7 +4,11 @@ class CommentablePresenterBase < SimpleDelegator
   def initialize(commentable, options = {})
     super(commentable)
     @commentable = commentable
-    @already_displayed_comments_count = options.fetch(:displayed_count, 0).to_i
+
+    # interact with DisplayableComments module
+    @displayed_count_override = Integer(options.fetch(:displayed_count, nil), exception: false)
+    @not_displayed_count_override = Integer(options.fetch(:not_displayed_count, nil), exception: false)
+    @oldest_display_comment_id_override = options[:oldest_comment_id]
   end
 
   attr_reader :commentable
@@ -17,12 +21,12 @@ class CommentablePresenterBase < SimpleDelegator
     nil
   end
 
-  def comments_container_id
-    "#{__getobj__.class.name.downcase}_#{id}_comments"
+  def child_display_depth
+    0
   end
 
-  def new_comments_container_id
-    "#{__getobj__.class.name.downcase}_#{id}_new_comments"
+  def comments_container_id
+    "#{__getobj__.class.name.downcase}_#{id}_comments"
   end
 
   def comments_counter_container_id
@@ -35,5 +39,9 @@ class CommentablePresenterBase < SimpleDelegator
 
   def comment_form_id
     "#{__getobj__.class.name.downcase}_#{id}_comment_form"
+  end
+
+  def comment_link_id
+    "#{__getobj__.class.name.downcase}_#{id}_comment_link"
   end
 end

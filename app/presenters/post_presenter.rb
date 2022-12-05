@@ -22,4 +22,9 @@ class PostPresenter < CommentablePresenterBase
   def load_comments_link_text
     "View Previous (#{not_displayed_comments_count} Remain)"
   end
+
+  def load_comments_params
+    { oldest: oldest_display_comment_id,
+      post_id: id }
+  end
 end
