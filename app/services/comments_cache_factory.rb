@@ -61,7 +61,7 @@ class CommentsCacheFactory
       Comment.joins(
         "INNER JOIN (
         #{Comment.select('id, row_number() OVER (PARTITION BY parent_comment_id
-        ORDER BY created_at) as date_order').to_sql}
+        ORDER BY created_at DESC) as date_order').to_sql}
         ) by_date
         ON by_date.id = comments.id"
       )
