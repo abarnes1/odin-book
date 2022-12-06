@@ -29,13 +29,6 @@ RSpec.describe CommentPresenter do
     end
   end
 
-  describe '#display_comments_turbo_method' do
-    it 'returns append' do
-      presenter = described_class.new(comment)
-      expect(presenter.display_comments_turbo_method).to eq(:append)
-    end
-  end
-
   describe '#max_display_depth?' do
     context 'when display depth is below the maximum' do
       it 'returns false' do
