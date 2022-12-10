@@ -28,11 +28,4 @@ RSpec.describe PostPresenter do
       expect(presenter.load_comments_link_text).to eq(expected)
     end
   end
-
-  describe '#display_comments_turbo_method' do
-    it 'returns prepend' do
-      presenter = described_class.new(post)
-      expect(presenter.display_comments_turbo_method).to eq(:prepend)
-    end
-  end
 end

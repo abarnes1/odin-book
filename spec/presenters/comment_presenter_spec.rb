@@ -9,15 +9,15 @@ RSpec.describe CommentPresenter do
     context 'when given a display depth' do
       it 'returns the display depth' do
         display_depth = 99
-        presenter = described_class.new(comment, display_depth: display_depth)
+        presenter = described_class.new(comment, depth: display_depth)
         expect(presenter.display_depth).to eq(display_depth)
       end
     end
 
     context 'when not given a display depth' do
-      it 'returns the default display depth' do
+      it 'returns nil' do
         presenter = described_class.new(comment)
-        expect(presenter.display_depth).to eq(described_class::DEFAULT_DISPLAY_DEPTH)
+        expect(presenter.display_depth).to be_nil
       end
     end
   end
@@ -32,21 +32,21 @@ RSpec.describe CommentPresenter do
   describe '#max_display_depth?' do
     context 'when display depth is below the maximum' do
       it 'returns false' do
-        presenter = described_class.new(comment, display_depth: described_class::MAX_DISPLAY_DEPTH - 1)
+        presenter = described_class.new(comment, depth: described_class::MAX_DISPLAY_DEPTH - 1)
         expect(presenter.max_display_depth?).to be(false)
       end
     end
 
     context 'when display depth is equal to the maximum' do
       it 'returns true' do
-        presenter = described_class.new(comment, display_depth: described_class::MAX_DISPLAY_DEPTH)
+        presenter = described_class.new(comment, depth: described_class::MAX_DISPLAY_DEPTH)
         expect(presenter.max_display_depth?).to be(true)
       end
     end
 
     context 'when display depth is above to the maximum' do
       it 'returns true' do
-        presenter = described_class.new(comment, display_depth: described_class::MAX_DISPLAY_DEPTH + 1)
+        presenter = described_class.new(comment, depth: described_class::MAX_DISPLAY_DEPTH + 1)
         expect(presenter.max_display_depth?).to be(true)
       end
     end
@@ -60,7 +60,7 @@ RSpec.describe CommentPresenter do
         allow(presenter).to receive(:not_displayed_comments_count).and_return(not_displayed_comments)
         allow(presenter).to receive(:max_display_depth?).and_return(false)
 
-        expected = "\u2937 #{not_displayed_comments} More Replies"
+        expected = "\u2937 View Previous Replies (#{not_displayed_comments} Remain)"
         expect(presenter.load_comments_link_text).to eq(expected)
       end
     end
