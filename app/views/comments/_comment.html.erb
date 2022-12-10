@@ -9,9 +9,10 @@
     <div class="is-flex is-flex-direction-column is-flex-grow-1 is-flex-shrink-1 ml-2">
       <div class="border-curved has-background-grey-dark p-2 is-flex is-flex-direction-column">
         <p><%= comment.user.username %></p>
-
-        <%= turbo_frame_tag comment.content_container_id do %>
-          <p class="is-word-break-all"><%= comment.message %></p>
+        <p class="is-word-break-all">
+          <%= turbo_frame_tag comment.content_container_id do %>
+          <%= comment.message %>
+        </p>
         <% end %>
 
         <div class="is-size-smaller is-flex gap-1 is-flex-wrap-wrap">

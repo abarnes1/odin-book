@@ -44,11 +44,15 @@ class CommentsController < ApplicationController
   end
 
   def update
-    @comment = Comment.find(params[:id])
+    @comment = CommentPresenter.new(Comment.find(params[:id]))
 
     if @comment.update(comment_params)
       flash[:alert] = 'Comment Update Success'
-      redirect_to feed_path
+
+      respond_to do |format|
+        format.html { redirect_to comment_path(@comment) }
+        format.turbo_stream { render :update }
+      end
     else
       flash[:alert] = 'Comment Update Error'
       render :edit, status: :unprocessable_entity
