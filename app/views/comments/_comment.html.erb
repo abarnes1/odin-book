@@ -9,19 +9,13 @@
     <div class="is-flex is-flex-direction-column is-flex-grow-1 is-flex-shrink-1 ml-2">
       <div class="border-curved has-background-grey-dark p-2 is-flex is-flex-direction-column">
         <p><%= comment.user.username %></p>
-        <p class="is-word-break-all"><%= comment.message %></p>
+
+        <%= turbo_frame_tag comment.content_container_id do %>
+          <p class="is-word-break-all"><%= comment.message %></p>
+        <% end %>
 
         <div class="is-size-smaller is-flex gap-1 is-flex-wrap-wrap">
           <p>Like</p>
-          <% if false %>
-            <p>
-              <%= turbo_frame_tag comment.comment_link_id do %>
-                <%= link_to 'Reply', new_comment_path(comment: {post_id: comment.post_id, parent_comment_id: comment.id, display_depth: comment.display_depth, displayed_count: comment.displayed_comments_count}), 
-                  class: 'is-text', method: :get, data: { turbo_stream: true } %>
-              <% end %>
-            </p>
-          <% end %>
-
           <p>
             <%= turbo_frame_tag comment.comment_link_id do %>
               <%= link_to 'Reply', new_comment_path(comment: { post_id: comment.post_id, parent_comment_id: comment.id }, display: { depth: comment.child_display_depth }), 
@@ -30,7 +24,12 @@
           </p>
 
           <% if comment.user == current_user %>
-            <p><%= link_to 'Edit', edit_comment_path(comment) if comment.user == current_user %></p>
+            <p>
+              <% if comment.user == current_user %>
+                <%= link_to 'Edit', edit_comment_path(comment),
+                  method: :get, data: { turbo_stream: true } %>  
+              <% end %>
+            </p>
           <% end %>
           <p><%= comment.created_at.strftime("%Y-%m-%d") %></p>
           <p>

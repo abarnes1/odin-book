@@ -44,4 +44,8 @@ class CommentablePresenterBase < SimpleDelegator
   def comment_link_id
     "#{__getobj__.class.name.downcase}_#{id}_comment_link"
   end
+
+  def content_container_id
+    "#{__getobj__.class.name.downcase}_#{id}_content"
+  end
 end
