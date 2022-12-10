@@ -32,16 +32,16 @@
     <span>
       <% if post.not_displayed_comments? %>
         <%= link_to "View Previous (#{post.not_displayed_comments_count} Remain)", load_path(**post.load_comments_params), 
-          id: post.load_comments_link_id,  method: :get, data: { turbo_stream: true }%>
+          id: post.container_id(:load_comments_link),  method: :get, data: { turbo_stream: true }%>
       <% end %>
     </span>
     
     <p class="is-flex is-justify-content-flex-end">&#9660; All Comments</p>
   </div>
 
-  <%= turbo_frame_tag post.comment_form_id %>
+  <%= turbo_frame_tag post.container_id(:comment_form) %>
 
-  <%= turbo_frame_tag post.comments_container_id do %>
+  <%= turbo_frame_tag post.container_id(:comments) do %>
       <% post.display_comments.each do |comment| %>
         <%= render partial: 'comments/comment', locals: { comment: comment, avatar_size: comment.avatar_size } %>  
       <% end %>

@@ -25,27 +25,7 @@ class CommentablePresenterBase < SimpleDelegator
     0
   end
 
-  def comments_container_id
-    "#{__getobj__.class.name.downcase}_#{id}_comments"
-  end
-
-  def comments_counter_container_id
-    "#{__getobj__.class.name.downcase}_#{id}_comments_counter"
-  end
-
-  def load_comments_link_id
-    "#{__getobj__.class.name.downcase}_#{id}_load_comments"
-  end
-
-  def comment_form_id
-    "#{__getobj__.class.name.downcase}_#{id}_comment_form"
-  end
-
-  def comment_link_id
-    "#{__getobj__.class.name.downcase}_#{id}_comment_link"
-  end
-
-  def content_container_id
-    "#{__getobj__.class.name.downcase}_#{id}_content"
+  def container_id(label)
+    "#{__getobj__.class.name.downcase}_#{id}_#{label}"
   end
 end

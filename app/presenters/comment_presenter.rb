@@ -36,16 +36,18 @@ class CommentPresenter < CommentablePresenterBase
     end
   end
 
-  def comment_form_id
+  def container_id(label)
+    return super(label) unless label == :comment_form
+
     # If comment has an id it should interact with its own form.
     # Otherwise, it is a new comment and the form belongs to
     # the parent commentable.
     if id?
-      super
+      super(label)
     elsif parent_comment_id?
-      "#{__getobj__.class.name.downcase}_#{parent_comment_id}_comment_form"
+      "#{__getobj__.class.name.downcase}_#{parent_comment_id}_#{label}"
     else
-      "post_#{post.id}_comment_form"
+      "post_#{post.id}_#{label}"
     end
   end
 

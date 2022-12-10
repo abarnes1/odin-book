@@ -25,38 +25,10 @@ RSpec.describe CommentablePresenterBase do
     end
   end
 
-  describe '#comments_container_id' do
+  describe '#container_id' do
     it 'returns the correct id' do
       presenter = described_class.new(thing)
-      expect(presenter.comments_container_id).to eq("object_99_comments")
-    end
-  end
-
-  describe '#new_comments_container_id' do
-    it 'returns the correct id' do
-      presenter = described_class.new(thing)
-      expect(presenter.new_comments_container_id).to eq("object_99_new_comments")
-    end
-  end
-
-  describe '#comments_counter_container_id' do
-    it 'returns the correct id' do
-      presenter = described_class.new(thing)
-      expect(presenter.comments_counter_container_id).to eq("object_99_comments_counter")
-    end
-  end
-
-  describe '#load_comments_link_id' do
-    it 'returns the correct id' do
-      presenter = described_class.new(thing)
-      expect(presenter.load_comments_link_id).to eq("object_99_load_comments")
-    end
-  end
-
-  describe '#comment_form_id' do
-    it 'returns the correct id' do
-      presenter = described_class.new(thing)
-      expect(presenter.comment_form_id).to eq("object_99_comment_form")
+      expect(presenter.container_id(:something)).to eq("object_99_something")
     end
   end
 end

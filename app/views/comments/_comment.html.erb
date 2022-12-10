@@ -10,7 +10,7 @@
       <div class="border-curved has-background-grey-dark p-2 is-flex is-flex-direction-column">
         <p><%= comment.user.username %></p>
         <p class="is-word-break-all">
-          <%= turbo_frame_tag comment.content_container_id do %>
+          <%= turbo_frame_tag comment.container_id(:message) do %>
           <%= comment.message %>
         </p>
         <% end %>
@@ -18,7 +18,7 @@
         <div class="is-size-smaller is-flex gap-1 is-flex-wrap-wrap">
           <p>Like</p>
           <p>
-            <%= turbo_frame_tag comment.comment_link_id do %>
+            <%= turbo_frame_tag comment.container_id(:comment_link) do %>
               <%= link_to 'Reply', new_comment_path(comment: { post_id: comment.post_id, parent_comment_id: comment.id }, display: { depth: comment.child_display_depth }), 
                 class: 'is-text', method: :get, data: { turbo_stream: true } %>
             <% end %>
@@ -34,7 +34,7 @@
           <% end %>
           <p><%= comment.created_at.strftime("%Y-%m-%d") %></p>
           <p>
-            <%= turbo_frame_tag comment.comments_counter_container_id do %>
+            <%= turbo_frame_tag comment.container_id(:comments_counter) do %>
               <%= comment.comments.size %>
             <% end %>
             Replies
@@ -42,7 +42,7 @@
         </div>
       </div>
 
-      <%= turbo_frame_tag comment.comment_form_id %>
+      <%= turbo_frame_tag comment.container_id(:comment_form) %>
     </div>
   </div>
 </div>
@@ -57,14 +57,14 @@
       <% else %>
         <%= link_to comment.load_comments_link_text, 
           load_path(**comment.load_comments_params), 
-          id: comment.load_comments_link_id,  method: :get, data: { turbo_stream: true } %>
+          id: comment.container_id(:load_comments_link),  method: :get, data: { turbo_stream: true } %>
       <% end %>
     </span>
   </div>
 <% end %>
 
 <div>
-  <%= turbo_frame_tag comment.comments_container_id do %>  
+  <%= turbo_frame_tag comment.container_id(:comments) do %>  
     <% if comment.display_comments? %>
       <%= render partial: 'comments/comment', collection: comment.display_comments, as: :comment %>  
     <% end %>

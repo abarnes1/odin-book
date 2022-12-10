@@ -1,14 +1,14 @@
 <%# replace link that loads additional comments %>
 <% if @commentable.not_displayed_comments? %>
-  <%= turbo_stream.replace @commentable.load_comments_link_id do %>
+  <%= turbo_stream.replace @commentable.container_id(:load_comments_link) do %>
     <%= link_to @commentable.load_comments_link_text, load_path(**@commentable.load_comments_params), 
-      id: @commentable.load_comments_link_id, method: :get, data: { turbo_stream: true } %> 
+      id: @commentable.container_id(:load_comments_link), method: :get, data: { turbo_stream: true } %> 
   <% end %>
 <% else %>
-  <%= turbo_stream.remove @commentable.load_comments_link_id %>
+  <%= turbo_stream.remove @commentable.container_id(:load_comments_link) %>
 <% end %>
 
 <%# render additional comments %>
-<%= turbo_stream.prepend(@commentable.comments_container_id) do %>
+<%= turbo_stream.prepend(@commentable.container_id(:comments)) do %>
   <%= render partial: 'comments/comment', collection: @commentable.display_comments %>
 <% end %>
