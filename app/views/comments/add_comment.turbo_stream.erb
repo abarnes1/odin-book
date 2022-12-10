@@ -6,7 +6,7 @@
 
 <%# render newly created comment %>
 <%= turbo_stream.append(@commentable.container_id(:comments)) do %>
-  <%= render partial: 'comments/comment', collection: @commentable.display_comments, locals: { avatar_size: @commentable.avatar_size } %>
+  <%= render partial: 'comments/comment', collection: @commentable.display_comments %>
 <% end %>
 
 <%# remove new comment form %>
