@@ -7,6 +7,10 @@ class CommentsController < ApplicationController
 
   def load
     @commentable = LoadComments.new(load_comments_params).load
+
+    respond_to do |format|
+      format.turbo_stream { render 'commentable/load' }
+    end
   end
 
   def new
@@ -31,7 +35,7 @@ class CommentsController < ApplicationController
 
       respond_to do |format|
         format.html { redirect_to comment_path(@commentable) }
-        format.turbo_stream { render 'comments/add_comment' }
+        format.turbo_stream { render 'commentable/add_comment' }
       end
     else
       flash.now[:alert] = 'Comment Creation Error'
