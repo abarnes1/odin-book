@@ -31,6 +31,8 @@ class CommentPresenter < CommentablePresenterBase
   def load_comments_link_text
     if max_display_depth?
       "\u2937 Continue Conversation"
+    elsif displayed_comments_count.zero?
+      "\u2937 View Replies"
     else
       "\u2937 View Previous Replies (#{not_displayed_comments_count} Remain)"
     end
