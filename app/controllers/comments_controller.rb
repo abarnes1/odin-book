@@ -34,7 +34,7 @@ class CommentsController < ApplicationController
       flash[:alert] = 'Comment Creation Success'
 
       respond_to do |format|
-        format.html { redirect_to comment_path(@commentable) }
+        format.html { redirect_to comment_path(comment.parent_comment_id) }
         format.turbo_stream { render 'commentable/add_comment' }
       end
     else
@@ -64,7 +64,11 @@ class CommentsController < ApplicationController
   end
 
   def show
-    @comment = LoadComments.new(comment_id: params[:id]).load
+    comment = Comment.find(params[:id])
+    @post = PostPresenter.new(comment.post)
+    @post.display_comments = LoadComments.new(comment_id: comment.id).load
+
+    render 'show', locals: { post: @post }
   end
 
   private

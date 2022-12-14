@@ -24,6 +24,11 @@ class PostsController < ApplicationController
     end
   end
 
+  def show
+    # todo: Maybe load *some* nested comments through service object and/or CommentsCache?
+    @post = LoadComments.new(post_id: params[:id]).load
+  end
+
   private
 
   def post_params
