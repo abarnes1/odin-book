@@ -1,43 +1,14 @@
-<div class="post-container border-light border-curved is-flex is-flex-direction-column mx-auto p-2">
-  <div class="is-flex mb-4">
-    <div class="image is-48x48"><img class="is-rounded" src="<%= gravatar_url(post.user.email, 48)%>" alt=""></div>
-    <div class="is-flex is-flex-direction-column ml-2">
-      <p><%= post.user.username %></p>
-      <p><%= post.created_at %></p>
-    </div>
-  </div>
-
-  <p class="mb-2"><%= post.content %></p>
-
-  <div class="is-flex is-justify-content-space-between">
-    <p><%= post.likes.size %> Likes</p>
-    <p>
-      <%= turbo_frame_tag "post_#{post.id}_total_comments_count" do %>
-        <%= post.total_comments_count %>
-      <% end %>
-      Comments
-    </p>
-  </div>
+<div class="post-container border-light border-curved is-flex is-flex-direction-column mx-auto p-2 mb-3">
+  <%= render partial: "posts/stackable_components/post_contents", locals: { post: post } %>
+  <%= render partial: "posts/stackable_components/interaction_counters", locals: { post: post } %>
 
   <hr class="my-0 has-background-grey">
 
-  <div class="is-flex is-justify-content-space-between">
-    <%= render partial: 'likes/form', locals: { like: Like.new, post: post } %>
-    <%= link_to 'Comment', new_comment_path(comment: { post_id: post.id }, display: { depth: 0 }), method: :get, data: { turbo_stream: true } %>
-  </div>
+  <%= render partial: "posts/stackable_components/interaction_links", locals: { post: post } %>
 
   <hr class="my-0 has-background-grey">
 
-  <div class="is-flex is-justify-content-space-between">
-    <span>
-      <% if post.not_displayed_comments? %>
-        <%= link_to "View Previous (#{post.not_displayed_comments_count} Remain)", load_path(**post.load_comments_params), 
-          id: post.container_id(:load_comments_link),  method: :get, data: { turbo_stream: true }%>
-      <% end %>
-    </span>
-    
-    <p class="is-flex is-justify-content-flex-end">&#9660; All Comments</p>
-  </div>
+  <%= render partial: "posts/stackable_components/comment_thread_links", locals: { post: post } %>
 
   <%= turbo_frame_tag post.container_id(:comment_form) %>
 

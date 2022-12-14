@@ -1,0 +1,5 @@
+<% if comment.top_level? %>
+  <%= link_to "Return To All Comments", post_path(comment.post_id), class: "has-text-centered" %>
+<% else %>
+  <%= link_to "View Parent Comment", comment_path(comment.parent_comment_id), class: "has-text-centered" %>
+<% end %>

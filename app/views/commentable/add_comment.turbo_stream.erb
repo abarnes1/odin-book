@@ -1,5 +1,5 @@
 <%# replace post comments count %>
-<%= render partial: 'posts/comment_counters', locals: { post: @commentable.post }  %>  
+<%= render partial: 'posts/comment_counters', locals: { post: PostPresenter.new(@commentable.post) }  %>  
 
 <%# replace comments count %>
 <%= render partial: 'commentable/comment_counters', locals: { commentable: @commentable } %>
