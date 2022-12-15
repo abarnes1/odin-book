@@ -10,6 +10,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream { render 'commentable/load' }
+      format.html { redirect_to feed_path }
     end
   end
 
