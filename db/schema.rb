@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_05_010614) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_17_223226) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,6 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_05_010614) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "comments_count"
+    t.integer "likes_count"
     t.index ["parent_comment_id"], name: "index_comments_on_parent_comment_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
@@ -44,10 +45,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_05_010614) do
 
   create_table "likes", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "post_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_likes_on_post_id"
+    t.bigint "likeable_id"
+    t.string "likeable_type"
+    t.index ["user_id", "likeable_id", "likeable_type"], name: "index_likes_on_user_id_and_likeable_id_and_likeable_type", unique: true
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
@@ -58,6 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_05_010614) do
     t.datetime "updated_at", null: false
     t.integer "total_comments_count"
     t.integer "comments_count"
+    t.integer "likes_count"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -82,7 +85,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_05_010614) do
   add_foreign_key "comments", "users"
   add_foreign_key "friendship_requests", "users", column: "recipient_id"
   add_foreign_key "friendship_requests", "users", column: "sender_id"
-  add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "users"
 end

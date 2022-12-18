@@ -9,6 +9,8 @@ class Comment < ApplicationRecord
   belongs_to :parent_comment, class_name: 'Comment', foreign_key: 'parent_comment_id', optional: true,
                               counter_cache: true
 
+  has_many :likes, as: :likeable, dependent: :destroy, inverse_of: :likeable
+
   validates :message, presence: true
 
   scope :newest, -> { order(created_at: :desc) }
@@ -30,6 +32,6 @@ class Comment < ApplicationRecord
   private
 
   def update_counter_caches
-    post.update_counters
+    post.update_comment_counters
   end
 end
