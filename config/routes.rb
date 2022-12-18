@@ -21,14 +21,23 @@ Rails.application.routes.draw do
   root 'feeds#show'
 
   resources :posts, only: %i[index new create show] do
-    resources :likes, only: %i[create destroy]
+    resources :likes, only: %i[create], module: :posts
+    resource :likes, only: %i[destroy], module: :posts
   end
 
+  resources :comments, only: %i[new create edit update index show] do
+    resources :likes, only: %i[create], module: :comments
+    resource :likes, only: %i[destroy], module: :comments
+  end
+
+  # resources :likes, only: %i[destroy]
+  resource :likes, only: %i[destroy]
+
   resource :friendship_request, only: %i[create update destroy]
-  resources :comments, only: %i[new create edit update index show]
   resource :feed, only: %i[show]
   resource :windowed_comments, only: %i[show]
 
   get '/friends', to: 'users#friends'
   get '/load', to: 'comments#load'
 end
+
