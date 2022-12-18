@@ -52,7 +52,7 @@ class CommentsCacheFactory
              .where(post_id: posts)
              .where("by_date.date_order <= #{comments_per_post}")
              .order(created_at: :desc)
-             .includes(:user)
+             .includes(:user, :likes)
              .reverse
     end
     # rubocop:enable Metrics/MethodLength
@@ -68,7 +68,7 @@ class CommentsCacheFactory
              .where(parent_comment_id: comments)
              .where("by_date.date_order <= #{replies_per_comment}")
              .order(:post_id, :created_at)
-             .includes(:user)
+             .includes(:user, :likes)
     end
   end
 end
