@@ -1,12 +1,11 @@
-<% if post.liked_by?(current_user) %>
-  <%= form_with url: post_like_path(post, post.user_like(current_user)), method: :delete, class: 'inline' do |form| %>
-    <%= form.hidden_field :post_id, value: post.id %>
+<% if likeable.liked_by?(current_user) %>
+  <%= form_with url: [likeable, :likes], method: :delete, class: 'inline' do |form| %>
+    <%= form.hidden_field :likeable_id, value: likeable.id %>
     <%= form.submit 'Unlike' %>
   <% end %>
 <% else %>
-  <%= form_with url: post_likes_path(post), class: 'inline' do |form| %>
-    <%= form.hidden_field :post_id, value: post.id %>
+  <%= form_with url: [likeable, Like.new], class: 'inline' do |form| %>
+    <%= form.hidden_field :likeable_id, value: likeable.id %>
     <%= form.submit 'Like' %>
   <% end %>
 <% end %>
-

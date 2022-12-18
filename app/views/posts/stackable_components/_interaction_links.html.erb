@@ -1,4 +1,4 @@
   <div class="is-flex is-justify-content-space-between">
-    <%= render partial: 'likes/form', locals: { like: Like.new, post: post } %>
+    <%= render partial: 'likes/form', locals: { like: Like.new, likeable: post } %>
     <%= link_to 'Comment', new_comment_path(comment: { post_id: post.id }, display: { depth: 0 }), method: :get, data: { turbo_stream: true } %>  
   </div>
