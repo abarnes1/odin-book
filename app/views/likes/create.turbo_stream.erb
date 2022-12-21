@@ -1,0 +1,7 @@
+<%= turbo_stream.update "#{dom_id(likeable)}_like_form" do %>
+  <%= render partial: 'likes/form', locals: { likeable: likeable }%>
+<% end %>
+
+<%= turbo_stream.update "#{dom_id(likeable)}_likes_count" do %>
+  <%= likeable.likes.size %> Likes</span>
+<% end %>
