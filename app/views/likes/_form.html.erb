@@ -1,11 +1,22 @@
 <% if likeable.liked_by?(current_user) %>
-  <%= form_with url: [likeable, :likes], method: :delete, class: 'inline' do |form| %>
+  <%= form_with url: [likeable, :likes], method: :delete, class: 'is-flex is-align-items-center' do |form| %>
     <%= form.hidden_field :likeable_id, value: likeable.id %>
-    <%= form.submit 'Unlike' %>
+    <button type="submit" class='button-link is-flex is-align-items-center' >
+      <span class="mr-1">Unlike</span>
+      <span class="material-symbols-rounded unlike">
+        thumb_up
+      </span>
+    </button>
   <% end %>
 <% else %>
-  <%= form_with url: [likeable, Like.new], class: 'inline' do |form| %>
+  <%= form_with url: [likeable, Like.new], class: 'is-flex is-align-items-center' do |form| %>
     <%= form.hidden_field :likeable_id, value: likeable.id %>
-    <%= form.submit 'Like' %>
+    
+    <button type="submit" class='button-link is-flex is-align-items-center' >
+      <span class="mr-1">Like</span>
+      <span class="material-symbols-rounded like">
+        thumb_up
+      </span>
+    </button>
   <% end %>
 <% end %>

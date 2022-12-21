@@ -1,4 +1,10 @@
-  <div class="is-flex is-justify-content-space-between">
-    <%= render partial: 'likes/form', locals: { like: Like.new, likeable: post } %>
-    <%= link_to 'Comment', new_comment_path(comment: { post_id: post.id }, display: { depth: 0 }), method: :get, data: { turbo_stream: true } %>  
-  </div>
+<div class="is-flex is-justify-content-space-between">
+<%= render partial: 'likes/form', locals: { like: Like.new, likeable: post } %>
+    
+  <span class='is-flex is-align-items-center'>
+    <%= link_to new_comment_path(comment: { post_id: post.id }, display: { depth: 0 }), method: :get, data: { turbo_stream: true }, class: 'is-flex is-align-items-center' do %>  
+      <span class="material-symbols-rounded">mode_comment</span>
+      <span class='ml-1'>Comment</span>
+    <% end %>
+  </span>
+</div>

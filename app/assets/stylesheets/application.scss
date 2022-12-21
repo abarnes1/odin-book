@@ -41,14 +41,68 @@
 
 /* bulma has-text-grey-lighter equivalent */
 a {
-  color: hsl(0, 0%, 86%);
+  color: $grey-lighter;
 }
 
 /* bulma has-text-white-ter equivalent */
 a:hover {
-  color: hsl(0, 0%, 96%);
+  color: $white-ter;
 }
 
 .is-word-break-all {
   word-break: break-all;
+}
+
+form.hide-submit input[type="submit"] {
+  display: none;
+}
+
+.button-link {
+  border: 0px;
+  padding: 0;
+  margin: 0;
+  font-weight: 400;
+  font-size: inherit;
+  color: $grey-lighter;
+  background-color: transparent;
+  border-color: transparent;
+
+  &:hover {
+    color: $white-ter;
+    text-decoration: none;
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  &:focus {
+    text-decoration: none;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  // Remove all padding and height so it's just plain, unpadded text.
+  &.button-text {
+    padding: 0;
+    height: unset;
+  }
+}
+
+.like {
+  font-variation-settings:
+  'FILL' 0;
+
+  color: $grey-lighter;
+  // font-size: 1.25rem;
+}
+
+.like:hover {
+  color: $white-ter;
+}
+
+.unlike {
+  color: hsl(217, 71%, 63%);
+}
+
+.unlike:hover {
+  color: hsl(217, 71%, 53%);
 }
