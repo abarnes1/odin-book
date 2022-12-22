@@ -12,7 +12,7 @@ class LikesController < ApplicationController
               CommentPresenter.new(likeable)
             end
 
-          render :create, locals: { likeable: likeable_presenter }
+          render :update_counters, locals: { likeable: likeable_presenter }
         end
         format.html { redirect_to feed_path, alert: 'Liked!' }
       end
@@ -32,7 +32,7 @@ class LikesController < ApplicationController
               CommentPresenter.new(likeable)
             end
 
-          render :destroy, locals: { likeable: likeable_presenter }
+          render :update_counters, locals: { likeable: likeable_presenter }
         end
         format.html { redirect_to feed_path, alert: 'Unliked!' }
       end
