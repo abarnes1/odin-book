@@ -8,4 +8,8 @@ class Posts::LikesController < LikesController
   def like
     @like ||= Like.find_by(likeable_id: params[:likeable_id], likeable_type: Post.name, user_id: current_user.id)
   end
+
+  def likeable_presenter
+    PostPresenter.new(likeable)
+  end
 end

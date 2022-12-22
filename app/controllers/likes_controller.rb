@@ -5,13 +5,6 @@ class LikesController < ApplicationController
     if likeable.likes.create(user: current_user)
       respond_to do |format|
         format.turbo_stream do
-          likeable_presenter =
-            if likeable.is_a? Post
-              PostPresenter.new(likeable)
-            else
-              CommentPresenter.new(likeable)
-            end
-
           render :update_counters, locals: { likeable: likeable_presenter }
         end
         format.html { redirect_to feed_path, alert: 'Liked!' }
@@ -25,13 +18,6 @@ class LikesController < ApplicationController
     if like.destroy
       respond_to do |format|
         format.turbo_stream do
-          likeable_presenter =
-            if likeable.is_a? Post
-              PostPresenter.new(likeable)
-            else
-              CommentPresenter.new(likeable)
-            end
-
           render :update_counters, locals: { likeable: likeable_presenter }
         end
         format.html { redirect_to feed_path, alert: 'Unliked!' }
