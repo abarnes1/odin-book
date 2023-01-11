@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   root 'feeds#show'
 
-  resources :posts, only: %i[index new create show] do
+  resources :posts, except: %i[destroy] do
     resources :likes, only: %i[create], module: :posts
     resource :likes, only: %i[destroy], module: :posts
   end

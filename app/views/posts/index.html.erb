@@ -1,8 +1,11 @@
-<div class="container bordered">
-  <span class='is-size-3'>User Posts</span>
-  <%= link_to 'New Post', new_post_path %>
-</div>
+<section class="section py-0">
+  <h1 class='is-size-3 has-text-centered'><%= current_user.username %>'s Posts</h1>
+  
+  <span class='is-centered'><%= link_to 'New Post', new_post_path %></span>
+</section>
 
 <section class="section">
-  <%= render partial: 'post', collection: @posts %>
+  <div class='feed-container'>
+    <%= render partial: 'posts/post', collection: @posts, as: :post %>
+  </div>
 </section>

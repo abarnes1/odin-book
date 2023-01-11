@@ -1,10 +1,10 @@
 <div class="is-flex is-justify-content-space-between">
-  <% if post.not_displayed_comments? %>
-    <span>
-      <%= link_to "View Previous (#{post.not_displayed_comments_count} Remain)", load_path(**post.load_comments_params), 
-        id: post.container_id(:load_comments_link),  method: :get, data: { turbo_stream: true } %>
-    </span>
-  <% end %>
+  <span>
+    <% if post.not_displayed_comments? %>
+        <%= link_to "View Previous (#{post.not_displayed_comments_count} Remain)", load_path(**post.load_comments_params), 
+          id: post.container_id(:load_comments_link),  method: :get, data: { turbo_stream: true } %>
+    <% end %>
+  </span>
 
   <span class="is-flex is-justify-content-flex-end">&#9660; All Comments</span>
 </div>
