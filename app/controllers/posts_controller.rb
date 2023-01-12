@@ -22,10 +22,10 @@ class PostsController < ApplicationController
     @post = current_user.posts.build(post_params)
 
     if @post.save
-      flash[:alert] = 'Post Creation Success'
+      flash[:notice] = 'Post Created'
       redirect_to @post
     else
-      flash.now[:alert] = 'Post Creation Error'
+      flash.now[:alert] = 'Post Creation Failed'
       render :new, status: :unprocessable_entity
     end
   end
@@ -41,10 +41,10 @@ class PostsController < ApplicationController
 
   def update
     if post.update(post_params)
-      flash[:alert] = 'Post Updated'
+      flash[:notice] = 'Post Updated'
       redirect_to @post
     else
-      flash[:alert] = 'Post Update Error'
+      flash[:alert] = 'Post Update Failed'
       render :edit, status: :unprocessable_entity
     end
   end

@@ -32,14 +32,14 @@ class CommentsController < ApplicationController
 
       @commentable.display_comments = comment
 
-      flash[:alert] = 'Comment Creation Success'
+      flash[:notice] = 'Comment Created'
 
       respond_to do |format|
         format.html { redirect_to comment_path(comment.parent_comment_id) }
-        format.turbo_stream { render 'commentable/add_comment' }
+        format.turbo_stream { render 'commentable/add_comment', flash.now[:notice] = 'ass'}
       end
     else
-      flash.now[:alert] = 'Comment Creation Error'
+      flash.now[:alert] = 'Comment Creation Failed'
       render :new, status: :unprocessable_entity
     end
   end
@@ -52,14 +52,14 @@ class CommentsController < ApplicationController
     @comment = CommentPresenter.new(Comment.find(params[:id]))
 
     if @comment.update(comment_params)
-      flash[:alert] = 'Comment Update Success'
+      flash[:notice] = 'Comment Updated'
 
       respond_to do |format|
         format.html { redirect_to comment_path(@comment) }
         format.turbo_stream { render :update }
       end
     else
-      flash[:alert] = 'Comment Update Error'
+      flash[:alert] = 'Comment Update Failed'
       render :edit, status: :unprocessable_entity
     end
   end

@@ -5,7 +5,7 @@ class LikesController < ApplicationController
     if likeable.likes.create(user: current_user)
       respond_to do |format|
         format.turbo_stream { render :update, locals: { likeable: likeable_presenter } }
-        format.html { redirect_to feed_path, alert: 'Liked!' }
+        format.html { redirect_to feed_path, notice: 'Liked!' }
       end
     else
       flash[:alert] = 'Like Failed'
@@ -16,7 +16,7 @@ class LikesController < ApplicationController
     if like.destroy
       respond_to do |format|
         format.turbo_stream { render :update, locals: { likeable: likeable_presenter } }
-        format.html { redirect_to feed_path, alert: 'Unliked!' }
+        format.html { redirect_to feed_path, notice: 'Unliked!' }
       end
     else
       flash[:alert] = 'Unlike Failed'
