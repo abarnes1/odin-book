@@ -1,17 +1,19 @@
-<% if notice %>
-  <div data-controller='toggleable' data-toggleable-change-class='is-hidden'>
-    <div class='notification is-primary my-0 has-text-centered' data-toggleable-target="toggle">
-      <button class='delete' data-action="click->toggleable#toggle"></button>
-      <%= notice %>
+<%= turbo_frame_tag 'flash' %>
+  <% if notice %>
+    <div data-controller='toggleable' data-toggleable-change-class='is-hidden'>
+      <div class='notification is-primary my-0 has-text-centered' data-toggleable-target="toggle">
+        <button class='delete' data-action="click->toggleable#toggle"></button>
+        <%= notice %>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 
-<% if alert %>
-  <div data-controller='toggleable' data-toggleable-change-class='is-hidden'>
-    <div class='notification is-danger my-0 has-text-centered' data-toggleable-target="toggle">
-      <button class='delete' data-action="click->toggleable#toggle"></button>
-      <%= alert %>
+  <% if alert %>
+    <div data-controller='toggleable' data-toggleable-change-class='is-hidden'>
+      <div class='notification is-danger my-0 has-text-centered' data-toggleable-target="toggle">
+        <button class='delete' data-action="click->toggleable#toggle"></button>
+        <%= alert %>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>
