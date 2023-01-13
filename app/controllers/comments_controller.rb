@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_authorization, only: %i[edit update destroy]
 
   def index
     # placeholder, may use for user comments
@@ -36,7 +37,7 @@ class CommentsController < ApplicationController
 
       respond_to do |format|
         format.html { redirect_to comment_path(comment.parent_comment_id) }
-        format.turbo_stream { render 'commentable/add_comment', flash.now[:notice] = 'ass'}
+        format.turbo_stream { render 'commentable/add_comment' }
       end
     else
       flash.now[:alert] = 'Comment Creation Failed'
@@ -59,7 +60,7 @@ class CommentsController < ApplicationController
         format.turbo_stream { render :update }
       end
     else
-      flash[:alert] = 'Comment Update Failed'
+      flash.now[:alert] = 'Comment Update Failed'
       render :edit, status: :unprocessable_entity
     end
   end
@@ -84,5 +85,13 @@ class CommentsController < ApplicationController
 
   def display_params
     params.require(:display).permit(:depth)
+  end
+
+  def comment
+    @comment ||= Comment.find(params[:id])
+  end
+
+  def check_authorization
+    head :unauthorized unless comment.user == current_user
   end
 end

@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_authorization, only: %i[edit update]
+  before_action :check_authorization, only: %i[edit update destroy]
 
   def index
     posts = current_user.posts.includes(
@@ -35,8 +35,7 @@ class PostsController < ApplicationController
   end
 
   def edit
-    # @post = Post.find(params[:id])
-    post
+    @post = Post.find(params[:id])
   end
 
   def update
@@ -44,7 +43,7 @@ class PostsController < ApplicationController
       flash[:notice] = 'Post Updated'
       redirect_to @post
     else
-      flash[:alert] = 'Post Update Failed'
+      flash.now[:alert] = 'Post Update Failed'
       render :edit, status: :unprocessable_entity
     end
   end
@@ -56,10 +55,7 @@ class PostsController < ApplicationController
   end
 
   def check_authorization
-    return if post.user == current_user
-
-    flash[:alert] = 'Not Authorized'
-    redirect_to post_path(post)
+    head :unauthorized unless post.user == current_user
   end
 
   def post
