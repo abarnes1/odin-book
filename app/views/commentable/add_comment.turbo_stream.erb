@@ -1,3 +1,5 @@
+<%= turbo_stream.update 'flash', partial: 'shared/flash' unless flash.empty? %>
+
 <%# replace post comments count %>
 <%= render partial: 'posts/comment_counters', locals: { post: PostPresenter.new(@commentable.post) }  %>  
 

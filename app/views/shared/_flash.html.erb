@@ -1,4 +1,4 @@
-<%= turbo_frame_tag 'flash' %>
+<%= turbo_frame_tag 'flash' do %>
   <% if notice %>
     <div data-controller='toggleable' data-toggleable-change-class='is-hidden'>
       <div class='notification is-primary my-0 has-text-centered' data-toggleable-target="toggle">
@@ -16,4 +16,4 @@
       </div>
     </div>
   <% end %>
-</div>
+<% end %>

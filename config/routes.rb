@@ -40,4 +40,3 @@ Rails.application.routes.draw do
   get '/friends', to: 'users#friends'
   get '/load', to: 'comments#load'
 end
-

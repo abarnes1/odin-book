@@ -1,3 +1,5 @@
+<%= turbo_stream.update 'flash', partial: 'shared/flash' unless flash.empty? %>
+
 <%= turbo_stream.update(@comment.container_id(:message)) do %>
   <%= @comment.message %>
 <% end %>
