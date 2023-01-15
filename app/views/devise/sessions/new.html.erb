@@ -1,26 +1,37 @@
-<h2>Log in</h2>
+<h2 class='is-size-3 has-text-centered mb-3'>Log in</h2>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { method: :post, data: { turbo: false } }) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class='columns is-centered px-4'>
+  <div class='column border-curved border-light is-half'>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { method: :post, data: { turbo: false } }) do |f| %>
+      <div class="field">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'input' %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password %><br />
+        <%= f.password_field :password, autocomplete: "current-password", class: 'input' %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="field">
+          
+          <%= f.label :remember_me, class: 'checkbox' do |label|  %>
+            <%= f.check_box :remember_me %>
+            Remember Me
+          <% end %>
+        </div>
+      <% end %>
+
+      <div class="actions">
+        <%= f.submit "Log in", class: 'button' %>
+      </div>
+    <% end %>
   </div>
+</div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
+<div class='columns is-centered px-4'>
+  <div class='column is-half'>
+    <%= render "devise/shared/links" %>
   </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
