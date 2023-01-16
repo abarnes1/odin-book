@@ -14,7 +14,7 @@ class FriendshipRequestsController < ApplicationController
 
     FriendshipRequest.destroy(request.id)
 
-    redirect_to users_path
+    redirect_back(fallback_location: root_path)
   end
 
   def update
@@ -22,13 +22,13 @@ class FriendshipRequestsController < ApplicationController
 
     request.update(status: 'accepted')
 
-    redirect_to users_path
+    redirect_back(fallback_location: users_path)
   end
 
   private
 
   def find_friend_request
-    friend_request = FriendshipRequest.where(sender: current_user, recipient: params[:friend_id]).or(
+    FriendshipRequest.where(sender: current_user, recipient: params[:friend_id]).or(
       FriendshipRequest.where(sender: params[:friend_id], recipient: current_user)
     ).first
   end

@@ -30,13 +30,12 @@ Rails.application.routes.draw do
     resource :likes, only: %i[destroy], module: :comments
   end
 
-  # resources :likes, only: %i[destroy]
   resource :likes, only: %i[destroy]
 
   resource :friendship_request, only: %i[create update destroy]
   resource :feed, only: %i[show]
   resource :windowed_comments, only: %i[show]
 
-  get '/friends', to: 'users#friends'
+  resources :friends, only: %i[index]
   get '/load', to: 'comments#load'
 end

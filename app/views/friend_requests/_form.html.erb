@@ -10,5 +10,5 @@
 
 <%= form_with url: friendship_request_path, method: method, class: 'inline friend-request-form' do |form| %> 
   <%= form.hidden_field :friend_id, value: user.id %>
-  <%= form.submit friendship_button_text(current_user, user) %>
+  <%= form.submit friendship_button_text(current_user, user), class: "button is-small" + " #{friendship_button_class(current_user, user)}" %>
 <% end %>

@@ -10,4 +10,16 @@ module FriendshipRequestHelper
       'Request Friendship'
     end
   end
+
+  def friendship_button_class(user, friend)
+    if user.friends.include?(friend)
+      'is-danger'
+    elsif user.requested_friendship_with?(friend)
+      'is-danger'
+    elsif user.friendship_requested_by?(friend)
+      'is-primary'
+    else
+      'is-link'
+    end
+  end
 end
