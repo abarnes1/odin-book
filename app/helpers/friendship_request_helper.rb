@@ -32,4 +32,12 @@ module FriendshipRequestHelper
       :post
     end
   end
+
+  def friendship_confirm_message(user, friend)
+    if user.friends?(friend)
+      'Really remove friendship?'
+    elsif user.requested_friendship_with?(friend)
+      'Really cancel friendship request?'
+    end
+  end
 end

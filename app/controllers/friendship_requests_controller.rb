@@ -29,6 +29,7 @@ class FriendshipRequestsController < ApplicationController
   def update
     if friend_request.update(status: 'accepted')
       flash[:notice] = 'Request Accepted'
+      # send notification of new friend here
     else
       flash[:alert] = 'Request Failed'
     end

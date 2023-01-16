@@ -1,25 +1,10 @@
 <% form_method = friendship_form_method(current_user, user) %>
 <% color_class = friendship_button_class(current_user, user) %>
-<% button_text = friendship_button_text(current_user, user)%>
+<% button_text = friendship_button_text(current_user, user) %>
+<% confirm_message = friendship_confirm_message(current_user, user) %>
 
 <%= form_with url: friendship_request_path, method: form_method, class: 'inline friend-request-form' do |form| %> 
   <%= form.hidden_field :friend_id, value: user.id %>
-
-  <%# How to best conditionally ask for confirmation? %>
-  <%# Note: I do not know the status of the pending friend request %>
-  <% if form_method == :delete %>
-    <% confirm_message = 'Really remove friendship?' %>
-
-    <% if current_user.requested_friendship_with?(user) %>
-      <% confirm_message = 'Really cancel friendship request?' %>
-    <% end %>
-
-    <%= form.submit button_text, class: "button is-small #{color_class}", 
-        data: { turbo_confirm: confirm_message } %>    
-  <% else  %>
-    <%= form.submit button_text, class: "button is-small #{color_class}" %>
-  <% end %>
-
-  <%# Working button that never confirms %>
-  <%#= form.submit button_text, class: "button is-small #{color_class}" %>
+  <%= form.submit button_text, class: "button is-small #{color_class}", 
+    data: { turbo_confirm: confirm_message } %>  
 <% end %>
