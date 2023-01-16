@@ -22,4 +22,14 @@ module FriendshipRequestHelper
       'is-link'
     end
   end
+
+  def friendship_form_method(user, friend)
+    if user.friends?(friend) || user.requested_friendship_with?(friend)
+      :delete
+    elsif user.friendship_requested_by?(friend)
+      :patch
+    else
+      :post
+    end
+  end
 end

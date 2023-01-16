@@ -1,35 +1,50 @@
 class FriendshipRequestsController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_authorization, only: %i[destroy]
 
   def create
-    current_user.sent_friend_requests.build(recipient_id: params[:friend_id])
+    request = current_user.sent_friend_requests.build(recipient_id: params[:friend_id])
 
-    current_user.save
+    if request.save
+      flash[:notice] = 'Friend Request Sent'
+      # send notification to recipient here
+    else
+      flash[:alert] = 'Request Failed'
+    end
 
-    redirect_to users_path
+    redirect_back(fallback_location: users_path)
   end
 
   def destroy
-    request = find_friend_request
+    if friend_request.destroy
+      flash[:notice] = friend_request.status == 'pending' ? 'Request Cancelled' : 'Friend Removed'
+      # delete sent notification if it exists?
+    else
+      flash[:alert] = 'Request Failed'
+    end
 
-    FriendshipRequest.destroy(request.id)
-
-    redirect_back(fallback_location: root_path)
+    redirect_back(fallback_location: users_path)
   end
 
   def update
-    request = find_friend_request
-
-    request.update(status: 'accepted')
+    if friend_request.update(status: 'accepted')
+      flash[:notice] = 'Request Accepted'
+    else
+      flash[:alert] = 'Request Failed'
+    end
 
     redirect_back(fallback_location: users_path)
   end
 
   private
 
-  def find_friend_request
-    FriendshipRequest.where(sender: current_user, recipient: params[:friend_id]).or(
+  def friend_request
+    @friend_request ||= FriendshipRequest.where(sender: current_user, recipient: params[:friend_id]).or(
       FriendshipRequest.where(sender: params[:friend_id], recipient: current_user)
     ).first
+  end
+
+  def check_authorization
+    head :unauthorized unless friend_request.sender == current_user || friend_request.recipient == current_user
   end
 end
