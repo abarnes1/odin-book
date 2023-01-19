@@ -7,7 +7,9 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  resources :users, only: %i[index show]
+  resources :users, only: %i[index show] do
+    resources :posts, only: %i[index], module: :users
+  end
 
   devise_scope :user do
     get '/sign_in', to: 'devise/sessions#new'
@@ -20,7 +22,7 @@ Rails.application.routes.draw do
 
   root 'feeds#show'
 
-  resources :posts, except: %i[destroy] do
+  resources :posts, except: %i[destroy index] do
     resources :likes, only: %i[create], module: :posts
     resource :likes, only: %i[destroy], module: :posts
   end

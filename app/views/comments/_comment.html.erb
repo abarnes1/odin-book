@@ -11,9 +11,9 @@
         <p><%= comment.user.username %></p>
         <p class="is-word-break-all">
           <%= turbo_frame_tag comment.container_id(:message) do %>
-          <%= comment.message %>
+            <%= comment.message %>
+          <% end %>
         </p>
-        <% end %>
 
         <div class="is-flex is-size-smaller is-justify-content-space-between">
           <div class="is-flex gap-1 is-flex-wrap-wrap is-align-items-center">

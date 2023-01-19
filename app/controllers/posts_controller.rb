@@ -2,18 +2,6 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_authorization, only: %i[edit update destroy]
 
-  def index
-    posts = current_user.posts.includes(
-      likes: [:user],
-      comments: [:user]
-    )
-
-    # not great but won't error - should load some comments similar to a feed
-    # otherwise n+1 problems OR make smaller posts view with limited info that
-    # links to post#show
-    @posts = posts.map { |p| PostPresenter.new(p) }
-  end
-
   def new
     @post = Post.new
   end

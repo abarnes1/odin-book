@@ -1,1 +1,32 @@
-Placeholder profile for <%= @user.username %>
+<section class="section py-0">
+  <h1 class='is-size-3 has-text-centered'><%= @user.username %>'s Profile</h1>
+</section>
+
+<div class='is-flex gap-1 is-flex-wrap-wrap is-justify-content-center'>
+  <div class='image is-128x128 is-flex-shrink-0'><img class='is-rounded' src="<%= gravatar_url(@user.email, 128)%>" alt=""></div>
+  <div class='is-flex is-flex-direction-column'>
+    <p><%= @user.username %></p>
+    <p><%= @user.email %></p>
+    <p><%= link_to "#{@user.posts.count} Posts", user_posts_path(@user) %></p>
+    <p><%= @user.comments.count %> Comments</p>
+    <p><%= @user.friends.count %> Friends</p>
+  </div>
+</div>
+
+<div>
+  Latest post:
+  <% if @post.nil? %>
+    <%= @user.username %> has never made a comment.
+  <% else %>
+    <%= render  partial: 'posts/post', locals: { post: @post } %>
+  <% end %>
+</div>
+
+<div>
+  Latest comment:
+  <% if @comment.nil? %>
+    <%= @user.username %> has never made a comment.
+  <% else %>
+    <%= render partial: 'comments/comment', locals: { comment: @comment } %>
+  <% end %>
+</div>
