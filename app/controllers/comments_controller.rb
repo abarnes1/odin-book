@@ -29,11 +29,15 @@ class CommentsController < ApplicationController
 
       @commentable.display_comments = comment
 
-      flash[:notice] = 'Comment Created'
-
       respond_to do |format|
-        format.html { redirect_to comment_path(comment.parent_comment_id) }
-        format.turbo_stream { render 'commentable/add_comment' }
+        format.html do
+          flash[:notice] = 'Comment Created'
+          redirect_to comment_path(comment.parent_comment_id)
+        end
+        format.turbo_stream do
+          flash.now[:notice] = 'Comment Created'
+          render 'commentable/add_comment'
+        end
       end
     else
       flash.now[:alert] = 'Comment Creation Failed'
@@ -49,11 +53,16 @@ class CommentsController < ApplicationController
     @comment = CommentPresenter.new(Comment.find(params[:id]))
 
     if @comment.update(comment_params)
-      flash[:notice] = 'Comment Updated'
-
       respond_to do |format|
-        format.html { redirect_to comment_path(@comment) }
-        format.turbo_stream { render :update }
+        format.html do
+          flash[:notice] = 'Comment Updated'
+          redirect_to comment_path(@comment)
+        end
+
+        format.turbo_stream do
+          flash.now[:notice] = 'Comment Updated'
+          render :update
+        end
       end
     else
       flash.now[:alert] = 'Comment Update Failed'
