@@ -2,10 +2,6 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_authorization, only: %i[edit update destroy]
 
-  def index
-    # placeholder, may use for user comments
-  end
-
   def load
     @commentable = LoadComments.new(load_comments_params).load
 

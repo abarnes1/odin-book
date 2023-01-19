@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   resources :users, only: %i[index show] do
     resources :posts, only: %i[index], module: :users
+    resources :comments, only: %i[index], module: :users
   end
 
   devise_scope :user do
@@ -22,12 +23,12 @@ Rails.application.routes.draw do
 
   root 'feeds#show'
 
-  resources :posts, except: %i[destroy index] do
+  resources :posts, only: %i[new create edit update show] do
     resources :likes, only: %i[create], module: :posts
     resource :likes, only: %i[destroy], module: :posts
   end
 
-  resources :comments, only: %i[new create edit update index show] do
+  resources :comments, only: %i[new create edit update show] do
     resources :likes, only: %i[create], module: :comments
     resource :likes, only: %i[destroy], module: :comments
   end
