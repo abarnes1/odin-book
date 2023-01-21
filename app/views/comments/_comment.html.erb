@@ -76,7 +76,7 @@ comment partial placeholder
 <div>
   <%= turbo_frame_tag comment.container_id(:comments) do %>  
     <% if comment.display_comments? %>
-      <%= render partial: 'comments/thread_comment', collection: comment.display_comments, as: :comment %>  
+      <%= render partial: 'comments/thread/comment', collection: comment.display_comments, as: :comment %>  
     <% end %>
   <% end %>
 </div>  
