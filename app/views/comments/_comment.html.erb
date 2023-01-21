@@ -1,4 +1,6 @@
-<div class="comment-container is-flex is-flex-direction-column mb-2" id=<%= dom_id(comment) %>>
+comment partial placeholder
+<% if false %>
+<div class="is-flex is-flex-direction-column mb-2" id=<%= dom_id(comment) %>>
   <div class="is-flex">
     <span class="is-flex-shrink-0" style="width: <%= comment.indent_pixels %>px"></span>
 
@@ -74,7 +76,8 @@
 <div>
   <%= turbo_frame_tag comment.container_id(:comments) do %>  
     <% if comment.display_comments? %>
-      <%= render partial: 'comments/comment', collection: comment.display_comments, as: :comment %>  
+      <%= render partial: 'comments/thread_comment', collection: comment.display_comments, as: :comment %>  
     <% end %>
   <% end %>
-</div>
+</div>  
+<% end %>

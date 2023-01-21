@@ -27,6 +27,6 @@
   <% if @comment.nil? %>
     <%= @user.username %> has never made a comment.
   <% else %>
-    <%= render partial: 'comments/comment', locals: { comment: @comment } %>
+    <%= render partial: 'comments/thread_comment', locals: { comment: @comment } %>
   <% end %>
 </div>

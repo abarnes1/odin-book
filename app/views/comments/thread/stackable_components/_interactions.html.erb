@@ -1,0 +1,33 @@
+<div class="is-flex is-size-smaller is-justify-content-space-between">
+  <div class="is-flex gap-1 is-flex-wrap-wrap is-align-items-center">
+    <span>
+      <%= render partial: 'likes/form', locals: { like: Like.new, likeable: comment } %>
+    </span>
+    <span>
+      <%= turbo_frame_tag comment.container_id(:comment_link) do %>
+        <%= link_to 'Reply', new_comment_path(comment: { post_id: comment.post_id, parent_comment_id: comment.id }, display: { depth: comment.child_display_depth }), 
+          class: 'is-text', method: :get, data: { turbo_stream: true } %>
+      <% end %>
+    </span>
+
+    <% if comment.user == current_user %>
+      <span>
+        <% if comment.user == current_user %>
+          <%= link_to 'Edit', edit_comment_path(comment), method: :get, data: { turbo_stream: true } %>  
+        <% end %>
+      </span>
+    <% end %>
+    
+    <span>
+      <%= turbo_frame_tag comment.container_id(:comments_counter) do %>
+        <%= comment.comments.size %>
+      <% end %>
+      Replies
+    </span>
+
+    <span><%= "#{time_ago_in_words(comment.created_at)} ago" %></span>
+  </div>
+  <%= turbo_frame_tag comment.container_id(:likes_count) do %>
+    <span class="is-justify-content-end"><%= comment.likes.size %> Likes</span>  
+  <% end %>
+</div>
