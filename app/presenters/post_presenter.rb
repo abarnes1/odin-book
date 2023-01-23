@@ -16,7 +16,11 @@ class PostPresenter < CommentablePresenterBase
   end
 
   def load_comments_link_text
-    "View Previous (#{not_displayed_comments_count} Remain)"
+    if display_comments?
+      "View Previous (#{not_displayed_comments_count} Remain)"
+    else
+      "View Comments (#{not_displayed_comments_count})"
+    end
   end
 
   def load_comments_params
