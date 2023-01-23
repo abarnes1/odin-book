@@ -8,25 +8,29 @@
     <p><%= @user.username %></p>
     <p><%= @user.email %></p>
     <p><%= link_to "#{@user.posts.count} Posts", user_posts_path(@user) %></p>
-    <p><%= @user.comments.count %> Comments</p>
+    <p><%= link_to "#{@user.comments.count} Comments", user_comments_path(@user) %></p>
     <p><%= @user.friends.count %> Friends</p>
   </div>
 </div>
 
-<div>
-  Latest post:
-  <% if @post.nil? %>
-    <%= @user.username %> has never made a comment.
-  <% else %>
-    <%= render  partial: 'posts/post', locals: { post: @post } %>
-  <% end %>
+<div class='columns is-centered'>
+  <div class='column is-half'>
+    <h2 class='is-size-5 has-text-left'>Latest post:</h2>
+    <% if @post.nil? %>
+      <%= @user.username %> has never made a post.
+    <% else %>
+      <%= render  partial: 'posts/post', locals: { post: @post } %>
+    <% end %>
+  </div>
 </div>
 
-<div>
-  Latest comment:
-  <% if @comment.nil? %>
-    <%= @user.username %> has never made a comment.
-  <% else %>
-    <%= render partial: 'comments/comment', locals: { comment: @comment } %>
-  <% end %>
+<div class='columns is-centered'>
+  <div class='column is-half-desktop'>
+    <h2 class='is-size-5 has-text-left'>Latest comment:</h2>
+    <% if @comment.nil? %>
+      <%= @user.username %> has never made a comment.
+    <% else %>
+      <%= render partial: 'comments/comment', locals: { comment: @comment } %>
+    <% end %>
+  </div>
 </div>

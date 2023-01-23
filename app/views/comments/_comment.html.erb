@@ -1,83 +1,10 @@
-comment partial placeholder
-<% if false %>
-<div class="is-flex is-flex-direction-column mb-2" id=<%= dom_id(comment) %>>
-  <div class="is-flex">
-    <span class="is-flex-shrink-0" style="width: <%= comment.indent_pixels %>px"></span>
+<div class="border-light border-curved is-flex is-flex-direction-column p-2 mb-3">
+  <span>
+    <%= time_ago_in_words(comment.created_at) %> ago on <%= link_to comment.owner.user.username, user_path(comment.owner.user) %>'s 
+    <%= link_to comment.owner.class.name.downcase, comment.owner %>:
+  </span>
 
-    <div class="image is-<%= comment.avatar_size %>x<%= comment.avatar_size %> is-flex-shrink-0">
-      <img class="is-rounded" src="<%= gravatar_url(comment.user.email, comment.avatar_size)%>" alt="">
-    </div>
-    
-    <div class="is-flex is-flex-direction-column is-flex-grow-1 is-flex-shrink-1 ml-2">
-      <div class="border-curved has-background-grey-dark p-2 is-flex is-flex-direction-column">
-        <p><%= comment.user.username %></p>
-        <p class="is-word-break-all">
-          <%= turbo_frame_tag comment.container_id(:message) do %>
-            <%= comment.message %>
-          <% end %>
-        </p>
+  <hr class="my-1 has-background-grey">
 
-        <div class="is-flex is-size-smaller is-justify-content-space-between">
-          <div class="is-flex gap-1 is-flex-wrap-wrap is-align-items-center">
-            <span>
-              <%= render partial: 'likes/form', locals: { like: Like.new, likeable: comment } %>
-            </span>
-            <span>
-              <%= turbo_frame_tag comment.container_id(:comment_link) do %>
-                <%= link_to 'Reply', new_comment_path(comment: { post_id: comment.post_id, parent_comment_id: comment.id }, display: { depth: comment.child_display_depth }), 
-                  class: 'is-text', method: :get, data: { turbo_stream: true } %>
-              <% end %>
-            </span>
-
-            <% if comment.user == current_user %>
-              <span>
-                <% if comment.user == current_user %>
-                  <%= link_to 'Edit', edit_comment_path(comment), method: :get, data: { turbo_stream: true } %>  
-                <% end %>
-              </span>
-            <% end %>
-            
-            <span>
-              <%= turbo_frame_tag comment.container_id(:comments_counter) do %>
-                <%= comment.comments.size %>
-              <% end %>
-              Replies
-            </span>
-
-            <span><%= "#{time_ago_in_words(comment.created_at)} ago" %></span>
-          </div>
-          <%= turbo_frame_tag comment.container_id(:likes_count) do %>
-            <span class="is-justify-content-end"><%= comment.likes.size %> Likes</span>  
-          <% end %>
-        </div>
-      </div>
-
-      <%= turbo_frame_tag comment.container_id(:comment_form) %>
-    </div>
-  </div>
+  <%= comment.message %>
 </div>
-
-<% if comment.not_displayed_comments? %>
-  <div class="is-flex">
-    <span class="is-flex-shrink-0" style="width: <%= comment.load_comments_link_indent_pixels %>px"></span>
-
-    <span class="is-size-smaller">
-      <% if comment.max_display_depth? %>
-        <%= link_to comment.load_comments_link_text, comment_path(comment), data: { turbo: false } %>
-      <% else %>
-        <%= link_to comment.load_comments_link_text, 
-          load_path(**comment.load_comments_params), 
-          id: comment.container_id(:load_comments_link),  method: :get, data: { turbo_stream: true } %>
-      <% end %>
-    </span>
-  </div>
-<% end %>
-
-<div>
-  <%= turbo_frame_tag comment.container_id(:comments) do %>  
-    <% if comment.display_comments? %>
-      <%= render partial: 'comments/thread/comment', collection: comment.display_comments, as: :comment %>  
-    <% end %>
-  <% end %>
-</div>  
-<% end %>

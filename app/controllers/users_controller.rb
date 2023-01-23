@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @post = PostPresenter.new(@user.posts.last)
-    @comment = CommentPresenter.new(@user.comments.last, { depth: 0 })
+    @post = PostPresenter.new(@user.posts.last) unless @user.posts.last.nil?
+    @comment = CommentPresenter.new(@user.comments.last, { depth: 0 }) unless @user.comments.last.nil?
   end
 end
