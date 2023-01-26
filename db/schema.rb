@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_17_223226) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_26_232215) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,8 +25,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_17_223226) do
     t.string "message", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "comments_count"
-    t.integer "likes_count"
+    t.integer "comments_count", default: 0
+    t.integer "likes_count", default: 0
     t.index ["parent_comment_id"], name: "index_comments_on_parent_comment_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
@@ -58,9 +58,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_17_223226) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "total_comments_count"
-    t.integer "comments_count"
-    t.integer "likes_count"
+    t.integer "total_comments_count", default: 0
+    t.integer "comments_count", default: 0
+    t.integer "likes_count", default: 0
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
