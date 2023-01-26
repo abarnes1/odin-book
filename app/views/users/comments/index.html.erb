@@ -1,1 +1,15 @@
-user/:id/comments placeholder
+<section class='section py-0'>
+  <h1 class='is-size-3 has-text-centered'><%= current_user.username %>'s Comments</h1>
+</section>
+
+<section class='section'>
+  <div class='comments-container columns is-centered'>
+    <div class='column is-half-desktop'>
+      <% if @comments.nil? %>
+        <%= @user.username %> has never made a comment.
+      <% else %>
+          <%= render partial: 'comments/comment', collection: @comments, as: :comment %>
+      <% end %>
+    </div>
+  </div>
+</section>

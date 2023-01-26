@@ -1,10 +1,10 @@
-<div class="border-light border-curved is-flex is-flex-direction-column p-2 mb-3">
+<div class='border-light border-curved is-flex is-flex-direction-column p-2 mb-3 is-word-break-all' id=<%= dom_id(comment) %>>
   <span>
     <%= time_ago_in_words(comment.created_at) %> ago on <%= link_to comment.owner.user.username, user_path(comment.owner.user) %>'s 
     <%= link_to comment.owner.class.name.downcase, comment.owner %>:
   </span>
 
-  <hr class="my-1 has-background-grey">
-
   <%= comment.message %>
+  <hr class='my-1 has-background-grey'>
+  <%= render partial: 'comments/stackable_components/interaction_counters', locals: { comment: comment} %>
 </div>
