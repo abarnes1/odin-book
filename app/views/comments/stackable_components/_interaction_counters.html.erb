@@ -1,11 +1,6 @@
 <div class="is-flex is-justify-content-space-between">
   <% if true %>
     <span><%= comment.likes_count %> Likes</span>
-    <span><%= comment.comments_count %> Comments</span>  
-  <% end %>
-  
-  <% if false %>
-    <span><%= comment.likes.size %> Likes</span>
-    <span><%= comment.comments.size %> Comments</span>
+    <span><%= link_to "#{comment.comments_count} Comments", comment %></span>
   <% end %>
 </div>
