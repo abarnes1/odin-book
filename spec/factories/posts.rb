@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :post do
     content { Faker::ChuckNorris.fact }
-    user { nil }
+    association :user, factory: :user
   end
 end

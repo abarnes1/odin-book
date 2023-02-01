@@ -1,5 +1,6 @@
 class Comment < ApplicationRecord
   include Likeable
+  include Pageable
 
   after_create :update_counter_caches
   after_destroy :update_counter_caches

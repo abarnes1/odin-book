@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
   include Likeable
+  include Pageable
 
   belongs_to :user
 
