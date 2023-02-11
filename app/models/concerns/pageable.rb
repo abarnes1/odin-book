@@ -27,7 +27,7 @@ module Pageable
   PER_PAGE_DEFAULT = 10
 
   included do
-    scope :page, ->(page_number: 1, per: nil) { offset(safe_offset(page_number, per)).limit(safe_per_page(per)) }
+    scope :page, ->(page_number = 1, per: nil) { offset(safe_offset(page_number, per)).limit(safe_per_page(per)) }
     scope :pages, ->(per: nil) { (size.to_f / safe_per_page(per)).ceil }
 
     def self.per_page
