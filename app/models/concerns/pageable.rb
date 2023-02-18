@@ -35,7 +35,7 @@ module Pageable
     end
 
     def self.safe_page_number(page_number)
-      return 1 if page_number < 2
+      return 1 if page_number.nil? || page_number < 2
 
       page_number
     end
