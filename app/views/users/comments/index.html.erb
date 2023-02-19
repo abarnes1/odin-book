@@ -1,5 +1,5 @@
 <section class='section py-0'>
-  <h1 class='is-size-3 has-text-centered'><%= current_user.username %>'s Comments</h1>
+  <h1 class='is-size-3 has-text-centered'><%= @user.username %>'s Comments</h1>
 </section>
 
 <section class='section'>
@@ -13,3 +13,7 @@
     </div>
   </div>
 </section>
+
+<%= render layout: 'shared/page_ranges', locals: { page_ranges: @page_ranges } do |page| %>
+  <% user_comments_path(@user, page: page != 1 ? page : nil) %>
+<% end %>

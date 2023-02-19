@@ -1,0 +1,45 @@
+<% if page_ranges.page_count > 1 %>
+  <nav class='pagination my-2 is-centered' role='navigation' aria-label='pagination'>
+    <ul class='pagination-list'>
+      <% unless page_ranges.first_page_number == page_ranges.current_page_number %>
+        <li>
+          <%= link_to page_ranges.first_page_number, yield(page_ranges.first_page_number), class: 'pagination-link has-text-light', 
+            'aria-label': "Goto page #{page_ranges.first_page_number}" %>  
+        </li>
+
+        <li><span class='pagination-ellipsis'>&hellip;</span></li>
+      <% end %>
+
+      <% unless page_ranges.previous_pages.empty? %>
+        <% page_ranges.previous_pages.each do |page| %>
+          <li>
+            <%= link_to page, yield(page), class: 'pagination-link has-text-light', 'aria-label': "Goto page #{page}" %>
+          </li>
+        <% end %>
+      <% end %>
+
+      <li>
+        <%= link_to page_ranges.current_page_number, yield(page_ranges.current_page_number), class: 'pagination-link is-current',
+          'aria-label': "Goto page #{page_ranges.current_page_number}" %>
+      </li>
+
+      <% unless page_ranges.next_pages.empty? %>
+        <% page_ranges.next_pages.each do |page| %>
+          <li>
+            <%= link_to page, yield(page), class: 'pagination-link has-text-light', 'aria-label': "Goto page #{page}" %>
+          </li>
+        <% end %>
+      <% end %>
+
+      <% unless page_ranges.last_page_number == page_ranges.current_page_number %>
+        <li><span class='pagination-ellipsis'>&hellip;</span></li>
+
+        <li>
+          <%= link_to page_ranges.last_page_number, yield(page_ranges.last_page_number), class: 'pagination-link has-text-light', 
+            'aria-label': "Goto page #{page_ranges.last_page_number}" %>  
+        </li>
+      <% end %>
+    </ul>
+  </nav>
+<% end %>
+
