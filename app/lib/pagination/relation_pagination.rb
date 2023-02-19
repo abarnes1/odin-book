@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 require_relative 'page_ranges'
 
-# 
 module Pagination
+  # Allows paging through and/or accessing specific pages of an
+  # ActiveRecord::Relation that includes the Pageable concern.
   class RelationPagination
     def initialize(relation, per_page: relation.per_page)
       @relation = relation

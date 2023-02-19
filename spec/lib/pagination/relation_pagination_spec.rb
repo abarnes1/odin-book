@@ -129,4 +129,54 @@ RSpec.describe Pagination::RelationPagination do
       end
     end
   end
+
+  describe '#next' do
+    it 'returns the next page of models' do
+      last_page = [all_relation.last]
+      with_four_pages.page(3)
+
+      expect(with_four_pages.next).to match_array(last_page)
+    end
+
+    it 'sets the current page' do
+      with_four_pages.page(1)
+      with_four_pages.next
+
+      expect(with_four_pages.current_page_number).to eq(2)
+    end
+
+    context 'when on the last page' do
+      it 'still returns the last page' do
+        last_page = [all_relation.last]
+        with_four_pages.page(4)
+
+        expect(with_four_pages.next).to match_array(last_page)
+      end
+    end
+  end
+
+  describe '#previous' do
+    it 'returns the next page of models' do
+      first_page = all_relation.limit(per_page)
+      with_four_pages.page(2)
+
+      expect(with_four_pages.previous).to match_array(first_page)
+    end
+
+    it 'sets the current page' do
+      with_four_pages.page(3)
+      with_four_pages.previous
+
+      expect(with_four_pages.current_page_number).to eq(2)
+    end
+
+    context 'when on the first page' do
+      it 'still returns the first page' do
+        first_page = all_relation.limit(per_page)
+        with_four_pages.page(1)
+
+        expect(with_four_pages.previous).to match_array(first_page)
+      end
+    end
+  end
 end
