@@ -7,3 +7,7 @@
     <%= render partial: 'posts/post', collection: @posts, as: :post %>
   </div>
 </section>
+
+<%= render layout: 'shared/page_ranges', locals: { page_ranges: @page_ranges } do |page| %>
+  <% user_posts_path(@user, page: page != 1 ? page : nil) %>
+<% end %>
