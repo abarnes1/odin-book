@@ -3,3 +3,7 @@
 </section>
 
 <%= render partial: 'listed_user', collection: @users, as: :user %>  
+
+<%= render layout: 'shared/page_ranges', locals: { page_ranges: @page_ranges } do |page| %>
+  <% users_path(@user, page: page != 1 ? page : nil) %>
+<% end %>
