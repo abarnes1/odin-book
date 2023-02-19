@@ -20,12 +20,12 @@ RSpec.shared_examples Pageable do
   describe '#page' do
     it 'returns the correct page' do
       stub_const("Pageable::PER_PAGE_DEFAULT", 3)
-      expect(described_class.page(4)).to eq([described_class.last])
+      expect(described_class.page(page_number: 4)).to eq([described_class.last])
     end
 
     context 'when page out of range' do
       it 'returns an empty array' do
-        expect(described_class.page(1000)).to eq([])
+        expect(described_class.page(per: 1000)).to eq([])
       end
     end
   end
