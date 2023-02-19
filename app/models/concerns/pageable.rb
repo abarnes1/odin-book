@@ -7,7 +7,7 @@
 # in valid SQL.
 #
 # User.page(-1) => User.page(1)
-# User.page(2, -1) => User.page(2, 10), where 10 is the default per_page value
+# User.page(2, per: -1) => User.page(2, per: 10), where 10 is the default per_page value
 #
 # Per page values may be overridden in model classes, however,
 # invalid values from overridden methods will result in an error rather
@@ -20,7 +20,7 @@
 #   end
 # end
 #
-# User.page(1) defaults to User.page(1, -1) and will raise an exception
+# User.page(1) defaults to User.page(1, per: -1) and will raise an exception
 module Pageable
   extend ActiveSupport::Concern
 
