@@ -8,6 +8,7 @@ module Pagination
     def initialize(relation, per_page: relation.per_page)
       @relation = relation
       @per_page = per_page
+      @page_ranges = nil
     end
 
     attr_reader :per_page
@@ -24,7 +25,10 @@ module Pagination
       num = first_page_number if num <= first_page_number
       num = last_page_number if num >= last_page_number
 
-      self.current_page_number = num
+      if current_page_number != num
+        self.current_page_number = num
+        @page_ranges = nil
+      end
 
       relation.page(current_page_number, per: per_page)
     end
@@ -46,17 +50,25 @@ module Pagination
     end
 
     def next
-      self.current_page_number += 1 if current_page_number < last_page_number
-      page
+      if current_page_number < last_page_number
+        self.current_page_number += 1
+        @page_ranges = nil
+      end
+
+      self
     end
 
     def previous
-      self.current_page_number -= 1 if current_page_number > first_page_number
-      page
+      if current_page_number > first_page_number
+        self.current_page_number -= 1
+        @page_ranges = nil
+      end
+
+      self
     end
 
     def page_ranges
-      Pagination::PageRanges.new(current_page: current_page_number, total_pages: pages)
+      @page_ranges ||= Pagination::PageRanges.new(current_page: current_page_number, total_pages: pages)
     end
 
     private

@@ -38,16 +38,19 @@ RSpec.describe Pagination::RelationPagination do
       it 'returns the requested page' do
         requested_page = 2
         subject.page(requested_page)
+
         expect(subject.current_page_number).to eq(requested_page)
       end
 
       it 'returns first page when negative page requested' do
         subject.page(-1)
+
         expect(subject.current_page_number).to eq(subject.first_page_number)
       end
 
       it 'returns last page when out of range page requested' do
         subject.page(1000)
+
         expect(subject.current_page_number).to eq(subject.last_page_number)
       end
     end
@@ -57,6 +60,7 @@ RSpec.describe Pagination::RelationPagination do
     context 'when page too low' do
       it 'returns the first page' do
         first_page = all_relation.limit(per_page)
+
         expect(with_four_pages.page(-1)).to match_array(first_page)
       end
     end
@@ -64,12 +68,14 @@ RSpec.describe Pagination::RelationPagination do
     context 'when page too high' do
       it 'returns the last page' do
         last_page = [all_relation.last]
+
         expect(with_four_pages.page(1000)).to match_array(last_page)
       end
     end
 
     it 'returns the correct page' do
       second_page = all_relation.limit(per_page).offset(per_page)
+
       expect(with_four_pages.page(2)).to match_array(second_page)
     end
   end
@@ -131,51 +137,41 @@ RSpec.describe Pagination::RelationPagination do
   end
 
   describe '#next' do
-    it 'returns the next page of models' do
-      last_page = [all_relation.last]
-      with_four_pages.page(3)
-
-      expect(with_four_pages.next).to match_array(last_page)
+    it 'returns self' do
+      expect(with_four_pages.next).to eq(with_four_pages)
     end
 
-    it 'sets the current page' do
+    it 'increments the current page' do
       with_four_pages.page(1)
-      with_four_pages.next
 
-      expect(with_four_pages.current_page_number).to eq(2)
+      expect(with_four_pages.next.current_page_number).to eq(2)
     end
 
     context 'when on the last page' do
-      it 'still returns the last page' do
-        last_page = [all_relation.last]
+      it 'does not increment the current page' do
         with_four_pages.page(4)
 
-        expect(with_four_pages.next).to match_array(last_page)
+        expect(with_four_pages.next.current_page_number).to eq(4)
       end
     end
   end
 
   describe '#previous' do
-    it 'returns the next page of models' do
-      first_page = all_relation.limit(per_page)
-      with_four_pages.page(2)
-
-      expect(with_four_pages.previous).to match_array(first_page)
+    it 'returns self' do
+      expect(with_four_pages.previous).to eq(with_four_pages)
     end
 
-    it 'sets the current page' do
-      with_four_pages.page(3)
-      with_four_pages.previous
+    it 'decrements the current page' do
+      with_four_pages.page(2)
 
-      expect(with_four_pages.current_page_number).to eq(2)
+      expect(with_four_pages.previous.current_page_number).to eq(1)
     end
 
     context 'when on the first page' do
-      it 'still returns the first page' do
-        first_page = all_relation.limit(per_page)
+      it 'does not decrement the current page' do
         with_four_pages.page(1)
-
-        expect(with_four_pages.previous).to match_array(first_page)
+        
+        expect(with_four_pages.previous.current_page_number).to eq(1)
       end
     end
   end
