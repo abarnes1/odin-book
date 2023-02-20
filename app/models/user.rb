@@ -20,24 +20,6 @@ class User < ApplicationRecord
            class_name: 'FriendshipRequest', foreign_key: :recipient_id
 
   def friends
-    @friends ||= friends_as_active_record_custom_sql.to_a
-  end
-
-  def friends?(user)
-    friends.include?(user)
-  end
-
-  def requested_friendship_with?(user)
-    friend_request_user_ids.include?(user.id)
-  end
-
-  def friendship_requested_by?(user)
-    requested_friend_user_ids.include?(user.id)
-  end
-
-  private
-
-  def friends_as_active_record_custom_sql
     join_clause = <<~SQL
       JOIN friendship_requests
         ON users.id =
@@ -50,6 +32,24 @@ class User < ApplicationRecord
     SQL
 
     User.joins(join_clause).merge(FriendshipRequest.accepted)
+  end
+
+  def friends?(user)
+    friend_ids.include?(user.id)
+  end
+
+  def requested_friendship_with?(user)
+    friend_request_user_ids.include?(user.id)
+  end
+
+  def friendship_requested_by?(user)
+    requested_friend_user_ids.include?(user.id)
+  end
+
+  private
+
+  def friend_ids
+    @friend_ids ||= friends.pluck(:id).to_a
   end
 
   def friend_request_user_ids

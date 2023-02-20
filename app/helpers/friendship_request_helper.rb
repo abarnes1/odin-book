@@ -1,6 +1,6 @@
 module FriendshipRequestHelper
   def friendship_button_text(user, friend)
-    if user.friends.include?(friend)
+    if user.friends?(friend)
       'Remove Friendship'
     elsif user.requested_friendship_with?(friend)
       'Cancel Request'
@@ -12,7 +12,7 @@ module FriendshipRequestHelper
   end
 
   def friendship_button_class(user, friend)
-    if user.friends.include?(friend)
+    if user.friends?(friend)
       'is-danger'
     elsif user.requested_friendship_with?(friend)
       'is-danger'
