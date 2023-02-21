@@ -9,3 +9,7 @@
     <%= render partial: 'posts/post', collection: @posts, as: :post %>
   </div>
 </section>
+
+<%= render layout: 'shared/page_ranges', locals: { page_ranges: @page_ranges } do |page| %>
+  <% feed_path(page: page != 1 ? page : nil) %>
+<% end %>

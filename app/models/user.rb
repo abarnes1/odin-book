@@ -19,6 +19,13 @@ class User < ApplicationRecord
   has_many :received_friend_requests, -> { FriendshipRequest.pending },
            class_name: 'FriendshipRequest', foreign_key: :recipient_id
 
+  def feed_posts
+    Post.includes(:user, likes: [:user])
+        .joins(:user)
+        .where(user_id: friends.pluck(:id) << id)
+        .newest
+  end
+
   def friends
     join_clause = <<~SQL
       JOIN friendship_requests
