@@ -5,7 +5,7 @@ class FeedsController < ApplicationController
     posts_relation = current_user.feed_posts
     pagination = Pagination::RelationPagination.new(posts_relation)
 
-    @posts = LoadPostsWithTieredComments.new(pagination.page(page).to_a).load
+    @posts = LoadPostsTieredComments.new(pagination.page(page).to_a).load
     @page_ranges = pagination.page_ranges
   end
 
