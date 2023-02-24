@@ -2,13 +2,38 @@
 
 # Loads n comments per m tiers with minimal database activity.  Returns
 # supplied Posts as PostPresenters, which are capable of displaying a
-# subset of all post comments.
+# subset of each post's own #comments as #display_comments.
+#
+# ex: Normally this tree would run a query for the posts, again for each post's
+#  comments, then yet again for each comment's comments in an n+1 fashion, with the
+#  number in parenthesis denoting the query number:
+# Post (1)
+#  Comment (2)
+#    Comment (3)
+#  Comment (2)
+#    Comment (4)
+# Post (1)
+#  Comment (5)
+#    Comment (6)
+#  Comment (5)
+#    Comment (7)
+#
+# This class loads each tier in one query:
+# Post (1)
+#  Comment (2)
+#    Comment (3)
+#  Comment (2)
+#    Comment (3)
+# Post (1)
+#  Comment (2)
+#    Comment (3)
+#  Comment (2)
+#    Comment (3)
 class LoadPostsTieredComments
   extend ServiceSupport::AttachDisplayCommentsFromCache
 
   attr_reader :posts, :comment_tiers, :comments_per_tier
 
-  DEFAULT_POST_COUNT = 5
   DEFAULT_COMMENT_TIERS = 3
   DEFAULT_COMMENTS_PER_TIER = 3
 
