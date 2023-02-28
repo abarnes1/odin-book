@@ -11,9 +11,6 @@ class User < ApplicationRecord
   has_many :likes, inverse_of: :user
   has_many :comments, inverse_of: :user
 
-  # uniqueness at model level
-  # https://nelsonfigueroa.dev/uniqueness-constraint-between-two-columns-in-rails/
-
   has_many :sent_friend_requests, -> { FriendshipRequest.pending },
            class_name: 'FriendshipRequest', foreign_key: :sender_id
   has_many :received_friend_requests, -> { FriendshipRequest.pending },
@@ -33,8 +30,8 @@ class User < ApplicationRecord
           CASE
             WHEN friendship_requests.sender_id = #{id}
               THEN friendship_requests.recipient_id
-            ELSE
-              friendship_requests.sender_id
+            WHEN friendship_requests.recipient_id = #{id}
+              THEN friendship_requests.sender_id
           END
     SQL
 
