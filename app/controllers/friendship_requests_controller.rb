@@ -1,6 +1,7 @@
 class FriendshipRequestsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_authorization, only: %i[destroy]
+  before_action :validate_destroy_request, only: %i[destroy]
+  before_action :validate_create_request, only: %i[create]
 
   def create
     request = current_user.sent_friend_requests.build(recipient_id: params[:friend_id])
@@ -43,6 +44,22 @@ class FriendshipRequestsController < ApplicationController
     @friend_request ||= FriendshipRequest.where(sender: current_user, recipient: params[:friend_id]).or(
       FriendshipRequest.where(sender: params[:friend_id], recipient: current_user)
     ).first
+  end
+
+  def validate_destroy_request
+    if friend_request.nil?
+      flash[:alert] = 'Invalid Request'
+      redirect_back(fallback_location: users_path)
+    end
+
+    check_authorization unless performed?
+  end
+
+  def validate_create_request
+    return unless friend_request
+
+    flash[:alert] = 'Invalid Request'
+    redirect_back(fallback_location: users_path)
   end
 
   def check_authorization
