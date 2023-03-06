@@ -2,7 +2,7 @@ class Post < ApplicationRecord
   include Likeable
   include Pageable
 
-  prepend SoftDeletable
+  include SoftDeletable
   soft_deletable content: 'Post removed'
 
   belongs_to :user

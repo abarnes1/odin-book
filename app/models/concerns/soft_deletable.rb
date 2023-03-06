@@ -1,7 +1,7 @@
 module SoftDeletable
   extend ActiveSupport::Concern
 
-  prepended do
+  included do
     def soft_delete
       self.soft_deleted = true
       self
