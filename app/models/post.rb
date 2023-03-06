@@ -2,6 +2,10 @@ class Post < ApplicationRecord
   include Likeable
   include Pageable
 
+  # include SoftDeletable.with_soft_deletable_fields(content: 'Post content deleted by author.')
+  include SoftDeletable.with_soft_deletable_fields(:content)
+  # prepend SoftDeletable
+
   belongs_to :user
 
   has_many :comments, -> { top_level }, class_name: 'Comment', dependent: :destroy, inverse_of: :post
