@@ -2,9 +2,8 @@ class Post < ApplicationRecord
   include Likeable
   include Pageable
 
-  # include SoftDeletable.with_soft_deletable_fields(content: 'Post content deleted by author.')
-  include SoftDeletable.with_soft_deletable_fields(:content)
-  # prepend SoftDeletable
+  prepend SoftDeletable
+  soft_deletable content: 'Post removed'
 
   belongs_to :user
 
