@@ -1,3 +1,28 @@
+# frozen_string_literal: true
+
+# Handles what is returned by model attributes when a model instance
+# is soft deleted, meaning it is deleted from a user perspective but
+# remains persisted in the underlying database.
+
+# Usage:
+#
+# 1. Defining soft deleted values in Model:
+#
+#  class Post < ApplicationRecord
+#    include SoftDeletable
+#    soft_deletable :attritube1, attribute2: value
+#  end
+#
+#  - attribute1 is soft deleted with a default value
+#  - attribute2 is soft deleted with a specific value
+#
+# 2. Setting values outside of a model class:
+#
+#   Post.set_soft_deletable_field(attribute)
+#  - attribute is soft deleted with a default value
+#
+#   Post.set_soft_deletable_field(attribute, value)
+#  - attribute is soft deleted with a specific value
 module SoftDeletable
   extend ActiveSupport::Concern
 
