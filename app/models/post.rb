@@ -3,7 +3,7 @@ class Post < ApplicationRecord
   include Pageable
 
   include SoftDeletable
-  soft_deletable content: 'Post removed'
+  soft_deletable content: 'deleted post'
 
   belongs_to :user
 

@@ -15,6 +15,12 @@ module SoftDeletable
     def soft_deleted?
       soft_deleted
     end
+
+    private
+
+    def field_type_default(field)
+      self.class.field_type_default(field)
+    end
   end
 
   class_methods do
@@ -34,14 +40,12 @@ module SoftDeletable
       end
 
       define_method field do
-        soft_deleted? ? (override || self.class.field_type_default(field)) : super()
+        soft_deleted? ? (override || field_type_default(field)) : super()
       end
 
       define_method "original_#{field}".to_sym do
         self[field]
       end
-
-      true
     end
 
     def active_record_field_type(field)
