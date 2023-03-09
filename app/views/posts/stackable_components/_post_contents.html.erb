@@ -6,4 +6,4 @@
   </div>
 </div>
 
-<p class="mb-2"><%= post.content %></p>
+<p class="mb-2<%= ' is-italic' if post.soft_deleted? %>"><%= post.content %></p>
