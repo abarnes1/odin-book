@@ -1,8 +1,10 @@
 require 'rails_helper'
 require_relative 'concerns/shared/pageable'
+require_relative 'concerns/shared/soft_deletable'
 
 RSpec.describe Comment, type: :model do
   it_behaves_like Pageable
+  it_behaves_like SoftDeletable
 
   describe '#top_level?' do
     context 'when comment is a post comment' do

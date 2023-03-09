@@ -1,8 +1,10 @@
 require 'rails_helper'
 require_relative 'concerns/shared/pageable'
+require_relative 'concerns/shared/soft_deletable'
 
 RSpec.describe Post, type: :model do
   it_behaves_like Pageable
+  it_behaves_like SoftDeletable
 
   describe '#comments_count' do
     let!(:user) { create(:user) }

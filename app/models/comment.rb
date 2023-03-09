@@ -1,6 +1,9 @@
 class Comment < ApplicationRecord
   include Likeable
   include Pageable
+  include SoftDeletable
+
+  soft_deletable message: 'comment deleted by author'
 
   after_create :update_counter_caches
   after_destroy :update_counter_caches
