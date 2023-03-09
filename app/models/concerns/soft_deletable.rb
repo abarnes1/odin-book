@@ -41,8 +41,6 @@ module SoftDeletable
       soft_deleted
     end
 
-    private
-
     def field_type_default(field)
       self.class.field_type_default(field)
     end
@@ -77,8 +75,8 @@ module SoftDeletable
       columns_hash[field.to_s].type
     end
 
-    def field_type_default(field)
-      active_record_field_type = active_record_field_type(field)
+    def field_type_default(field_name)
+      active_record_field_type = active_record_field_type(field_name)
       return 'String is soft deleted.' if active_record_field_type == :string
 
       raise ArgumentError, "Default soft deleted value for field type #{active_record_field_type} does not exist. "\
