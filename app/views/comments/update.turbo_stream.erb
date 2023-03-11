@@ -8,3 +8,6 @@
   <% render partial: 'comments/delete_link', locals: { comment: @comment }%>
 <% end %>
 
+<%= turbo_stream.update(@comment.container_id(:interactions)) do %>
+  <%= render partial: 'comments/thread/stackable_components/interactions', locals: { comment: @comment } %>
+<% end %>

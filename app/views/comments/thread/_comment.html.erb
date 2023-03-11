@@ -20,7 +20,9 @@
           <% end %>
         <% end %>
 
-        <%= render partial: 'comments/thread/stackable_components/interactions', locals: { comment: comment } %>
+        <%= turbo_frame_tag comment.container_id(:interactions) do %>
+          <%= render partial: 'comments/thread/stackable_components/interactions', locals: { comment: comment } %>
+        <% end %>
       </div>
 
       <%= turbo_frame_tag comment.container_id(:comment_form) %>

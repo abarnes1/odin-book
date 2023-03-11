@@ -10,16 +10,8 @@
       <% end %>
     </span>
 
-    <% if comment.user == current_user %>
+    <% if comment.user == current_user && !comment.soft_deleted? %>
       <span>
-      <% if false %>
-        <% if comment.soft_deleted %>
-          <%= link_to 'Undelete', comment_path(comment, comment: { soft_deleted: false }), method: :put, data: { turbo_stream: true, turbo_method: :patch } %>  
-        <% else %>
-          <%= link_to 'Edit', edit_comment_path(comment), method: :get, data: { turbo_stream: true } %>  
-          <%= link_to 'Delete', edit_comment_path(comment, params: { soft_deleted: true }), method: :patch, data: { turbo_stream: true } %>  
-        <% end %>
-      <% end %>
         <%= link_to 'Edit', edit_comment_path(comment), method: :get, data: { turbo_stream: true } %>  
       </span>
     <% end %>

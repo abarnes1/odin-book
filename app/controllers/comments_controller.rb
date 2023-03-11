@@ -50,7 +50,7 @@ class CommentsController < ApplicationController
   end
 
   def update
-    @comment = CommentPresenter.new(Comment.find(params[:id]))
+    @comment = CommentPresenter.new(Comment.find(params[:id]), display_params )
 
     if @comment.update(comment_params)
       respond_to do |format|
