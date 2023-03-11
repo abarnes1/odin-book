@@ -1,0 +1,7 @@
+  <% if comment.user == current_user %>
+    <% if comment.soft_deleted? %>
+      <%= link_to 'Undelete', comment_path(comment, comment: { soft_deleted: false }), method: :put, class: 'is-size-smaller', data: { turbo_stream: true, turbo_method: :patch } %>  
+    <% else %>
+      <%= link_to 'Delete', comment_path(comment, comment: { soft_deleted: true }), method: :put, class: 'is-size-smaller', data: { turbo_stream: true, turbo_method: :patch } %>  
+    <% end %>         
+  <% end %>

@@ -10,11 +10,15 @@
       <div class="border-curved has-background-grey-dark p-2 is-flex is-flex-direction-column">
         <p><%= comment.user.username %></p>
 
-        <p class="is-word-break-all<%= ' is-italic' if comment.soft_deleted? %>">
-          <%= turbo_frame_tag comment.container_id(:message) do %>
-            <%= comment.message %>
+        <%= turbo_frame_tag comment.container_id(:message) do %>
+          <% render partial: 'comments/message', locals: { comment: comment } %>
+        <% end %>
+
+        <% if comment.user == current_user %>
+          <%= turbo_frame_tag comment.container_id(:delete_link) do %>
+            <% render partial: 'comments/delete_link', locals: { comment: comment } %>
           <% end %>
-        </p>
+        <% end %>
 
         <%= render partial: 'comments/thread/stackable_components/interactions', locals: { comment: comment } %>
       </div>

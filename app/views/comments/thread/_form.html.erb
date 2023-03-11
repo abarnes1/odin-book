@@ -4,6 +4,10 @@
     <%= form.hidden_field :post_id, value: comment.post_id %>
     <%= form.hidden_field :parent_comment_id %>
 
+    <% if false %>
+      <%= form.hidden_field :soft_deleted %>  
+    <% end %>
+
     <%= hidden_field_tag "display[depth]", comment.display_depth %>
 
     <% button_text = comment.persisted? ? 'Update' : 'Comment' %>

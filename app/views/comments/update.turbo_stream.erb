@@ -1,5 +1,10 @@
 <%= turbo_stream.update 'flash', partial: 'shared/flash' unless flash.empty? %>
 
 <%= turbo_stream.update(@comment.container_id(:message)) do %>
-  <%= @comment.message %>
+  <% render partial: 'comments/message', locals: { comment: @comment }%>
 <% end %>
+
+<%= turbo_stream.update(@comment.container_id(:delete_link)) do %>
+  <% render partial: 'comments/delete_link', locals: { comment: @comment }%>
+<% end %>
+
