@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_authorization, only: %i[edit update destroy]
+  before_action :check_authorization, only: %i[edit update]
 
   def new
     @post = Post.new

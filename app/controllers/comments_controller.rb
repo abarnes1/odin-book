@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_authorization, only: %i[edit update destroy]
+  before_action :check_authorization, only: %i[edit update]
 
   def load
     @commentable = LoadComments.new(load_comments_params).load
