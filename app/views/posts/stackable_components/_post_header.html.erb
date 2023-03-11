@@ -5,5 +5,3 @@
     <p><%= time_ago_in_words(post.created_at) %></p>
   </div>
 </div>
-
-<p class="mb-2<%= ' is-italic' if post.soft_deleted? %>"><%= post.content %></p>

@@ -8,6 +8,6 @@
   <%= form_with model: post do |form| %>
     <%= form.label :content, "What's on your mind?" %>
     <%= form.text_area :content, class: "textarea input is-static has-background-grey-dark has-text-grey-lighter border-curved my-2 px-2", rows: "5", required: true %>
-    <%= form.submit class: "button p-2 is-dark border-curved" %>
+    <%= form.submit class: "button p-2 is-dark border-curved", data: { turbo: false } %>
   <% end %>
 </div>

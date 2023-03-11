@@ -1,7 +1,7 @@
 <div class="is-flex is-justify-content-space-between">
   <%= render partial: 'likes/form', locals: { like: Like.new, likeable: post } %>
 
-  <% if post.user == current_user %>
+  <% if post.user == current_user && !post.soft_deleted? %>
     <%= link_to edit_post_path(post), class: 'is-flex is-align-items-center' do %>
       <span class="material-symbols-rounded">edit</span>
       <span class='ml-1'>Edit</span>

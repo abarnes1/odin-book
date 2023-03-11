@@ -1,0 +1,9 @@
+  <% if post.user == current_user %>
+    <% if post.soft_deleted? %>
+      <%= link_to 'Undelete', post_path(post, post: { soft_deleted: false }), 
+        method: :put, class: 'is-size-smaller', data: { turbo_stream: true, turbo_method: :patch } %>  
+    <% else %>
+      <%= link_to 'Delete', post_path(post, post: { soft_deleted: true }),
+        method: :put, class: 'is-size-smaller', data: { turbo_stream: true, turbo_method: :patch } %>  
+    <% end %>         
+  <% end %>
