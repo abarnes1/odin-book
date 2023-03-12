@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :posts, inverse_of: :user
   has_many :likes, inverse_of: :user
   has_many :comments, inverse_of: :user
+  has_many :notifications, inverse_of: :user
 
   has_many :sent_friend_requests, -> { FriendshipRequest.pending },
            class_name: 'FriendshipRequest', foreign_key: :sender_id
