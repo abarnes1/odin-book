@@ -7,7 +7,9 @@
 <div class="post-container border-light border-curved is-flex is-flex-direction-column mx-auto p-2 mb-3">
   <%= form_with model: post do |form| %>
     <%= form.label :content, "What's on your mind?" %>
-    <%= form.text_area :content, class: "textarea input is-static has-background-grey-dark has-text-grey-lighter border-curved my-2 px-2", rows: "5", required: true %>
+    <%= form.text_area :content, class: "textarea input is-static has-background-grey-dark has-text-grey-lighter border-curved my-2 px-2", 
+      rows: "5", required: true, value: post.original_content %>
+    
     <%= form.submit class: "button p-2 is-dark border-curved", data: { turbo: false } %>
   <% end %>
 </div>
