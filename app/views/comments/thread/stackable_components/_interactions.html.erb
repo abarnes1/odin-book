@@ -12,7 +12,7 @@
 
     <% if comment.user == current_user && !comment.soft_deleted? %>
       <span>
-        <%= link_to 'Edit', edit_comment_path(comment), method: :get, data: { turbo_stream: true } %>  
+        <%= link_to 'Edit', edit_comment_path(comment, display: { depth: comment.display_depth } ), method: :get, data: { turbo_stream: true } %>  
       </span>
     <% end %>
     

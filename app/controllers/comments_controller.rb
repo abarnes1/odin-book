@@ -22,8 +22,6 @@ class CommentsController < ApplicationController
   def create
     comment = CommentPresenter.new(current_user.comments.build(comment_params), display_params)
     if comment.save
-      # LoadCommnents works but probably does too much, maybe can do something like
-      # CommentablePresenterFactory.build(comment.owner, presenter_params) instead
       @commentable = LoadComments.new(comment_id: comment.parent_comment_id, post_id: comment.post_id,
                                       limit: 0, depth: comment.display_depth - 1).load
 
@@ -46,16 +44,19 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    @comment = CommentPresenter.new(Comment.find(params[:id]))
-
     respond_to do |format|
-      format.html { redirect_to comment_path(@comment) }
-      format.turbo_stream { @comment }
+      format.html do
+        redirect_to comment_path(comment)
+      end
+
+      format.turbo_stream do
+        @comment = CommentPresenter.new(Comment.find(params[:id]), display_params)
+      end
     end
   end
 
   def update
-    @comment = CommentPresenter.new(Comment.find(params[:id]), display_params )
+    @comment = CommentPresenter.new(Comment.find(params[:id]), display_params)
 
     if @comment.update(comment_params)
       respond_to do |format|
