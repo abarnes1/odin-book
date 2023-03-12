@@ -47,6 +47,11 @@ class CommentsController < ApplicationController
 
   def edit
     @comment = CommentPresenter.new(Comment.find(params[:id]))
+
+    respond_to do |format|
+      format.html { redirect_to comment_path(@comment) }
+      format.turbo_stream { @comment }
+    end
   end
 
   def update

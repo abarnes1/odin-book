@@ -1,6 +1,7 @@
 <div class="is-flex">
   <%= form_with model: comment, class: "is-flex is-flex-grow-1 my-2" do |form| %>
-    <%= form.text_field :message, class: "input is-static is-flex-grow-1 has-background-grey-dark has-text-grey-lighter border-curved", required: true, active: true %>
+    <%= form.text_field :message, class: "input is-static is-flex-grow-1 has-background-grey-dark has-text-grey-lighter border-curved",
+      required: true, active: true, value: comment.original_message %>
     <%= form.hidden_field :post_id, value: comment.post_id %>
     <%= form.hidden_field :parent_comment_id %>
 
