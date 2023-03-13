@@ -55,14 +55,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_12_142112) do
 
   create_table "notifications", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "participant_id", null: false
     t.string "notifiable_type", null: false
     t.bigint "notifiable_id", null: false
     t.boolean "acknowledged", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
-    t.index ["participant_id"], name: "index_notifications_on_participant_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
@@ -101,6 +99,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_12_142112) do
   add_foreign_key "friendship_requests", "users", column: "sender_id"
   add_foreign_key "likes", "users"
   add_foreign_key "notifications", "users"
-  add_foreign_key "notifications", "users", column: "participant_id"
   add_foreign_key "posts", "users"
 end
