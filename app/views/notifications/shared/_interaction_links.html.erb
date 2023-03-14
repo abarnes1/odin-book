@@ -1,0 +1,7 @@
+<div class='is-flex gap-1'>
+  <% unless notification.acknowledged? %>
+    <%= button_to 'Acknowledge', '' %>  
+  <% end %>
+  
+  <%= button_to 'Delete', '' %>
+</div>

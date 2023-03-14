@@ -1,3 +1,3 @@
 <% @notifications.each do |notification| %>
-  <%= render partial: "notifications/#{notification.notifiable_type.underscore}_notification", locals: { notifiable: notification.notifiable } %>
+  <%= render partial: "notifications/#{notification.notifiable_type.underscore}_notification", locals: { notification: notification } %>
 <% end %>
