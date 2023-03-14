@@ -1,6 +1,9 @@
 <div class='is-flex gap-1'>
   <% unless notification.acknowledged? %>
-    <%= button_to 'Acknowledge', '' %>  
+    <%= form_with model: notification do |form| %>
+      <%= form.hidden_field :acknowledged, value: true %>
+      <%= form.submit 'Acknowledge', data: { turbo: false } %>
+    <% end %>
   <% end %>
   
   <%= button_to 'Delete', notification_path(notification), method: :delete, data: { turbo: false } %>

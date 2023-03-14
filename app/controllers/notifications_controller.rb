@@ -17,8 +17,19 @@ class NotificationsController < ApplicationController
   end
 
   def update
-    # if notification.update(notification_params)
-    # end
+    if notification.update(notification_params)
+      respond_to do |format|
+        format.html do
+          flash[:notice] = 'Notification Updated'
+          redirect_back(fallback_location: notifications_path)
+        end
+
+        format.turbo_stream do
+          flash.now[:notice] = 'Notification Updated'
+          render :update
+        end
+      end
+    end
   end
 
   def destroy
