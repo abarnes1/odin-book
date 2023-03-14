@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   resource :friendship_request, only: %i[create update destroy]
   resource :feed, only: %i[show]
   resource :windowed_comments, only: %i[show]
-  resources :notifications, only: %i[index]
+  resources :notifications, only: %i[index destroy]
 
   resources :friends, only: %i[index]
   get '/load', to: 'comments#load'

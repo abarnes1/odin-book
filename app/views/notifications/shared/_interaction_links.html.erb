@@ -3,5 +3,5 @@
     <%= button_to 'Acknowledge', '' %>  
   <% end %>
   
-  <%= button_to 'Delete', '' %>
+  <%= button_to 'Delete', notification_path(notification), method: :delete, data: { turbo: false } %>
 </div>
