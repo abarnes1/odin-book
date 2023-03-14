@@ -27,6 +27,8 @@ class CommentsController < ApplicationController
 
       @commentable.display_comments = comment
 
+      Notification.create(user: @commentable.user, notifiable_id: comment.id, notifiable_type: 'Comment')
+
       respond_to do |format|
         format.html do
           flash[:notice] = 'Comment Created'

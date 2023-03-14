@@ -8,7 +8,7 @@ class FriendshipRequestsController < ApplicationController
 
     if request.save
       flash[:notice] = 'Friend Request Sent'
-      # send notification to recipient here
+      Notification.create(user: request.recipient, notifiable: request)
     else
       flash[:alert] = 'Request Failed'
     end
