@@ -1,0 +1,3 @@
+<%= turbo_stream.update('notifications_modal') do %>
+  <%= render partial: 'notifications/modal', locals: { notifications: @notifications } %>
+<% end %>

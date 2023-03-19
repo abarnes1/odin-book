@@ -5,12 +5,14 @@ class NotificationsController < ApplicationController
   def index
     @notifications = current_user.notifications.newest.limit(10).includes(
       [
-        notifiable: 
+        notifiable:
         [
           :user,                    # user being notified
           :sender,                  # friendship request
-          post: [:user],            # posts
-          parent_comment: [:user],  # comments
+          {
+            post: [:user],          # posts
+            parent_comment: [:user] # comments
+          }
         ]
       ]
     )

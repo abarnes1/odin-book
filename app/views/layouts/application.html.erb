@@ -12,6 +12,7 @@
 
   <body class='site is-flex is-flex-direction-column has-background-black-ter has-text-grey-lighter'>
     <%= render partial: 'shared/nav' if user_signed_in? %>
+    <%= turbo_frame_tag 'notifications_modal' if user_signed_in? %>
     <%= render partial: 'shared/flash' %>
 
     <main class='is-flex-grow-1'>

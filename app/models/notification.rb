@@ -3,4 +3,5 @@ class Notification < ApplicationRecord
   belongs_to :notifiable, polymorphic: true
 
   scope :newest, -> { order(created_at: :desc) }
+  scope :unacknowledged, -> { where(acknowledged: false) }
 end

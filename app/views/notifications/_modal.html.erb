@@ -1,0 +1,11 @@
+  <div class="modal is-active" data-controller='toggleable' data-toggleable-change-class='is-active' data-toggleable-target="toggle">
+    <div class="modal-background" data-action="click->toggleable#toggle"></div>
+    <div class="modal-content">
+        <div class="modal-content">
+          <% notifications.each do |notification| %>
+            <%= render partial: "notifications/modal_cards/#{notification.notifiable_type.underscore}_notification", locals: { notification: notification } %>
+          <% end %>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" data-action="click->toggleable#toggle"></button>
+  </div>
