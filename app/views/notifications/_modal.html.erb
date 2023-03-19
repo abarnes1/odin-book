@@ -1,11 +1,23 @@
-  <div class="modal is-active" data-controller='toggleable' data-toggleable-change-class='is-active' data-toggleable-target="toggle">
-    <div class="modal-background" data-action="click->toggleable#toggle"></div>
-    <div class="modal-content">
-        <div class="modal-content">
-          <% notifications.each do |notification| %>
-            <%= render partial: "notifications/modal_cards/#{notification.notifiable_type.underscore}_notification", locals: { notification: notification } %>
-          <% end %>
-        </div>
-    </div>
-    <button class="modal-close is-large" aria-label="close" data-action="click->toggleable#toggle"></button>
+<div class="modal is-active" data-controller='toggleable' data-toggleable-change-class='is-active' data-toggleable-target="toggle">
+  <div class="modal-background" data-action="click->toggleable#toggle"></div>
+  <div class="modal-card">
+    <header class="modal-card-head has-background-black-ter">
+      <p class="modal-card-title has-text-grey-lighter">Notifications</p>
+      <button class="delete" aria-label="close" data-action="click->toggleable#toggle"></button>
+    </header>
+
+    <section class="modal-card-body has-background-black-ter has-text-grey-lighter">
+      <% notifications.each do |notification| %>
+        <%= render partial: "notifications/modal_cards/#{notification.notifiable_type.underscore}_notification", locals: { notification: notification } %>
+
+        <% unless notifications.last.eql?(notification) %>
+          <hr class='has-background-grey'>
+        <% end %>
+      <% end %>
+    </section>
+
+    <footer class="modal-card-foot has-background-black-ter has-text-grey-lighter is-flex is-justify-content-end">
+      <%= button_to 'View All', notifications_path, class: 'button is-success mr-0' %>
+    </footer>
   </div>
+</div>
