@@ -16,15 +16,17 @@ class NotificationsController < ApplicationController
         ]
       ]
     )
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { unsupported_format }
+    end
   end
 
   def update
     if notification.update(notification_params)
       respond_to do |format|
-        format.html do
-          flash[:notice] = 'Notification Updated'
-          redirect_back(fallback_location: notifications_path)
-        end
+        format.html { unsupported_format }
 
         format.turbo_stream do
           flash.now[:notice] = 'Notification Updated'
@@ -37,10 +39,7 @@ class NotificationsController < ApplicationController
   def destroy
     if notification.destroy
       respond_to do |format|
-        format.html do
-          flash[:notice] = 'Notification Removed'
-          redirect_back(fallback_location: notifications_path)
-        end
+        format.html { unsupported_format }
 
         format.turbo_stream do
           flash.now[:notice] = 'Notification Removed'
@@ -62,5 +61,10 @@ class NotificationsController < ApplicationController
 
   def notification
     @notification ||= Notification.find(params[:id])
+  end
+
+  def unsupported_format
+    flash[:alert] = 'Not Supported'
+    redirect_back(fallback_location: feed_path)
   end
 end
