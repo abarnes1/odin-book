@@ -8,16 +8,28 @@
 
     <section class="modal-card-body has-background-black-ter has-text-grey-lighter">
       <% notifications.each do |notification| %>
-        <%= render partial: "notifications/modal_cards/#{notification.notifiable_type.underscore}_notification", locals: { notification: notification } %>
+        <%= turbo_frame_tag dom_id(notification) do %>
+          <%= render layout: "notifications/modal_cards/#{notification.notifiable_type.underscore}_notification",  
+          locals: { notification: notification, last: notifications.last.eql?(notification) } do %>
+          
+            <% unless notifications.last.eql?(notification) %>
+              <hr class='has-background-grey'>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
 
-        <% unless notifications.last.eql?(notification) %>
-          <hr class='has-background-grey'>
+      <%= turbo_frame_tag 'notifications_placeholder' do %>
+        <% if notifications.empty? %>
+          <p>No notifications.</p>
         <% end %>
       <% end %>
     </section>
 
-    <footer class="modal-card-foot has-background-black-ter has-text-grey-lighter is-flex is-justify-content-end">
-      <%= button_to 'View All', notifications_path, class: 'button is-success mr-0' %>
-    </footer>
+    <% if false %>
+      <footer class="modal-card-foot has-background-black-ter has-text-grey-lighter is-flex is-justify-content-end">
+        <%= button_to 'View All', notifications_path, class: 'button is-success mr-0', method: :get %>
+      </footer>
+    <% end %>
   </div>
 </div>

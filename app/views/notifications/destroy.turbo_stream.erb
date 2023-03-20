@@ -1,0 +1,11 @@
+<%= turbo_stream.update 'notifications_count' do %>
+  <%= current_user.notifications.unacknowledged.count %>
+<% end %>
+
+<%= turbo_stream.remove(dom_id(@notification)) %>
+
+<% if current_user.notifications.unacknowledged.empty? %>
+  <%= turbo_stream.update 'notifications_placeholder' do %>
+    <p>No notifications.</p>
+  <% end %>
+<% end %>

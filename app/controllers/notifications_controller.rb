@@ -3,7 +3,7 @@ class NotificationsController < ApplicationController
   before_action :check_authorization, only: %i[update destroy]
 
   def index
-    @notifications = current_user.notifications.newest.limit(10).includes(
+    @notifications = current_user.notifications.unacknowledged.newest.limit(10).includes(
       [
         notifiable:
         [

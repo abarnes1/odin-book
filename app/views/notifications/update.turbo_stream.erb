@@ -1,0 +1,11 @@
+<%= turbo_stream.update 'notifications_count' do %>
+  <%= current_user.notifications.unacknowledged.count %>
+<% end %>
+
+<%= turbo_stream.update(dom_id(@notification)) do %>
+  <%= render layout: "notifications/modal_cards/#{@notification.notifiable_type.underscore}_notification", locals: { notification: @notification } do %>
+    <% unless current_user.notifications.unacknowledged.last.eql?(@notification) %>
+      <hr class='has-background-grey'>
+    <% end %>
+  <% end %>
+<% end %>
