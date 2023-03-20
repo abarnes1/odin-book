@@ -19,13 +19,14 @@
 
     <section class="modal-card-body has-background-black-ter has-text-grey-lighter">
       <% notifications.each do |notification| %>
-        <%= turbo_frame_tag dom_id(notification) do %>
-          <%= render layout: "notifications/modal_cards/#{notification.notifiable_type.underscore}_notification",  
-          locals: { notification: notification, last: notifications.last.eql?(notification) } do %>
-          
-            <% unless notifications.last.eql?(notification) %>
-              <hr class='has-background-grey'>
-            <% end %>
+        <%= turbo_frame_tag "#{dom_id(notification)}_container" do %>
+          <%= turbo_frame_tag dom_id(notification) do %>
+            <%= render partial: "notifications/modal_cards/#{notification.notifiable_type.underscore}_notification",  
+            locals: { notification: notification, last: notifications.last.eql?(notification) } %>
+          <% end %>
+
+          <% unless notifications.last.eql?(notification) %>
+            <hr class='has-background-grey'>
           <% end %>
         <% end %>
       <% end %>
