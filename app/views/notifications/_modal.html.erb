@@ -8,7 +8,7 @@
         </span>
 
         <% if params[:filters].present? && params[:filters][:unread] == 'true' %>
-          <%= button_to 'View All', notifications_path, method: :get, data: { turbo_stream: true }, class: 'button is-small is-dark ml-2' %>
+          <%= button_to 'Include Previously Read', notifications_path, method: :get, data: { turbo_stream: true }, class: 'button is-small is-dark ml-2' %>
         <% else %>
           <%= button_to 'Unread Only', notifications_path, params: { filters: { unread: true } }, method: :get, data: { turbo_stream: true }, class: 'button is-small is-dark ml-2' %>
         <% end %>
@@ -37,9 +37,10 @@
       <% end %>
     </section>
 
-    <% if false %>
+    <% unless @pagination.current_page_number == @pagination.last_page_number %>
       <footer class="modal-card-foot has-background-black-ter has-text-grey-lighter is-flex is-justify-content-end">
-        <%= button_to 'View All', notifications_path, class: 'button is-success mr-0', method: :get %>
+        <%= button_to 'More', notifications_path, params: @filters.merge(page: @pagination.current_page_number, filters: { oldest: notifications.last.id } ),
+          data: { turbo_stream: true }, class: 'button is-success mr-0', method: :get %>
       </footer>
     <% end %>
   </div>

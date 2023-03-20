@@ -1,4 +1,6 @@
 class Notification < ApplicationRecord
+  include Pageable
+
   belongs_to :user, inverse_of: :notifications
   belongs_to :notifiable, polymorphic: true
 

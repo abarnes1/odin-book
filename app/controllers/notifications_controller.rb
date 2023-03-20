@@ -3,7 +3,11 @@ class NotificationsController < ApplicationController
   before_action :check_authorization, only: %i[update destroy]
 
   def index
-    @notifications = filter(index_base_relation, filter_params)
+    notifications_relation = filter(index_base_relation, filter_params)
+
+    @pagination = Pagination::RelationPagination.new(notifications_relation)
+    @notifications = @pagination.page(1)
+    @filters = filter_params
 
     respond_to do |format|
       format.turbo_stream
@@ -12,7 +16,7 @@ class NotificationsController < ApplicationController
   end
 
   def update
-    if notification.update(notification_params)
+    if notification&.update(notification_params)
       respond_to do |format|
         format.html { unsupported_format }
 
@@ -21,11 +25,14 @@ class NotificationsController < ApplicationController
           render :update
         end
       end
+    else
+      flash[:alert] = 'Mysterious Error'
+      redirect_back(fallback_location: feed_path)
     end
   end
 
   def destroy
-    if notification.destroy
+    if notification&.destroy
       respond_to do |format|
         format.html { unsupported_format }
 
@@ -34,6 +41,9 @@ class NotificationsController < ApplicationController
           render :destroy
         end
       end
+    else
+      flash[:alert] = 'Mysterious Error'
+      redirect_back(fallback_location: feed_path)
     end
   end
 
@@ -44,11 +54,11 @@ class NotificationsController < ApplicationController
   end
 
   def check_authorization
-    head :unauthorized unless notification.user == current_user
+    head :unauthorized if notification && notification.user != current_user
   end
 
   def notification
-    @notification ||= Notification.find(params[:id])
+    @notification ||= Notification.find_by_id(params[:id])
   end
 
   def unsupported_format
@@ -57,7 +67,7 @@ class NotificationsController < ApplicationController
   end
 
   def index_base_relation
-    current_user.notifications.newest.limit(10).includes(
+    current_user.notifications.newest.includes(
       [
         notifiable:
         [
@@ -73,16 +83,21 @@ class NotificationsController < ApplicationController
   end
 
   def filter_params
-    params.permit(filters: [:unread])
+    @filter_params ||= params.permit(:page, filters: %i[unread oldest])
   end
 
   def filter(relation, filter_params)
-    return relation if filter_params.empty?
+    return relation unless filter_params[:filters].present?
 
-    if filter_params[:filters][:unread] == 'true'
-      relation.unacknowledged
-    else
-      relation
+    filter_params[:filters].each_pair do |key, value|
+      case key.to_sym
+      when :unread
+        relation = relation.unacknowledged if value == 'true'
+      when :oldest
+        relation = relation.where('id < ?', value)
+      end
     end
+
+    relation
   end
 end
