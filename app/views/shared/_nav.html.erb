@@ -3,7 +3,7 @@
     <a href="/" class="navbar-item has-text-light">Odin Book</a>
     <div class='navbar-item has-text-light'>
 
-      <%= link_to notifications_path, method: :get, data: { turbo_stream: true }, class: 'is-flex' do %> 
+      <%= link_to notifications_path(filters: { unread: true }), method: :get, data: { turbo_stream: true }, class: 'is-flex' do %> 
         <span class="material-symbols-rounded is-size-4">notifications</span>
         (
         <%= turbo_frame_tag 'notifications_count' do %>

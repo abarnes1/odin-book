@@ -1,9 +1,20 @@
 <div class="modal is-active" data-controller='toggleable' data-toggleable-change-class='is-active' data-toggleable-target="toggle">
   <div class="modal-background" data-action="click->toggleable#toggle"></div>
   <div class="modal-card">
-    <header class="modal-card-head has-background-black-ter">
-      <p class="modal-card-title has-text-grey-lighter">Notifications</p>
-      <button class="delete" aria-label="close" data-action="click->toggleable#toggle"></button>
+    <header class="modal-card-head has-background-black-ter is-justify-content-space-between">
+      <span class='is-flex is-justify-content-flex-start is-align-items-center'>
+        <span class="modal-card-title has-text-grey-lighter">
+          Notifications |
+        </span>
+
+        <% if params[:filters].present? && params[:filters][:unread] == 'true' %>
+          <%= button_to 'View All', notifications_path, method: :get, data: { turbo_stream: true }, class: 'button is-small is-dark ml-2' %>
+        <% else %>
+          <%= button_to 'Unread Only', notifications_path, params: { filters: { unread: true } }, method: :get, data: { turbo_stream: true }, class: 'button is-small is-dark ml-2' %>
+        <% end %>
+      </span>
+
+      <button class="delete is-justify-content-flex-end has-background-grey" aria-label="close" data-action="click->toggleable#toggle"></button>
     </header>
 
     <section class="modal-card-body has-background-black-ter has-text-grey-lighter">
