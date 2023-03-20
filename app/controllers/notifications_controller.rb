@@ -11,23 +11,21 @@ class NotificationsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream
-      format.html { unsupported_format }
+      format.html { unsupported_format_error }
     end
   end
 
   def update
     if notification&.update(notification_params)
       respond_to do |format|
-        format.html { unsupported_format }
+        format.html { unsupported_format_error }
 
         format.turbo_stream do
-          flash.now[:notice] = 'Notification Updated'
           render :update
         end
       end
     else
-      flash[:alert] = 'Mysterious Error'
-      redirect_back(fallback_location: feed_path)
+      notification_doesnt_exist_error
     end
   end
 
@@ -37,13 +35,11 @@ class NotificationsController < ApplicationController
         format.html { unsupported_format }
 
         format.turbo_stream do
-          flash.now[:notice] = 'Notification Removed'
           render :destroy
         end
       end
     else
-      flash[:alert] = 'Mysterious Error'
-      redirect_back(fallback_location: feed_path)
+      notification_doesnt_exist_error
     end
   end
 
@@ -61,8 +57,13 @@ class NotificationsController < ApplicationController
     @notification ||= Notification.find_by_id(params[:id])
   end
 
-  def unsupported_format
+  def unsupported_format_error
     flash[:alert] = 'Not Supported'
+    redirect_back(fallback_location: feed_path)
+  end
+
+  def notification_doesnt_exist_error
+    flash[:alert] = "Notification Doesn't Exist"
     redirect_back(fallback_location: feed_path)
   end
 
