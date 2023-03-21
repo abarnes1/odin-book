@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_authorization, only: %i[edit update]
+  after_action :broadcast_notification, only: 
 
   def load
     @commentable = LoadComments.new(load_comments_params).load
@@ -28,6 +29,7 @@ class CommentsController < ApplicationController
       @commentable.display_comments = comment
 
       Notification.create(user: @commentable.user, notifiable_id: comment.id, notifiable_type: 'Comment')
+      NotificationChannel.broadcast_to(@commentable.user, count: 1)
 
       respond_to do |format|
         format.html do
