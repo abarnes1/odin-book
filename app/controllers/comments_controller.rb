@@ -109,4 +109,13 @@ class CommentsController < ApplicationController
   def check_authorization
     head :unauthorized unless comment.user == current_user
   end
+
+  def broadcast_notification
+    # Literally no idea why this method is called when loading more comments.
+    # What I can tell you is that not having it breaks comment threads real nice.
+    # Surely it's a dynamically defined method based on the existance of NotificationChannel?
+    # I'm going to blame a combination of Turbo and ActionCable because I
+    # have no hair left to pull out. Nothing should be broadcasted on #load ?!?!
+    # WHY ?!?!
+  end
 end

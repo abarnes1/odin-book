@@ -1,5 +1,5 @@
 <div class='is-flex gap-1 is-justify-content-end'>
-  <% unless notification.acknowledged? %>
+  <% if notification.notifiable && !notification.acknowledged? %>
     <%= form_with model: notification do |form| %>
       <%= form.hidden_field :acknowledged, value: true %>
 

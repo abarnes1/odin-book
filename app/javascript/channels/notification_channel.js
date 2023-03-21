@@ -3,7 +3,6 @@ import consumer from "channels/consumer"
 consumer.subscriptions.create("NotificationChannel", {
   connected() {
     // Called when the subscription is ready for use on the server
-    console.log("connected");
   },
 
   disconnected() {
@@ -11,7 +10,6 @@ consumer.subscriptions.create("NotificationChannel", {
   },
 
   received(data) {
-    console.log(data)
     // Called when there's incoming data on the websocket for this channel
     let counter_container = document.getElementById('notifications_count');
     let notification_count = parseInt(counter_container.textContent)

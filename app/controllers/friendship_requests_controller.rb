@@ -9,6 +9,7 @@ class FriendshipRequestsController < ApplicationController
     if request.save
       flash[:notice] = 'Friend Request Sent'
       Notification.create(user: request.recipient, notifiable: request)
+      NotificationChannel.broadcast_to(request.recipient, count: 1)
     else
       flash[:alert] = 'Request Failed'
     end
@@ -30,7 +31,6 @@ class FriendshipRequestsController < ApplicationController
   def update
     if friend_request.update(status: 'accepted')
       flash[:notice] = 'Request Accepted'
-      # send notification of new friend here
     else
       flash[:alert] = 'Request Failed'
     end

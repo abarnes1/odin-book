@@ -21,8 +21,12 @@
       <% notifications.each do |notification| %>
         <%= turbo_frame_tag "#{dom_id(notification)}_container" do %>
           <%= turbo_frame_tag dom_id(notification) do %>
-            <%= render partial: "notifications/modal_cards/#{notification.notifiable_type.underscore}_notification",  
-            locals: { notification: notification, last: notifications.last.eql?(notification) } %>
+            <% if notification.notifiable %>
+              <%= render partial: "notifications/modal_cards/#{notification.notifiable_type.underscore}_notification",  
+                locals: { notification: notification, last: notifications.last.eql?(notification) } %>  
+            <% else %>
+              <%= render partial: "notifications/modal_cards/nil_notification", locals: { notification: notification } %>
+            <% end %>
           <% end %>
 
           <% unless notifications.last.eql?(notification) %>
