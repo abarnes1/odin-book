@@ -35,3 +35,8 @@ requirements.md
 /spec/examples.txt
 /scripts
 /notes
+
+.env.development.local
+.env.production.local
+.env.test.local
+.env.local

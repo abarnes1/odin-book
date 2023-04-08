@@ -62,6 +62,8 @@ group :development, :test do
 
   gem "rack-mini-profiler"
   gem "benchmark-ips"
+
+  gem 'dotenv-rails'
 end
 
 group :development do
