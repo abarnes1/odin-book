@@ -1,0 +1,15 @@
+# Git
+.git
+.gitignore
+
+# Logs
+log/*
+
+# Temp files
+tmp/*
+
+# .env files
+.env.development.local
+.env.production.local
+.env.test.local
+.env.local
