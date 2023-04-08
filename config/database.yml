@@ -84,6 +84,6 @@ test:
 #
 production:
   <<: *default
-  database: odin_book_production
-  username: odin_book
-  password: <%= ENV["ODIN_BOOK_DATABASE_PASSWORD"] %>
+  # database: odin_book_production
+  # username: odin_book
+  # password: <%= ENV["ODIN_BOOK_DATABASE_PASSWORD"] %>
