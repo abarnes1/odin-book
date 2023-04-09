@@ -2,10 +2,15 @@
 // Run that command whenever you add a new controller or create them with
 // ./bin/rails generate stimulus controllerName
 
-import { application } from "./application"
+import { application } from "controllers/application"
 
-import ConfirmableController from "./confirmable_controller"
-application.register("confirmable", ConfirmableController)
+// Eager load all controllers defined in the import map under controllers/**/*_controller
+import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
+eagerLoadControllersFrom("controllers", application)
 
-import ToggleableController from "./toggleable_controller"
-application.register("toggleable", ToggleableController)
+// original imports that did not work with asset precompilation
+// import ConfirmableController from "./confirmable_controller"
+// application.register("confirmable", ConfirmableController)
+
+// import ToggleableController from "./toggleable_controller"
+// application.register("toggleable", ToggleableController)
