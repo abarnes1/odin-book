@@ -23,6 +23,11 @@ module OdinBook
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
+    # asset pipeline prepending
+    config.relative_url_root = ENV["RAILS_RELATIVE_URL_ROOT"] if ENV["RAILS_RELATIVE_URL_ROOT"]
+    config.action_cable.url = ENV["RAILS_RELATIVE_URL_ROOT"] ? "#{ENV['RAILS_RELATIVE_URL_ROOT'].chomp('/')}/cable" : '/cable'
+    Rails.application.routes.default_url_options[:script_name] = ENV['RAILS_RELATIVE_URL_ROOT'] if ENV['RAILS_RELATIVE_URL_ROOT']
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   end
 
   unauthenticated :user do
-    root to: redirect('/sign_in'), as: :unauthenticated_root
+    root to: redirect("#{ENV["RAILS_RELATIVE_URL_ROOT"]}/sign_in"), as: :unauthenticated_root
+    # root to: redirect('/sign_in'), as: :unauthenticated_root
   end
 
   root 'feeds#show'

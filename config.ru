@@ -2,5 +2,9 @@
 
 require_relative "config/environment"
 
-run Rails.application
+# Prepends path helpers: example_path becomes /<relative_url_root>/example instead of /example
+map ENV['RAILS_RELATIVE_URL_ROOT'] || '/' do
+  run Rails.application
+end
+
 Rails.application.load_server

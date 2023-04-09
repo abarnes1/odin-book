@@ -1,6 +1,6 @@
 <nav class="navbar has-background-dark is-transparent" data-controller="toggleable" data-toggleable-change-class="is-active">
   <div class="navbar-brand">
-    <a href="/" class="navbar-item has-text-light">Odin Book</a>
+    <a href=<%= root_path %> class="navbar-item has-text-light">Odin Book</a>
     <div class='navbar-item has-text-light'>
 
       <%= link_to notifications_path(filters: { unread: true }), method: :get, data: { turbo_stream: true }, class: 'is-flex' do %> 
