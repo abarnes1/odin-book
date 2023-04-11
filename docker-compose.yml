@@ -10,6 +10,9 @@ services:
       - gem_cache:/gems
     env_file:
       - .env.production.local
+    depends_on:
+      - database
+      - redis
 
   redis:
     image: redis

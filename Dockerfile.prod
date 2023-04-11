@@ -22,8 +22,6 @@ RUN bundle install
 # copy rails app to /usr/src/app/ the in the container
 COPY . /usr/src/app/
 
-RUN RAILS_ENV=production bin/rails assets:precompile
-
 # executes docker-entrypoint.sh script that
 # deletes server.pid in case of unclean shutdown
 ENTRYPOINT ["./docker-entrypoint.sh"]
