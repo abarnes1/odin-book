@@ -17,7 +17,7 @@ WORKDIR /usr/src/app
 ENV BUNDLE_PATH /gems
 
 RUN bundle config set --local without 'development test'
-RUN bundle install --without development test
+RUN bundle install
 
 # copy rails app to /usr/src/app/ the in the container
 COPY . /usr/src/app/
