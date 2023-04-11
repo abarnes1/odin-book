@@ -72,5 +72,5 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   # Whitelist console output to typical Docker network address
-  config.web_console.allowed_ips = ['172.17.0.0/12']
+  # config.web_console.allowed_ips = ['172.17.0.0/12']
 end
