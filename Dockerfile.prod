@@ -23,11 +23,8 @@ RUN bundle install
 COPY . /usr/src/app/
 
 # executes docker-entrypoint.sh script that
-# deletes server.pid in case of unclean shutdown
+#   - creates database
+#   - migrates database
+#   - precompiles assets
 ENTRYPOINT ["./docker-entrypoint.sh"]
-
-# May need to initially start with shell to manage db:create,
-# db:migrate, and/or asset compilation
-# CMD ["bin/sh"]
-
 CMD ["bin/rails", "s", "-b", "0.0.0.0"]
