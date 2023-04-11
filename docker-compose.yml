@@ -18,7 +18,7 @@ services:
     image: redis
 
   database:
-    image: postgres
+    image: postgres:alpine
     env_file:
       - .env.production.local
     volumes:
