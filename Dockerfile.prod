@@ -16,15 +16,20 @@ WORKDIR /usr/src/app
 # Used to set known location for gems to use in gem cache
 ENV BUNDLE_PATH /gems
 
+RUN bundle config set --local without 'development test'
 RUN bundle install --without development test
 
 # copy rails app to /usr/src/app/ the in the container
 COPY . /usr/src/app/
 
-RUN bin/rails assets:precompile
+RUN RAILS_ENV=production bin/rails assets:precompile
 
 # executes docker-entrypoint.sh script that
 # deletes server.pid in case of unclean shutdown
 ENTRYPOINT ["./docker-entrypoint.sh"]
+
+# May need to initially start with shell to manage db:create,
+# db:migrate, and/or asset compilation
+# CMD ["bin/sh"]
 
 CMD ["bin/rails", "s", "-b", "0.0.0.0"]
