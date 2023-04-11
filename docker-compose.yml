@@ -1,13 +1,14 @@
 services:
   web:
     build: .
+      dockerfile: Dockerfile.prod
     ports:
       - "2222:3000"
     volumes: 
       - .:/usr/src/app
       - gem_cache:/gems
     env_file:
-      - .env.development.local
+      - .env.production.local
 
   redis:
     image: redis
@@ -15,7 +16,7 @@ services:
   database:
     image: postgres
     env_file:
-        - .env.development.local
+        - .env.production.local
     volumes:
      - db_data:/var/lib/postgresql/data
 
