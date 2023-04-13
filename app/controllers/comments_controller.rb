@@ -28,8 +28,10 @@ class CommentsController < ApplicationController
 
       @commentable.display_comments = comment
 
-      Notification.create(user: @commentable.user, notifiable_id: comment.id, notifiable_type: 'Comment')
-      NotificationChannel.broadcast_to(@commentable.user, count: 1)
+      unless @commentable.user == comment.user
+        Notification.create(user: @commentable.user, notifiable_id: comment.id, notifiable_type: 'Comment')
+        NotificationChannel.broadcast_to(@commentable.user, count: 1)
+      end
 
       respond_to do |format|
         format.html do
