@@ -1,5 +1,14 @@
 <% comment = notification.notifiable %>
-<% owner_preview = (comment.top_level? ? comment.post.content : comment.parent_comment.message).first(10) + '...' %>
-<p class='mb-2'><%= comment.user.username %> commented <%= comment.message.first(10) %>... <%= time_ago_in_words(comment.created_at) %> ago on your <%= comment.owner.class %> <%= owner_preview %></p>
+
+<p class='mb-2'>
+  <%= link_to comment.user.username, user_path(comment.user) %> commented <%= time_ago_in_words(comment.created_at) %> ago on your <%= link_to comment.owner.class, comment.owner %>
+  <br>
+
+  <% if comment.message.length >= 40 %>
+    <%= comment.message.first(40) %>...  
+  <% else %>
+    <%= comment.message %>
+  <% end %>
+</p>
 
 <%= render partial: 'notifications/shared/interaction_links', locals: { notification: notification } %>

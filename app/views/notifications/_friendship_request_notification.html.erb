@@ -1,6 +1,0 @@
-<%= turbo_frame_tag dom_id(notification) do %>
-  <% friend_request = notification.notifiable %>
-  <p>friend request from <%= friend_request.sender.username %> <%= time_ago_in_words(friend_request.created_at) %> ago</p>
-
-  <%= render partial: 'notifications/shared/interaction_links', locals: { notification: notification } %>
-<% end %>
