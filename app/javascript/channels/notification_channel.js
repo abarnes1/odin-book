@@ -11,8 +11,20 @@ consumer.subscriptions.create("NotificationChannel", {
 
   received(data) {
     // Called when there's incoming data on the websocket for this channel
-    let counter_container = document.getElementById('notifications_count');
-    let notification_count = parseInt(counter_container.textContent)
-    counter_container.textContent = ` ${notification_count + parseInt(data["count"])} `;
-  }
+    let counterElement = document.getElementById('notifications_count');
+    let currentNotificationCount = parseInt(counterElement.textContent)
+    let newNotificationCount = parseInt(data["total"]);
+
+    if (data["count"]) {
+      newNotificationCount = currentNotificationCount + parseInt(data["count"]);
+    };
+
+    counterElement.textContent = ` ${newNotificationCount} `;
+    
+    if (newNotificationCount > 0 ) {
+      counterElement.parentElement.classList.remove('is-hidden');
+    } else {
+      counterElement.parentElement.classList.add('is-hidden');
+    }
+  },
 });

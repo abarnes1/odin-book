@@ -106,3 +106,14 @@ form.hide-submit input[type="submit"] {
 .unlike:hover {
   color: hsl(217, 71%, 53%);
 }
+
+.icon-counter {
+  right: 4px;
+  top: 6px;
+  position: absolute;
+  background: blue;
+  border-radius:  10px;
+  padding: 2px;
+  width: 20px;
+  font-weight: bold;
+}

@@ -4,12 +4,15 @@
     <div class='navbar-item has-text-light'>
 
       <%= link_to notifications_path(filters: { unread: true }), method: :get, data: { turbo_stream: true }, class: 'is-flex' do %> 
-        <span class="material-symbols-rounded is-size-4">notifications</span>
-        (
-        <%= turbo_frame_tag 'notifications_count' do %>
+        <span class="material-symbols-rounded is-size-4 is-relative">notifications</span>
+
+        <% class_list = current_user.notifications.unacknowledged.count.positive? ? [] : ['is-hidden'] %>
+
+        <span class='icon-counter is-size-7 has-text-centered<%= " #{class_list.join(' ')}" unless class_list.empty? %>' >
+          <%= turbo_frame_tag 'notifications_count' do %>
             <%= current_user.notifications.unacknowledged.count %>
-        <% end %>
-        )
+          <% end %>
+        </span>
       <% end %>
     </div>
 

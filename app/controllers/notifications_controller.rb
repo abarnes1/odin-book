@@ -1,6 +1,7 @@
 class NotificationsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_authorization, only: %i[update destroy]
+  after_action :broadcast_notification_count, only: %i[update destroy]
 
   def index
     notifications_relation = filter(index_base_relation, filter_params)
@@ -100,5 +101,9 @@ class NotificationsController < ApplicationController
     end
 
     relation
+  end
+
+  def broadcast_notification_count
+    NotificationChannel.broadcast_to(current_user, total: current_user.notifications.unacknowledged.count)
   end
 end
