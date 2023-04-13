@@ -1,5 +1,11 @@
 <section class='section py-0'>
   <h1 class='is-size-3 has-text-centered'><%= link_to "#{@user.username}'s Posts", @user %></h1>
+
+  <% if current_user == @user %>
+    <p class='has-text-centered'>
+      What's on your mind?&nbsp;<%= link_to 'Create a Post', new_post_path, data: { turbo: false } %>
+    </p>  
+  <% end %>
 </section>
 
 <section class='section'>

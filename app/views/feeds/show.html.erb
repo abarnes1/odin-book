@@ -1,7 +1,9 @@
 <section class="section py-0">
   <h1 class='is-size-3 has-text-centered'>User Feed</h1>
   
-  <span class='is-centered'><%= link_to 'New Post', new_post_path %></span>
+  <p class='has-text-centered'>
+    What's on your mind?&nbsp;<%= link_to 'Create a Post', new_post_path, data: { turbo: false } %>
+  </p>
 </section>
 
 <section class="section">
