@@ -27,13 +27,15 @@
     <%= turbo_frame_tag comment.container_id(:comment_form) %>
 
     <% if comment.not_displayed_comments? %>
-      <% if comment.max_display_depth? %>
-        <%= link_to comment.load_comments_link_text, comment_path(comment), data: { turbo: false }, class: "is-size-smaller" %>
-      <% else %>
-        <%= link_to comment.load_comments_link_text, 
-          load_path(**comment.load_comments_params), 
-          id: comment.container_id(:load_comments_link),  method: :get, data: { turbo_stream: true }, class: "is-size-smaller"  %>
-      <% end %>
+      <span class="is-size-smaller">
+        <% if comment.max_display_depth? %>
+          <%= link_to comment.load_comments_link_text, comment_path(comment), data: { turbo: false } %>
+        <% else %>
+          <%= link_to comment.load_comments_link_text, 
+            load_path(**comment.load_comments_params), 
+            id: comment.container_id(:load_comments_link),  method: :get, data: { turbo_stream: true } %>
+        <% end %>
+      </span>
     <% end %>
 
     <div class="is-flex is-flex-direction-column">
