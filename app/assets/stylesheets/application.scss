@@ -91,6 +91,10 @@ form.hide-submit input[type="submit"] {
   vertical-align: middle;
 }
 
+.has-placeholder-text-grey-lighter::placeholder {
+  color: $grey-light;
+}
+
 .not-liked {
   font-variation-settings:
   'FILL' 0;
