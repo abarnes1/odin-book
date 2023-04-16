@@ -23,7 +23,7 @@
       Replies
     </span>
 
-    <span><%= "#{time_ago_in_words(comment.created_at)} ago" %></span>
+    <span><%= time_ago_in_words(comment.created_at) %></span>
   </div>
   <%= turbo_frame_tag comment.container_id(:likes_count) do %>
     <span class="is-justify-content-end"><%= comment.likes.size %> Likes</span>  
