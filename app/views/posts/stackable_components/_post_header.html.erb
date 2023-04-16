@@ -1,7 +1,7 @@
 <div class="is-flex mb-4">
   <div class="image is-48x48"><img class="is-rounded" src="<%= gravatar_url(post.user.email, 48)%>" alt=""></div>
   <div class="is-flex is-flex-direction-column ml-2">
-    <p><%= post.user.username %></p>
-    <p><%= time_ago_in_words(post.created_at) %></p>
+    <%= link_to post.user.username, user_path(post.user), class: 'has-text-weight-bold' %>
+    <span><%= time_ago_in_words(post.created_at) %></span>
   </div>
 </div>

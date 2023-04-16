@@ -6,7 +6,7 @@
   <div class="is-flex is-flex-direction-column is-flex-shrink-1 is-flex-grow-1">
     <div class="is-flex is-flex-direction-column">
       <div class="border-curved has-background-grey-dark p-2 is-flex is-flex-direction-column">
-        <span class="has-text-weight-bold"><%= comment.user.username %></span>
+        <%= link_to comment.user.username, user_path(comment.user), class: 'has-text-weight-bold' %>
 
         <%= turbo_frame_tag comment.container_id(:message) do %>
           <% render partial: 'comments/message', locals: { comment: comment } %>
