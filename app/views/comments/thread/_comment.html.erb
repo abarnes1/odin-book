@@ -1,12 +1,10 @@
-<div class="is-flex is-flex-direction-column mb-2" id=<%= dom_id(comment) %>>
-  <div class="is-flex">
-    <span class="is-flex-shrink-0" style="width: <%= comment.indent_pixels %>px"></span>
+<div class="is-flex mt-1" id=<%= dom_id(comment) %>>
+  <div class="image is-<%= comment.avatar_size %>x<%= comment.avatar_size %> is-flex-shrink-0 mt-1 mr-2">
+    <img class="is-rounded" src="<%= gravatar_url(comment.user.email, comment.avatar_size)%>" alt="">
+  </div>
 
-    <div class="image is-<%= comment.avatar_size %>x<%= comment.avatar_size %> is-flex-shrink-0 mt-1 mr-2">
-      <img class="is-rounded" src="<%= gravatar_url(comment.user.email, comment.avatar_size)%>" alt="">
-    </div>
-    
-    <div class="is-flex is-flex-direction-column is-flex-grow-1 is-flex-shrink-1">
+  <div class="is-flex is-flex-direction-column is-flex-shrink-1 is-flex-grow-1">
+    <div class="is-flex is-flex-direction-column">
       <div class="border-curved has-background-grey-dark p-2 is-flex is-flex-direction-column">
         <span class="has-text-weight-bold"><%= comment.user.username %></span>
 
@@ -20,36 +18,33 @@
           <% end %>
         <% end %>
       </div>
+    </div>
 
-      <%= turbo_frame_tag comment.container_id(:interactions) do %>
-        <%= render partial: 'comments/thread/stackable_components/interactions', locals: { comment: comment } %>
+    <%= turbo_frame_tag comment.container_id(:interactions) do %>
+      <%= render partial: 'comments/thread/stackable_components/interactions', locals: { comment: comment } %>
+    <% end %>
+
+    <%= turbo_frame_tag comment.container_id(:comment_form) %>
+
+    <% if comment.not_displayed_comments? %>
+      <% if comment.max_display_depth? %>
+        <%= link_to comment.load_comments_link_text, comment_path(comment), data: { turbo: false }, class: "is-size-smaller" %>
+      <% else %>
+        <%= link_to comment.load_comments_link_text, 
+          load_path(**comment.load_comments_params), 
+          id: comment.container_id(:load_comments_link),  method: :get, data: { turbo_stream: true }, class: "is-size-smaller"  %>
       <% end %>
+    <% end %>
 
-      <%= turbo_frame_tag comment.container_id(:comment_form) %>
+    <div class="is-flex is-flex-direction-column">
+      <%= turbo_frame_tag comment.container_id(:comments) do %>  
+        <% if comment.display_comments? %>
+          <%= render partial: 'comments/thread/comment', collection: comment.display_comments, as: :comment %>  
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>
 
-<% if comment.not_displayed_comments? %>
-  <div class="is-flex">
-    <span class="is-flex-shrink-0" style="width: <%= comment.load_comments_link_indent_pixels %>px"></span>
 
-    <span class="is-size-smaller">
-      <% if comment.max_display_depth? %>
-        <%= link_to comment.load_comments_link_text, comment_path(comment), data: { turbo: false } %>
-      <% else %>
-        <%= link_to comment.load_comments_link_text, 
-          load_path(**comment.load_comments_params), 
-          id: comment.container_id(:load_comments_link),  method: :get, data: { turbo_stream: true } %>
-      <% end %>
-    </span>
-  </div>
-<% end %>
 
-<div>
-  <%= turbo_frame_tag comment.container_id(:comments) do %>  
-    <% if comment.display_comments? %>
-      <%= render partial: 'comments/thread/comment', collection: comment.display_comments, as: :comment %>  
-    <% end %>
-  <% end %>
-</div>

@@ -1,4 +1,4 @@
-<div class="is-flex is-size-smaller is-justify-content-space-between">
+<div class="is-flex is-size-smaller is-justify-content-space-between ml-2">
   <div class="is-flex gap-1 is-flex-wrap-wrap is-align-items-center">
     <span>
       <%= render partial: 'likes/form', locals: { like: Like.new, likeable: comment } %>
@@ -25,6 +25,7 @@
 
     <span><%= time_ago_in_words(comment.created_at) %></span>
   </div>
+
   <%= turbo_frame_tag comment.container_id(:likes_count) do %>
     <span class="is-justify-content-end"><%= comment.likes.size %> Likes</span>  
   <% end %>
