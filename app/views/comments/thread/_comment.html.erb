@@ -11,12 +11,6 @@
         <%= turbo_frame_tag comment.container_id(:message) do %>
           <% render partial: 'comments/message', locals: { comment: comment } %>
         <% end %>
-
-        <% if comment.user == current_user %>
-          <%= turbo_frame_tag comment.container_id(:delete_link) do %>
-            <% render partial: 'comments/delete_link', locals: { comment: comment } %>
-          <% end %>
-        <% end %>
       </div>
     </div>
 

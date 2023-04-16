@@ -1,32 +1,38 @@
 <div class="is-flex is-size-smaller is-justify-content-space-between ml-2">
   <div class="is-flex gap-1 is-flex-wrap-wrap is-align-items-center">
-    <span>
-      <%= render partial: 'likes/form', locals: { like: Like.new, likeable: comment } %>
-    </span>
-    <span>
-      <%= turbo_frame_tag comment.container_id(:comment_link) do %>
-        <%= link_to 'Reply', new_comment_path(comment: { post_id: comment.post_id, parent_comment_id: comment.id }, display: { depth: comment.child_display_depth }), 
-          class: 'is-text', method: :get, data: { turbo_stream: true } %>
-      <% end %>
-    </span>
+    <%= render partial: 'likes/form', locals: { like: Like.new, likeable: comment } %>
 
-    <% if comment.user == current_user && !comment.soft_deleted? %>
-      <span>
-        <%= link_to 'Edit', edit_comment_path(comment, display: { depth: comment.display_depth } ), method: :get, data: { turbo_stream: true } %>  
-      </span>
+    <%= turbo_frame_tag comment.container_id(:comment_link) do %>
+      <%= link_to 'Reply', new_comment_path(comment: { post_id: comment.post_id, parent_comment_id: comment.id }, display: { depth: comment.child_display_depth }), 
+        class: 'is-text', method: :get, data: { turbo_stream: true } %>
     <% end %>
-    
-    <span>
-      <%= turbo_frame_tag comment.container_id(:comments_counter) do %>
-        <%= comment.comments.size %>
-      <% end %>
-      Replies
-    </span>
 
     <span><%= time_ago_in_words(comment.created_at) %></span>
+
+    <% if comment.user == current_user %>
+      <span> | </span>
+        <%= link_to 'Edit', edit_comment_path(comment, display: { depth: comment.display_depth } ), method: :get, data: { turbo_stream: true } %>
+
+        <%= turbo_frame_tag comment.container_id(:delete_link) do %>
+          <% render partial: 'comments/delete_link', locals: { comment: comment } %>
+        <% end %>
+    <% end %>
   </div>
 
-  <%= turbo_frame_tag comment.container_id(:likes_count) do %>
-    <span class="is-justify-content-end"><%= comment.likes.size %> Likes</span>  
-  <% end %>
+  <span>
+    <%= turbo_frame_tag comment.container_id(:comments_counter) do %>
+      <%= comment.comments.size %>
+    <% end %>
+
+    <span class="is-vertical-align-middle material-symbols-rounded">mode_comment</span>
+    <span>&nbsp;|&nbsp;</span>
+
+    <%= turbo_frame_tag comment.container_id(:likes_count) do %>
+      <%= comment.likes.size %>
+
+      <span class="is-vertical-align-middle material-symbols-rounded  <%= comment.liked_by?(current_user) ? "liked" : "not-liked" %>">
+        thumb_up
+      </span>
+    <% end %>
+  </span>
 </div>

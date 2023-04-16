@@ -87,24 +87,19 @@ form.hide-submit input[type="submit"] {
   }
 }
 
-.like {
+.is-vertical-align-middle {
+  vertical-align: middle;
+}
+
+.not-liked {
   font-variation-settings:
   'FILL' 0;
 
   color: $grey-lighter;
-  // font-size: 1.25rem;
 }
 
-.like:hover {
-  color: $white-ter;
-}
-
-.unlike {
+.liked {
   color: hsl(217, 71%, 63%);
-}
-
-.unlike:hover {
-  color: hsl(217, 71%, 53%);
 }
 
 .icon-counter {
