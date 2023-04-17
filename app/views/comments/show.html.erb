@@ -6,12 +6,12 @@
 
     <hr class="my-0 has-background-grey">
 
-    <%= render partial: "comments/stackable_components/comment_thread_links", locals: { comment: post.display_comments.first } %>
+    <%= render partial: "comments/thread/parent_comment_link", locals: { comment: post.display_comments.first } %>
 
     <%= turbo_frame_tag post.container_id(:comments) do %>
-        <% post.display_comments.each do |comment| %>
-          <%= render partial: 'comments/thread/comment', locals: { comment: comment, avatar_size: comment.avatar_size } %>  
-        <% end %>
+      <% post.display_comments.each do |comment| %>
+        <%= render partial: 'comments/thread/comment', locals: { comment: comment, avatar_size: comment.avatar_size } %>  
+      <% end %>
     <% end %>
   </div>
 </section>
