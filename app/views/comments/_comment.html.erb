@@ -4,7 +4,7 @@
     <%= link_to comment.owner.class.name.downcase, comment.owner %>:
   </span>
 
-  <%= render partial: 'comments/message', locals: { comment: comment } %>
+  <%= render partial: 'comments/shared/message', locals: { comment: comment } %>
   
   <hr class='my-1 has-background-grey'>
   <%= render partial: 'comments/stackable_components/interaction_counters', locals: { comment: comment} %>

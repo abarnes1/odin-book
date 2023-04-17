@@ -9,7 +9,7 @@
         <%= link_to comment.user.username, user_path(comment.user), class: 'has-text-weight-bold' %>
 
         <%= turbo_frame_tag comment.container_id(:message) do %>
-          <% render partial: 'comments/message', locals: { comment: comment } %>
+          <% render partial: 'comments/shared/message', locals: { comment: comment } %>
         <% end %>
       </div>
     </div>
