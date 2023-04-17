@@ -14,7 +14,7 @@
         <%= link_to 'Edit', edit_comment_path(comment, display: { depth: comment.display_depth } ), method: :get, data: { turbo_stream: true } %>
 
         <%= turbo_frame_tag comment.container_id(:delete_link) do %>
-          <% render partial: 'comments/delete_link', locals: { comment: comment } %>
+          <% render partial: 'comments/shared/delete_link', locals: { comment: comment } %>
         <% end %>
     <% end %>
   </div>
