@@ -1,21 +1,21 @@
 <div class="post-container border-light border-curved is-flex is-flex-direction-column mx-auto p-2 mb-3">
-  <%= render partial: "posts/stackable_components/post_header", locals: { post: post } %>
+  <%= render partial: "posts/components/post_header", locals: { post: post } %>
 
   <%= turbo_frame_tag post.container_id(:content) do %>
-    <%= render partial: "posts/stackable_components/content", locals: { post: post } %>
+    <%= render partial: "posts/components/content", locals: { post: post } %>
   <% end %>
 
-  <%= render partial: "posts/stackable_components/interaction_counters", locals: { post: post } %>
+  <%= render partial: "posts/components/interaction_counters", locals: { post: post } %>
 
   <hr class="my-0 has-background-grey">
 
   <%= turbo_frame_tag  post.container_id(:interaction_links) do %>
-    <%= render partial: "posts/stackable_components/interaction_links", locals: { post: post } %>
+    <%= render partial: "posts/components/interaction_links", locals: { post: post } %>
   <% end %>
 
   <hr class="my-0 has-background-grey">
 
-  <%= render partial: "posts/stackable_components/comment_thread_links", locals: { post: post } %>
+  <%= render partial: "posts/components/comment_thread_links", locals: { post: post } %>
 
   <%= turbo_frame_tag post.container_id(:comment_form) %>
 

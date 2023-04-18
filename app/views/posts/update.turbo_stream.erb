@@ -1,9 +1,9 @@
 <%= turbo_stream.update 'flash', partial: 'shared/flash' unless flash.empty? %>
 
 <%= turbo_stream.update(@post.container_id(:content)) do %>
-  <%= render partial: 'posts/stackable_components/content', locals: { post: @post }%>
+  <%= render partial: 'posts/components/content', locals: { post: @post }%>
 <% end %>
 
 <%= turbo_stream.update(@post.container_id(:delete_link)) do %>  
-  <%= render partial: "posts/stackable_components/delete_link", locals: { post: @post } %>
+  <%= render partial: "posts/components/delete_link", locals: { post: @post } %>
 <% end%>
