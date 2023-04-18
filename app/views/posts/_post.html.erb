@@ -5,10 +5,6 @@
     <%= render partial: "posts/stackable_components/content", locals: { post: post } %>
   <% end %>
 
-  <%= turbo_frame_tag post.container_id(:delete_link) do %>  
-    <%= render partial: "posts/stackable_components/delete_link", locals: { post: post } %>
-  <% end%>
-
   <%= render partial: "posts/stackable_components/interaction_counters", locals: { post: post } %>
 
   <hr class="my-0 has-background-grey">

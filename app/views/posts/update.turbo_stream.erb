@@ -4,9 +4,11 @@
   <%= render partial: 'posts/stackable_components/content', locals: { post: @post }%>
 <% end %>
 
-<%= turbo_stream.update(@post.container_id(:delete_link)) do %>  
-  <%= render partial: "posts/stackable_components/delete_link", locals: { post: @post } %>
-<% end%>
+<% if false %>
+  <%= turbo_stream.update(@post.container_id(:delete_link)) do %>  
+    <%= render partial: "posts/stackable_components/delete_link", locals: { post: @post } %>
+  <% end%>
+<% end %>
 
 <%= turbo_stream.update(@post.container_id(:interaction_links)) do %>
   <%= render partial: 'posts/stackable_components/interaction_links', locals: { post: @post } %>
