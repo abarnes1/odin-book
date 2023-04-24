@@ -2,7 +2,7 @@
   <%= render partial: "posts/components/post_header", locals: { post: post } %>
 
   <%= turbo_frame_tag post.container_id(:content) do %>
-    <%= render partial: "posts/components/content", locals: { post: post } %>
+    <%= render partial: "posts/shared/content", locals: { post: post } %>
   <% end %>
 
   <%= render partial: "posts/components/interaction_counters", locals: { post: post } %>
