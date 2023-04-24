@@ -5,5 +5,5 @@
 <% end %>
 
 <%= turbo_stream.update(@post.container_id(:delete_link)) do %>  
-  <%= render partial: "posts/components/delete_link", locals: { post: @post } %>
+  <%= render partial: "posts/post/delete_link", locals: { post: @post } %>
 <% end%>

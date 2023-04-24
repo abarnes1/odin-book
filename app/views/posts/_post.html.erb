@@ -15,7 +15,7 @@
 
   <hr class="my-0 has-background-grey">
 
-  <%= render partial: "posts/components/comment_thread_links", locals: { post: post } %>
+  <%= render partial: "posts/post/comment_thread_links", locals: { post: post } %>
 
   <%= turbo_frame_tag post.container_id(:comment_form) %>
 
