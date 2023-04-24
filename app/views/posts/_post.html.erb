@@ -1,5 +1,5 @@
 <div class="post-container border-light border-curved is-flex is-flex-direction-column mx-auto p-2 mb-3">
-  <%= render partial: "posts/components/post_header", locals: { post: post } %>
+  <%= render partial: "posts/shared/post_header", locals: { post: post } %>
 
   <%= turbo_frame_tag post.container_id(:content) do %>
     <%= render partial: "posts/shared/content", locals: { post: post } %>
