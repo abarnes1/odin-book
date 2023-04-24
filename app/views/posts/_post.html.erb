@@ -5,12 +5,12 @@
     <%= render partial: "posts/shared/content", locals: { post: post } %>
   <% end %>
 
-  <%= render partial: "posts/components/interaction_counters", locals: { post: post } %>
+  <%= render partial: "posts/shared/interaction_counters", locals: { post: post } %>
 
   <hr class="my-0 has-background-grey">
 
   <%= turbo_frame_tag  post.container_id(:interaction_links) do %>
-    <%= render partial: "posts/components/interaction_links", locals: { post: post } %>
+    <%= render partial: "posts/post/interaction_links", locals: { post: post } %>
   <% end %>
 
   <hr class="my-0 has-background-grey">
