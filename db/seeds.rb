@@ -6,8 +6,6 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-
-# create 15 users, 5 actual and 10 as filler for pagination
 demo_user = User.create(email: 'demo@testuser.com', password: 'demo123', username: 'demo user', first_name: 'Demo', last_name: 'User')
 
 15.times do |index|
@@ -88,5 +86,3 @@ friend1.posts.create(content: "I created my own pagination.  Next time I'll use 
 100.times do |index|
   friend1.posts.create(content: "This is a filler post so pagination works.", created_at: (index + 1).days.ago)
 end
-
-
