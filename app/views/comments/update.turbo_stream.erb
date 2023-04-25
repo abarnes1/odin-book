@@ -9,5 +9,5 @@
 <% end %>
 
 <%= turbo_stream.update(@comment.container_id(:interactions)) do %>
-  <%= render partial: 'comments/thread/interactions', locals: { comment: @comment } %>
+  <%= render partial: 'comments/thread_comment/interactions', locals: { comment: @comment } %>
 <% end %>

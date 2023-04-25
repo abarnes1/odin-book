@@ -6,11 +6,11 @@
 
     <hr class="my-0 has-background-grey">
 
-    <%= render partial: "comments/thread/parent_comment_link", locals: { comment: post.display_comments.first } %>
+    <%= render partial: "comments/thread_comment/parent_comment_link", locals: { comment: post.display_comments.first } %>
 
     <%= turbo_frame_tag post.container_id(:comments) do %>
       <% post.display_comments.each do |comment| %>
-        <%= render partial: 'comments/thread/comment', locals: { comment: comment, avatar_size: comment.avatar_size } %>  
+        <%= render partial: 'comments/thread_comment', locals: { comment: comment, avatar_size: comment.avatar_size } %>  
       <% end %>
     <% end %>
   </div>

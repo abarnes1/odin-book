@@ -15,7 +15,7 @@
     </div>
 
     <%= turbo_frame_tag comment.container_id(:interactions) do %>
-      <%= render partial: 'comments/thread/interactions', locals: { comment: comment } %>
+      <%= render partial: 'comments/thread_comment/interactions', locals: { comment: comment } %>
     <% end %>
 
     <%= turbo_frame_tag comment.container_id(:comment_form) %>
@@ -35,7 +35,7 @@
     <div class="is-flex is-flex-direction-column">
       <%= turbo_frame_tag comment.container_id(:comments) do %>  
         <% if comment.display_comments? %>
-          <%= render partial: 'comments/thread/comment', collection: comment.display_comments, as: :comment %>  
+          <%= render partial: 'comments/thread_comment', collection: comment.display_comments, as: :comment %>  
         <% end %>
       <% end %>
     </div>
