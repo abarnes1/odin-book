@@ -5,7 +5,7 @@ class LikesController < ApplicationController
   def create
     if likeable.likes.create(user: current_user)
       flash.now[:notice] = 'Liked!'
-      render :update, locals: { likeable: likeable_presenter }
+      render :create, locals: { likeable: likeable_presenter }
     else
       flash.now[:alert] = 'Like Failed'
       render_flash_turbo
@@ -15,7 +15,7 @@ class LikesController < ApplicationController
   def destroy
     if like.destroy
       flash.now[:notice] = 'Unliked!'
-      render :update, locals: { likeable: likeable_presenter }
+      render :destroy, locals: { likeable: likeable_presenter }
     else
       flash[:alert].now = 'Unlike Failed'
       render_flash_turbo

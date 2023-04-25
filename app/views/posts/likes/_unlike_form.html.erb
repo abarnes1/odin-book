@@ -1,0 +1,12 @@
+<%= turbo_frame_tag likeable.container_id(:like_form), class: 'is-flex is-align-items-center' do %>
+  <%= form_with url: [likeable, :likes], method: :delete do |form| %>
+    <%= form.hidden_field :likeable_id, value: likeable.id %>
+    
+    <button type="submit" class='button-link is-flex is-align-items-center'>
+      <span class="is-vertical-align-middle material-symbols-rounded liked">
+        thumb_up
+      </span>
+      <span class="mr-1">&nbsp;Unlike</span>
+    </button>
+  <% end %>
+<% end %>
