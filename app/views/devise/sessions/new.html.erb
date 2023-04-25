@@ -1,5 +1,13 @@
 <h2 class='is-size-3 has-text-centered mb-3'>Log in</h2>
 
+<div class='columns is-centered'>
+  <div class='column is-half has-text-centered'>
+    <p>Don't want to sign up? Log in with a demo user that has some informational posts about the site.</p>
+    <p>Email: demo@testuser.com</p>
+    <p>Password: demo123</p>
+  </div>
+</div>
+
 <div class='columns is-centered px-4'>
   <div class='column border-curved border-light is-half'>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { method: :post, data: { turbo: false } }) do |f| %>
