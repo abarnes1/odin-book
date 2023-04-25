@@ -1,6 +1,11 @@
 <div class="is-flex is-size-smaller is-justify-content-space-between ml-2">
   <div class="is-flex gap-1 is-flex-wrap-wrap is-align-items-center">
-    <%= render partial: 'comments/likes/form', locals: { like: Like.new, likeable: comment } %>
+    <% if comment.liked_by?(current_user) %>
+      <%= render partial: 'comments/likes/unlike_form', locals: { likeable: comment } %>
+    <% else %>
+      <%= render partial: 'comments/likes/like_form', locals: { likeable: comment } %>
+    <% end %>
+    
 
     <%= turbo_frame_tag comment.container_id(:comment_link) do %>
       <%= link_to 'Reply', new_comment_path(comment: { post_id: comment.post_id, parent_comment_id: comment.id }, display: { depth: comment.child_display_depth }), 

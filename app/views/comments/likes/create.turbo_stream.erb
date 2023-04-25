@@ -1,0 +1,13 @@
+<%= turbo_stream.update 'flash', partial: 'shared/flash' unless flash.empty? %>
+
+<%= turbo_stream.update "#{dom_id(likeable)}_like_form" do %>
+  <%= render partial: 'comments/likes/unlike_form', locals: { likeable: likeable } %>
+<% end %>
+
+<%= turbo_stream.update "#{dom_id(likeable)}_likes_count" do %>
+  <%= likeable.likes.size %>
+
+  <span class="is-vertical-align-middle material-symbols-rounded  <%= likeable.liked_by?(current_user) ? "liked" : "not-liked" %>">
+    thumb_up
+  </span>
+<% end %>

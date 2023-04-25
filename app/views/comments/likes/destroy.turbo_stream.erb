@@ -1,7 +1,7 @@
 <%= turbo_stream.update 'flash', partial: 'shared/flash' unless flash.empty? %>
 
 <%= turbo_stream.update "#{dom_id(likeable)}_like_form" do %>
-  <%= render partial: 'comments/likes/form', locals: { likeable: likeable } %>
+  <%= render partial: 'comments/likes/like_form', locals: { likeable: likeable } %>
 <% end %>
 
 <%= turbo_stream.update "#{dom_id(likeable)}_likes_count" do %>

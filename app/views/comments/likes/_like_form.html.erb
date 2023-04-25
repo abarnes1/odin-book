@@ -1,0 +1,9 @@
+<%= turbo_frame_tag likeable.container_id(:like_form), class: 'is-flex is-align-items-center' do %>
+  <%= form_with url: [likeable, Like.new] do |form| %>
+    <%= form.hidden_field :likeable_id, value: likeable.id %>
+    
+    <button type="submit" class='button-link'>
+      Like
+    </button>
+  <% end %>
+<% end %>
