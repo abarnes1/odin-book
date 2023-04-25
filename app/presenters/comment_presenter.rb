@@ -53,18 +53,6 @@ class CommentPresenter < CommentablePresenterBase
     end
   end
 
-  def load_comments_link_indent_pixels
-    indent_pixels + 32
-  end
-
-  def indent_pixels
-    if display_depth.positive?
-      display_depth * 32
-    else
-      0
-    end
-  end
-
   def avatar_size
     24
   end
