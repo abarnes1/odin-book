@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - spec/**/*
+    - db/seeds*
 
 Metrics/MethodLength:
   CountAsOne: ['array', 'heredoc']
