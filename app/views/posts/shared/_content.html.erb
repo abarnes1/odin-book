@@ -1,1 +1,1 @@
-<p class="mb-2<%= ' is-italic' if post.soft_deleted? %>"><%= post.content %></p>
+<%= simple_format(post.content, { class: "mb-4#{' is-italic' if post.soft_deleted? }"}) %>

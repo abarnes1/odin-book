@@ -1,3 +1,1 @@
-<p class="is-word-break-all<%= ' is-italic' if comment.soft_deleted? %>">
-  <%= comment.message %>
-</p>
+<%= simple_format(comment.message, { class: "#{' is-italic' if comment.soft_deleted? }"}) %>
