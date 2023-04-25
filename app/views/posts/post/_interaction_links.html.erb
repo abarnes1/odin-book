@@ -1,5 +1,9 @@
 <div class="is-flex is-justify-content-space-between">
-  <%= render partial: 'posts/likes/form', locals: { like: Like.new, likeable: post } %>
+  <% if post.liked_by?(current_user)%>
+    <%= render partial: 'posts/likes/unlike_form', locals: { likeable: post } %> 
+  <% else %>
+    <%= render partial: 'posts/likes/like_form', locals: { likeable: post } %>
+  <% end %>
 
   <% if post.user == current_user %>
     <span class="is-flex is-align-items-center">

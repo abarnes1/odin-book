@@ -1,8 +1,9 @@
 <div class="is-flex is-justify-content-space-between">
   <span>
     <%= turbo_frame_tag post.container_id(:likes_count) do %>
-      <%= post.likes.size %> Likes
+      <%= post.likes.size %>
     <% end %>
+    Likes
   </span>
   <span>
     <%= turbo_frame_tag post.container_id(:total_comments_count) do %>
