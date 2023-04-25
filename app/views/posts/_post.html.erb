@@ -20,8 +20,8 @@
   <%= turbo_frame_tag post.container_id(:comment_form) %>
 
   <%= turbo_frame_tag post.container_id(:comments) do %>
-      <% post.display_comments.each do |comment| %>
-        <%= render partial: 'comments/thread_comment', locals: { comment: comment, avatar_size: comment.avatar_size } %>  
-      <% end %>
+    <% post.display_comments.each do |comment| %>
+      <%= render partial: 'comments/thread_comment', locals: { comment: comment, avatar_size: comment.avatar_size } %>  
+    <% end %>
   <% end %>
 </div>
