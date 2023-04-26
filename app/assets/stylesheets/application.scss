@@ -39,14 +39,16 @@
   font-size: smaller;
 }
 
-/* bulma has-text-grey-lighter equivalent */
 a {
   color: $grey-lighter;
 }
 
-/* bulma has-text-white-ter equivalent */
 a:hover {
   color: $white-ter;
+}
+
+a.navbar-item:hover {
+  background-color: $grey-dark;
 }
 
 .is-word-break-all {
