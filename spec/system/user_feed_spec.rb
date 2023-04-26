@@ -32,7 +32,12 @@ RSpec.describe 'user feed', type: :system do
     end
   end
 
-  it 'shows only 5 posts' do
+  it 'shows only 10 posts' do
+    create(:post, user: user, created_at: Time.now)
+    create(:post, user: user, created_at: Time.now)
+    create(:post, user: user, created_at: Time.now)
+    create(:post, user: user, created_at: Time.now)
+    create(:post, user: user, created_at: Time.now)
     create(:post, user: user, created_at: Time.now)
     create(:post, user: user, created_at: Time.now)
     create(:post, user: user, created_at: Time.now)
@@ -42,6 +47,6 @@ RSpec.describe 'user feed', type: :system do
 
     visit feed_path
 
-    page.assert_selector('.post-container', count: 5)
+    page.assert_selector('.post-container', count: 10)
   end
 end
