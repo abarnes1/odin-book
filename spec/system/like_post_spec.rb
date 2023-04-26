@@ -13,7 +13,7 @@ RSpec.describe 'liking a post' do
   context 'when post is not liked' do
     it 'can be liked' do
       within '.post-container' do
-        expect(page).to have_button(value: 'Like')
+        expect(page).to have_button('Like')
       end
     end
 
@@ -31,7 +31,7 @@ RSpec.describe 'liking a post' do
 
     it 'can be unliked' do
       within '.post-container' do
-        expect(page).to have_button(value: 'Unlike')
+        expect(page).to have_button('Unlike')
       end
     end
 
