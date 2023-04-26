@@ -21,7 +21,7 @@ RSpec.describe 'editing a comment', type: :system do
       it 'does not update the comment' do
         update_comment('')
         message = page.find("#comment_message").native.attribute("validationMessage")
-      expect(message).to eq('Please fill out this field.')
+        expect(message).to eq('Please fill out this field.')
       end
     end
 
@@ -30,7 +30,10 @@ RSpec.describe 'editing a comment', type: :system do
 
       it 'updates the comment' do
         update_comment(new_comment_message)
-        expect(page).to have_content(new_comment_message)
+
+        within '.comment-container' do
+          expect(page).to have_content(new_comment_message)
+        end
       end
     end
   end
@@ -45,7 +48,9 @@ RSpec.describe 'editing a comment', type: :system do
     end
 
     it 'cannot be edited' do
-      expect(page).not_to have_selector(:link_or_button, 'Edit')
+      within '.comment-container' do
+        expect(page).not_to have_selector(:link_or_button, 'Edit')
+      end
     end
   end
 end

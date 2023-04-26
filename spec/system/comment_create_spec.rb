@@ -24,7 +24,10 @@ RSpec.describe 'creating a comment', type: :system do
     it 'creates the comment' do
       click_on 'Comment'
       post_comment(top_level_comment)
-      expect(page).to have_content(top_level_comment)
+
+      within '.comment-container' do
+        expect(page).to have_content(top_level_comment)
+      end
     end
   end
 
@@ -36,10 +39,13 @@ RSpec.describe 'creating a comment', type: :system do
       post_comment(top_level_comment)
     end
 
-    it 'is a thing' do
+    it 'creates the comment' do
       click_on 'Reply'
       post_comment(child_comment)
-      expect(page).to have_content(child_comment)
+
+      within '.comment-container' do
+        expect(page).to have_content(child_comment)
+      end
     end
   end
 end

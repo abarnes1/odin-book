@@ -1,4 +1,4 @@
-<div class="is-flex mt-1" id=<%= dom_id(comment) %>>
+<div class="is-flex mt-1 comment-container" id=<%= dom_id(comment) %>>
   <div class="image is-<%= comment.avatar_size %>x<%= comment.avatar_size %> is-flex-shrink-0 mt-1 mr-2">
     <img class="is-rounded" src="<%= gravatar_url(comment.user.email, comment.avatar_size)%>" alt="">
   </div>
