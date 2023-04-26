@@ -13,7 +13,7 @@ module CapybaraHelpers
     private
 
     def fill_in_post_content(content)
-      fill_in 'Content', with: content
+      fill_in 'post_content', with: content
     end
   end
 end

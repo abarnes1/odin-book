@@ -2,16 +2,18 @@ require 'rails_helper'
 
 RSpec.describe 'creating a post', type: :system do
   let!(:user) { create(:user) }
+  let!(:post) { create(:post, user: user) }
 
   before do
     sign_in user
-    visit new_post_path
+    visit feed_path
+    click_on 'Edit'
   end
 
   context 'when fields are valid' do
-    it 'creates the post' do
+    it 'updates the post' do
       post_content = 'This is my post.'
-      create_post(post_content)
+      update_post(post_content)
 
       within '.post-container' do
         expect(page).to have_content(post_content)
@@ -21,7 +23,7 @@ RSpec.describe 'creating a post', type: :system do
 
   context 'when content field is blank' do
     it 'does not create the post' do
-      create_post('')
+      update_post('')
 
       message = page.find("#post_content").native.attribute("validationMessage")
       expect(message).to eq('Please fill out this field.')
