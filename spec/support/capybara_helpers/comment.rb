@@ -7,7 +7,7 @@ module CapybaraHelpers
 
     def update_comment(message = 'This is an edited comment.')
       fill_in_comment_field(message)
-      click_on 'Comment'
+      click_on 'Update'
     end
 
     private
