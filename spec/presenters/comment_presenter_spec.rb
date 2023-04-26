@@ -60,7 +60,7 @@ RSpec.describe CommentPresenter do
         allow(presenter).to receive(:not_displayed_comments_count).and_return(not_displayed_comments)
         allow(presenter).to receive(:max_display_depth?).and_return(false)
 
-        expected = "\u2937 View Previous Replies (#{not_displayed_comments} Remain)"
+        expected = "\u2937 View Replies"
         expect(presenter.load_comments_link_text).to eq(expected)
       end
     end
