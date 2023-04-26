@@ -1,17 +1,19 @@
 <% if post.user == current_user %>
   <%= turbo_frame_tag post.container_id(:delete_link) do %>  
     <% if post.soft_deleted? %>
-      <span class="is-flex is-align-items-center">
-        <span class="material-symbols-rounded">restore_from_trash</span>
-        <%= link_to 'Undelete', post_path(post, post: { soft_deleted: false }), 
-          method: :put, class: 'ml-1', data: { turbo_stream: true, turbo_method: :patch } %>  
-      </span>
+        <%= link_to post_path(post, post: { soft_deleted: false }), method: :put,
+          class: 'ml-1 is-flex is-align-items-center', 
+          data: { turbo_stream: true, turbo_method: :patch } do %>  
+            <span class="material-symbols-rounded">restore_from_trash</span>
+            Undelete
+          <% end %>
     <% else %>
-      <span class="is-flex is-align-items-center">
-        <span class="material-symbols-rounded">delete</span>  
-        <%= link_to 'Delete', post_path(post, post: { soft_deleted: true }),
-          method: :put, class: 'ml-1',  data: { turbo_stream: true, turbo_method: :patch } %>  
-      </span>
+      <%= link_to post_path(post, post: { soft_deleted: true }), method: :put, 
+        class: 'ml-1 is-flex is-align-items-center',  
+        data: { turbo_stream: true, turbo_method: :patch } do %>  
+          <span class="material-symbols-rounded">delete</span>
+          Delete
+        <% end %>
     <% end %> 
   <% end%>        
 <% end %>
