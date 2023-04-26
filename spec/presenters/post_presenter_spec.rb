@@ -24,7 +24,7 @@ RSpec.describe PostPresenter do
       presenter = described_class.new(post)
       allow(presenter).to receive(:not_displayed_comments_count).and_return(not_displayed_count)
       
-      expected = "View Previous (#{not_displayed_count} Remain)"
+      expected = "View Comments (#{not_displayed_count})"
       expect(presenter.load_comments_link_text).to eq(expected)
     end
   end
