@@ -5,7 +5,7 @@ This the [final project](https://www.theodinproject.com/lessons/ruby-on-rails-ra
 # Live Site
 You can view a live version of this site [here](https://abar.dev/odin-book/).  There's a demo login available if you don't want to sign up:
 
-<span>User: demo@testuser.com</span>  
+User: demo@testuser.com  
 Password: demo123
 
 You can also sign up with any email address and not worry about having to verify the address prior to logging in.
