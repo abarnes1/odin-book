@@ -1,14 +1,14 @@
-<div class='columns is-centered is-vcentered my-1 listed-user-container' id=<%= dom_id(user)%>>
-  <div class='column is-one-fifth py-1'>
+<div class='columns is-centered is-vcentered my-1 listed-user-container is-mobile' id=<%= dom_id(user)%>>
+  <div class='column is-one-fifth-desktop is-half-mobile py-1'>
     <div class='is-flex is-justify-content-center'>
       <span class='image is-24x24'><img class='is-rounded' src="<%= gravatar_url(user.email, 48)%>" alt=""></span>
       <span class='ml-2'><%= link_to user.username, user_path(user) %></span>
     </div>
   </div>
 
-  <div class='column is-one-quarter py-1 has-text-centered'><%= link_to user.email, user_path(user) %></div>
+  <div class='column is-one-quarter py-1 has-text-centered is-hidden-mobile'><%= link_to user.email, user_path(user) %></div>
 
-  <div class='column is-one-fifth py-1 has-text-centered'>
+  <div class='column is-one-fifth-desktop is-half-mobile py-1 has-text-centered'>
     <%= render partial: 'friend_requests/form', locals: { user: user } %> 
   </div>
 </div>

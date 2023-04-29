@@ -2,7 +2,8 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    user_relation = User.where.not(id: current_user.id).order(:username)
+    user_relation = filter.order(:username)
+
     pagination = Pagination::RelationPagination.new(user_relation)
 
     @users = pagination.page(page)
@@ -21,5 +22,17 @@ class UsersController < ApplicationController
     return 1 unless params[:page].present?
 
     params[:page].to_i
+  end
+
+  def filter
+    filter = params[:filter]
+
+    if filter == 'sent'
+      current_user.sent_friend_request_users
+    elsif filter == 'received'
+      current_user.received_friend_request_users
+    else
+      User.where.not(id: current_user.id)
+    end
   end
 end

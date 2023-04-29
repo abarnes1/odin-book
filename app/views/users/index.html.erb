@@ -2,6 +2,17 @@
   <h1 class='is-size-3 has-text-centered'>Users List</h1>
 </section>
 
+<div class='my-2 is-flex is-flex-direction-column is-align-items-center'>
+  <span>Filter</span>
+  <div class='select is-small'>
+    <%= form_with url: "/users", method: :get, class: '' do |form| %>
+      <%= form.select :filter, [["All Users", nil], ["Received Friend Requests", :received], ["Sent Friend Requests", :sent]], 
+        { selected: params[:filter] },
+        onchange: "this.form.submit();" %>
+    </div>
+  <% end %>
+</div>
+
 <%= render partial: 'listed_user', collection: @users, as: :user %>  
 
 <%= render layout: 'shared/page_ranges', locals: { page_ranges: @page_ranges } do |page| %>

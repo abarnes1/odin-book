@@ -118,3 +118,13 @@ form.hide-submit input[type="submit"] {
   width: 20px;
   font-weight: bold;
 }
+
+.select select {
+  color: $grey-lighter !important;
+  background-color: $grey-dark !important;
+  border: none;
+}
+
+.select::after {
+  border-color: $grey-lighter !important;
+}
