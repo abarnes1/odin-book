@@ -9,9 +9,13 @@
 </section>
 
 <section class='section'>
-  <div class='posts-container'>
-    <%= render partial: 'posts/post', collection: @posts, as: :post %>
-  </div>
+  <% if @posts.size > 0 %>
+    <div class='posts-container'>
+      <%= render partial: 'posts/post', collection: @posts, as: :post %>
+    </div>    
+  <% else%>
+    <p class='has-text-centered'><%=@user.username%> has never posted anything.</p>
+  <% end %>
 </section>
 
 <%= render layout: 'shared/page_ranges', locals: { page_ranges: @page_ranges } do |page| %>

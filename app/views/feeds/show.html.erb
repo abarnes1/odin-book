@@ -7,9 +7,14 @@
 </section>
 
 <section class="section">
-  <div class='feed-container'>
-    <%= render partial: 'posts/post', collection: @posts, as: :post %>
-  </div>
+  <% if @posts.size > 0 %>
+    <div class='feed-container'>
+      <%= render partial: 'posts/post', collection: @posts, as: :post %>
+    </div>    
+  <% else%>
+   <p class='has-text-centered'>There isn't anything to show on your feed.</p>
+   <p class='has-text-centered'>Maybe it's time to <%= link_to 'make some friends', users_path %>?</p>
+  <% end %>
 </section>
 
 <%= render layout: 'shared/page_ranges', locals: { page_ranges: @page_ranges } do |page| %>
