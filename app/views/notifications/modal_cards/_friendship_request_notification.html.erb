@@ -1,4 +1,4 @@
 <% friend_request = notification.notifiable %>
-<p>Friend request from <%= link_to friend_request.sender.username, user_path(friend_request.sender) %> <%= time_ago_in_words(friend_request.created_at) %> ago</p>
+<p><%= link_to 'Friend request', users_path(filter: :received) %> from <%= link_to friend_request.sender.username, user_path(friend_request.sender) %> <%= time_ago_in_words(friend_request.created_at) %> ago</p>
 
 <%= render partial: 'notifications/shared/interaction_links', locals: { notification: notification } %>
