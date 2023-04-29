@@ -5,7 +5,7 @@ This the [final project](https://www.theodinproject.com/lessons/ruby-on-rails-ra
 # Live Site
 You can view a live version of this site [here](https://abar.dev/odin-book/).  There's a demo login available if you don't want to sign up:
 
-User: demo@testuser.com  
+<span>User: demo@testuser.com</span>  
 Password: demo123
 
 You can also sign up with any email address and not worry about having to verify the address prior to logging in.
@@ -33,7 +33,7 @@ This was one big learning opportunity that ended up in a lot of experimentation.
   - Turbo streams and frames to prevent full page loads
 
 ## The Cool Stuff
-  - Being able to [load multiple tiers/depths](./app/services/load_post_tiered_comments.rb) of comments across any number of posts without triggering n+1 queries.
+  - Being able to [load multiple tiers/depths](./app/services/load_posts_tiered_comments.rb) of comments across any number of posts without triggering n+1 queries.
   - A [pagination](./app/models/concerns/pageable.rb) concern that works well enough that it can probably be reused in the future.
   - The [soft deletable](./app/models/concerns/soft_deletable.rb) concern also turned out well.  If I need to attach this behavior to models in the future, it is usable as-is in my opinion.
   - Nested comments.  It turned out to be more challenging than it sounded and I'm happy I was able to find a solution.
