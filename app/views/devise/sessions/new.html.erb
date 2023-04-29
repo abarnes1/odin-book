@@ -1,15 +1,21 @@
-<h2 class='is-size-3 has-text-centered mb-3'>Log in</h2>
+<h2 class='is-size-3 has-text-centered mb-3'>Odin Book</h2>
+<img src='<%=image_path('odin-book-logo-people.svg')%>' id='login-logo'>
+  <div class='columns is-centered is-mobile'>
+    <div class='column is-two-fifths-tablet is-three-fifths-mobile'>
+        
+    </div>
+  </div>
 
-<div class='columns is-centered'>
-  <div class='column is-half has-text-centered'>
-    <p>Don't want to sign up? Log in with a demo user that has some informational posts about the site.</p>
-    <p>Email: demo@testuser.com</p>
-    <p>Password: demo123</p>
+<div class='columns is-centered is-mobile'>
+  <div class='column is-two-fifths-tablet is-three-fifths-mobile has-text-centered'>
+    <p class='is-size-smaller'>Don't want to sign up? Try the demo user login:</p>
+    <p class='is-size-smaller'>Email: demo@testuser.com</p>
+    <p class='is-size-smaller'>Password: demo123</p>
   </div>
 </div>
 
-<div class='columns is-centered px-4'>
-  <div class='column border-curved border-light is-half'>
+<div class='columns is-centered is-mobile px-4'>
+  <div class='column border-curved border-light is-two-fifths-tablet is-three-fifths-mobile'>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { method: :post, data: { turbo: false } }) do |f| %>
       <div class="field">
         <%= f.label :email %>
@@ -38,8 +44,8 @@
   </div>
 </div>
 
-<div class='columns is-centered px-4'>
-  <div class='column is-half'>
+<div class='columns is-centered px-4 is-mobile'>
+  <div class='column is-two-fifths-tablet is-three-fifths-mobile'>
     <%= render "devise/shared/links" %>
   </div>
 </div>

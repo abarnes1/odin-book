@@ -128,3 +128,10 @@ form.hide-submit input[type="submit"] {
 .select::after {
   border-color: $grey-lighter !important;
 }
+
+#login-logo {
+  display: block;
+  max-width: 192px;
+  max-height: 192px;
+  margin: auto;
+}
