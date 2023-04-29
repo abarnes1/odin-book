@@ -5,10 +5,10 @@
 <section class='section'>
   <div class='comments-container columns is-centered'>
     <div class='column is-half-desktop'>
-      <% if @comments.nil? %>
-        <%= @user.username %> has never made a comment.
+      <% if @comments.size > 0 %>
+        <%= render partial: 'comments/comment', collection: @comments, as: :comment %>
       <% else %>
-          <%= render partial: 'comments/comment', collection: @comments, as: :comment %>
+        <p class='has-text-centered'><%= @user.username %> has never made a comment.</p>
       <% end %>
     </div>
   </div>
