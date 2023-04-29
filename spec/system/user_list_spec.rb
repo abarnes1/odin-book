@@ -69,4 +69,60 @@ RSpec.describe 'user list', type: :system do
       end
     end
   end
+
+  context 'when filtering' do
+    let!(:friend) { create(:user) }
+    let!(:sent_friend_request_to) { create(:user) }
+    let!(:received_friend_request_from) { create(:user) }
+
+    before do
+      user1.sent_friend_requests.create(recipient: friend, status: :accepted)
+      user1.sent_friend_requests.create(recipient: sent_friend_request_to)
+      user1.received_friend_requests.create(sender: received_friend_request_from)
+    end
+
+    context 'when by sent friend requests' do
+      before do
+        visit users_path(filter: :sent)
+      end
+
+      it 'lists users who were sent friend requests' do
+        expect(page).to have_content(sent_friend_request_to.username)
+      end
+
+      it 'does not list users with no friend request' do
+        expect(page).not_to have_content(user2.username)
+      end
+
+      it 'does not list friends' do
+        expect(page).not_to have_content(friend.username)
+      end
+
+      it 'does not list users who sent friend requests' do
+        expect(page).not_to have_content(received_friend_request_from.username)
+      end
+    end
+
+    context 'when by received friend requests' do
+      before do
+        visit users_path(filter: :received)
+      end
+
+      it 'lists users who sent friend requests' do
+        expect(page).to have_content(received_friend_request_from.username)
+      end
+      
+      it 'does not list users with no friend request' do
+        expect(page).not_to have_content(user2.username)
+      end
+
+      it 'does not list friends' do
+        expect(page).not_to have_content(friend.username)
+      end
+
+      it 'does not list users who were sent friend requests' do
+        expect(page).not_to have_content(sent_friend_request_to.username)
+      end
+    end
+  end
 end
