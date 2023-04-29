@@ -34,9 +34,9 @@ This was one big learning opportunity that ended up in a lot of experimentation.
 
 ## The Cool Stuff
   - Being able to [load multiple tiers/depths](./app/services/load_posts_tiered_comments.rb) of comments across any number of posts without triggering n+1 queries.
-  - A [pagination](./app/models/concerns/pageable.rb) concern that works well enough that it can probably be reused in the future.
-  - The [soft deletable](./app/models/concerns/soft_deletable.rb) concern also turned out well.  If I need to attach this behavior to models in the future, it is usable as-is in my opinion.
-  - Nested comments.  It turned out to be more challenging than it sounded and I'm happy I was able to find a solution.
+  - A [pagination](./app/models/concerns/pageable.rb) concern that works well enough that it can probably be reused in the future, although an existing gem may be a wiser choice.
+  - The [soft deletable](./app/models/concerns/soft_deletable.rb) concern also turned out well.  This concern exists so deleting a post or comment will not delete child comments that belong to other users.  If I need to attach this behavior to models in the future, it is nearly usable as-is in my opinion.  
+  - Nested comments.  It turned out to be more challenging than it sounded and I'm happy I was able to find a solution that allows
 
 ## The Not-so-Cool Stuff
 The original plan for this project was lacking.  Not having a better plan upfront made it too easy to rethink decisions and get stuck in refactoring without a clear end goal.
