@@ -14,9 +14,11 @@ services:
     depends_on:
       - database
       - redis
+    restart: always
 
   redis:
     image: redis
+    restart: always
 
   database:
     image: postgres:alpine
@@ -24,6 +26,7 @@ services:
       - .env.production.local
     volumes:
       - db_data:/var/lib/postgresql/data
+    restart: always
 
 volumes:
   db_data:
